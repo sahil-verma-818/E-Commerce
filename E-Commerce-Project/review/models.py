@@ -1,7 +1,9 @@
 from product.models import Product
 from django.db import models
 from django.core.validators import MinValueValidator,MaxValueValidator
-from django.contrib.auth.models import User
+from django.conf import settings
+
+User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 
@@ -11,4 +13,4 @@ class Review(models.Model):
     heading = models.CharField(max_length=100)
     description = models.TextField()
     Product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete= None)
+    user = models.ForeignKey(User, on_delete= models.DO_NOTHING)

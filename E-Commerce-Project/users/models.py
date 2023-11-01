@@ -1,6 +1,8 @@
+from statistics import mode
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 # Create your models here.
 
 user_choices = (
@@ -10,11 +12,12 @@ user_choices = (
 )
 
 address_choice = (
-    ('home', 'Home')
-    ('work', 'Work')
+    ('home', 'Home'),
+    ('work', 'Work'),
 )
 
 class Address(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     house = models.CharField(max_length=100)
     area = models.CharField(max_length=200)
     landmark = models.CharField(max_length=100)
@@ -25,7 +28,6 @@ class Address(models.Model):
 
 class CustomUser(AbstractUser):
     mobile = models.CharField(max_length=20, blank=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
     user_type = models.CharField(max_length=10, choices=user_choices, blank=True)
 
 

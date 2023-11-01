@@ -16,9 +16,7 @@ payment_choices = (
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product, through='OrderItems')
     delivery_address = models.ForeignKey(Address, on_delete=models.CASCADE)
-    shipping_address = models.ForeignKey(Address, on_delete=models.CASCADE)
     order_date = models.DateTimeField(auto_now_add=True)
     order_id = models.CharField(max_length=100)
     transaction_id = models.CharField(max_length=100, blank=True)
