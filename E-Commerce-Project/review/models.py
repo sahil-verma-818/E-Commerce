@@ -13,4 +13,4 @@ class Review(models.Model):
     heading = models.CharField(max_length=100)
     description = models.TextField()
     Product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete= models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete= models.SET_NULL, null=True)

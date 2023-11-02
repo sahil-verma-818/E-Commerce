@@ -10,6 +10,7 @@ class Product(models.Model):
     product_desc = models.TextField()
     category = models.CharField(max_length=30)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     stock_quantity = models.PositiveIntegerField()
     image1 = models.ImageField(upload_to = 'static/')
     image2 = models.ImageField(upload_to = 'static/')
