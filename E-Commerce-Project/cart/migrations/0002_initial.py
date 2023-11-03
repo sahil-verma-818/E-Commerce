@@ -9,13 +9,13 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('manage_orders', '0001_initial'),
+        ('cart', '0001_initial'),
         ('product', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='orderitems',
+            model_name='cartitems',
             name='product',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='product.product'),
         ),
