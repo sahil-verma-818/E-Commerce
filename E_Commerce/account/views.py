@@ -4,14 +4,12 @@ from product.models import Product
 # Create your views here.
 
 def home(request):
-    context = {}
-    a = 0
-    for x in Product.objects.all().values():
-        context[a] = {
-            'category' : x['category'],
-            'price' : x['price']
-        }
-        a+=1
+    
+    data = Product.objects.all()
+    print(data.values())
+    context = {
+        'data' : data
+    }
     
     return render(request, 'product_template/index.html', context=context)
 
