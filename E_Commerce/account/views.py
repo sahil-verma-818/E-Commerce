@@ -4,11 +4,16 @@ from product.models import Product
 # Create your views here.
 
 def home(request):
-
-    data = product
-
+    context = {}
+    a = 0
+    for x in Product.objects.all().values():
+        context[a] = {
+            'category' : x['category'],
+            'price' : x['price']
+        }
+        a+=1
     
-    return render(request, 'product_template/index.html')
+    return render(request, 'product_template/index.html', context=context)
 
 def register(request):
 
