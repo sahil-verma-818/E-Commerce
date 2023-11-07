@@ -6,7 +6,6 @@ from product.models import Product
 def home(request):
     
     data = Product.objects.all()
-    print(data.values())
     context = {
         'data' : data
     }
