@@ -79,18 +79,9 @@ def account(request, id):
         zip = request.POST.get('zip')
         state = request.POST.get('state')
         city = request.POST.get('city')
-        mobile = request.POST.get('phone')
+        mobile = request.POST.get('mobile')
         email = request.POST.get('email')
 
-        print("1.", first_name)
-        print("2.", last_name)
-        print("3.", house)
-        print("4.", area)
-        print("5.", landmark)
-        print("6.", zip)
-        print("7.", state)
-        print("8.", city)
-        print("9.", mobile)
-        print("10.", email)
+        
 
         return render(request, 'users_template/customer-account.html')
