@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser,UserManager
 
 # Create your models here.
 
@@ -17,6 +17,9 @@ address_choice = (
 class User(AbstractUser):
     mobile = models.CharField(max_length=20, blank=True)
     user_type = models.CharField(max_length=10, choices=user_choices, blank=True)
+
+    objects = UserManager()
+    USERNAME_FIELD = 'username'
 
     def __str__(self) -> str:
         return self.username
