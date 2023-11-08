@@ -67,23 +67,45 @@ def account(request, id):
     
     if request.method == 'POST':
 
-        data1 = User.objects.get(username = id)
-        data2 = Address.objects.get(user=data1)
+        # data1 = User.objects.get(username = id)
+        # data2 = Address.objects.get(user=User.objects.get(username = id))
         
 
-        first_name = request.POST.get('first_name', data1.first_name)
-        last_name = request.POST.get('last_name')
-        house = request.POST.get('house')
-        area = request.POST.get('area')
-        landmark = request.POST.get('landmark')
-        zip = request.POST.get('zip')
-        state = request.POST.get('state')
-        city = request.POST.get('city')
-        mobile = request.POST.get('mobile')
-        email = request.POST.get('email')
+        updated_user = {
+            'first_name' : request.POST.get('first_name'),
+            'last_name' : request.POST.get('last_name'),
+            'mobile' : request.POST.get('mobile'),
+            'email' : request.POST.get('email')
+        }
 
-        
+        updated_address = {
+            'house' : request.POST.get('house'),
+            'area' : request.POST.get('area'),
+            'landmark' : request.POST.get('landmark'),
+            'zip' : request.POST.get('zip'),
+            'state' : request.POST.get('state'),
+            'city' : request.POST.get('city')
+        }
 
-        
+        User.objects.filter(username = id).update(**updated_user)
+        Address.objects.filter(user=User.objects.get(username=id)).update(**updated_address)
 
         return render(request, 'users_template/customer-account.html')
+    
+@login_required
+def update_password(request, id):
+    
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')
+        new_password = request.POST.get('new_password')
+        cnf_password = request.POST.get('cnf_password')
+
+        user = authenticate(username=id, password=old_password)
+        print(user)
+
+        if user is not None:
+            if new_password == cnf_password:
+                user.set_password(new_password)
+                user.save()
+    return redirect(f"/account/{user.username}")
+    
