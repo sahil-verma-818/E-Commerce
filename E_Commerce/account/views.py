@@ -84,4 +84,6 @@ def account(request, id):
 
         
 
+        
+
         return render(request, 'users_template/customer-account.html')
