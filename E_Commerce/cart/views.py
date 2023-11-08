@@ -2,6 +2,6 @@ from django.shortcuts import render
 
 # Create your views here.
 
-def cartlist(request):
+def cartlist(request,id):
 
-    return render(request, 'cart_template/basket.html')
+    return render(request, 'cart_template/basket.html')   

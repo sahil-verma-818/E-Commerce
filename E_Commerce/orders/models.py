@@ -30,4 +30,4 @@ class OrderItems(models.Model):
     quantity = models.PositiveIntegerField()
 
     def __str__(self) -> str:
-        return self.product_name
+        return self.order.order_id
