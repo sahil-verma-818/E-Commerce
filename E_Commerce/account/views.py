@@ -22,8 +22,6 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        
-
         if User.objects.filter(email=email).exists():
             print("Data already present.")
         else:
@@ -43,7 +41,7 @@ def login_user(request):
         if user is not None:
             login(request, user=user)
             
-            return redirect(f"account/{user.username}")
+            return redirect(f"account/{request.user}")
 
     return render(request, 'users_template/register.html')
     
@@ -51,10 +49,11 @@ def login_user(request):
 @login_required(login_url='/register')
 def account(request, id):
     if request.method == 'GET':
+        print(request.user.id)
         try:
-            data1 = User.objects.get(username = id)
-            data2 = Address.objects.get(user=data1)
-            
+            data1 = User.objects.get(id=request.user.id)
+            data2 = Address.objects.get(user=request.user)
+            print(data1.first_name)
         except User.DoesNotExist:
             data = None
 
@@ -66,11 +65,7 @@ def account(request, id):
         return render(request, 'users_template/customer-account.html', context)
     
     if request.method == 'POST':
-
-        # data1 = User.objects.get(username = id)
-        # data2 = Address.objects.get(user=User.objects.get(username = id))
-        
-
+            
         updated_user = {
             'first_name' : request.POST.get('first_name'),
             'last_name' : request.POST.get('last_name'),
@@ -86,9 +81,8 @@ def account(request, id):
             'state' : request.POST.get('state'),
             'city' : request.POST.get('city')
         }
-
-        User.objects.filter(username = id).update(**updated_user)
-        Address.objects.filter(user=User.objects.get(username=id)).update(**updated_address)
+        User.objects.filter(id = request.user.id).update(**updated_user)
+        Address.objects.filter(user=request.user).update(**updated_address)
 
         return render(request, 'users_template/customer-account.html')
     

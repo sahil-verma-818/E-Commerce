@@ -34,22 +34,22 @@
                       <tbody>
                         {% for data in data %}
                         <tr>
-                          <td><a href="#"><img src="img/detailsquare.jpg" alt="White Blouse Armani"></a></td>
+                          <td><a href="#"><img src="../{{data.product.image1}}" alt=""></a></td>
                           <td><a href="#">{{data.product.product_name}}</a></td>
                           <td>
                             <input type="number" value="{{data.quantity}}" class="form-control">
                           </td>
                           <td>{{data.product.price}}</td>
                           <td>{{data.product.Discount}}</td>
-                          <td>{{data.product.price}}</td>
-                          <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                          <td>{% widthratio data.product.price 1 data.quantity %}</td>
+                          <td><a href="/remove-cart/{{user}}/{{data.id}}"><i class="fa fa-trash-o"></i></a></td>
                         </tr>
                         {% endfor %}
                       </tbody>
                       <tfoot>
                         <tr>
                           <th colspan="5">Total</th>
-                          <th colspan="2">$446.00</th>
+                          <th colspan="2">{{total}}</th>
                         </tr>
                       </tfoot>
                     </table>
@@ -130,7 +130,7 @@
                     <tbody>
                       <tr>
                         <td>Order subtotal</td>
-                        <th>$446.00</th>
+                        <th>{{total}}</th>
                       </tr>
                       <tr>
                         <td>Shipping and handling</td>
@@ -142,7 +142,7 @@
                       </tr>
                       <tr class="total">
                         <td>Total</td>
-                        <th>$456.00</th>
+                        <th>{{total }}</th>
                       </tr>
                     </tbody>
                   </table>

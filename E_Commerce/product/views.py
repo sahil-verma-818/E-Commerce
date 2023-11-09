@@ -8,7 +8,8 @@ def product_category(request, id):
 
     data = Product.objects.get(id=id)
     context = {
-        'data' : data
+        'data' : data,
+        'user' : request.user
     }
     
     return render(request, 'product_template/detail.html', context)

@@ -14,7 +14,7 @@
                   <li class="breadcrumb-item"><a href="#">Home</a></li>
                   <li class="breadcrumb-item"><a href="#">Ladies</a></li>
                   <li class="breadcrumb-item"><a href="#">Tops</a></li>
-                  <li aria-current="page" class="breadcrumb-item active">White Blouse Armani</li>
+                  <li aria-current="page" class="breadcrumb-item active">{{data.product_name}}</li>
                 </ol>
               </nav>
             </div>
@@ -152,7 +152,7 @@
                     <h1 class="text-center">{{data.product_name}}</h1>
                     <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to product details, material &amp; care and sizing</a></p>
                     <p class="price"> 	&#8377; {{data.price}}</p>
-                    <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                    <p class="text-center buttons"><a href="/cart/{{user}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
                   </div>
                   <div data-slider-id="1" class="owl-thumbs">
                     <button class="owl-thumb-item"><img src=../{{data.image1}} alt="" class="img-fluid"></button>
