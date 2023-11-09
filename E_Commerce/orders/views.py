@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def order(request, id):
-    price = []
+    price = {}
     data = Order.objects.filter(user=User.objects.get(username=id))
     for x in data:
         print(x)
@@ -15,7 +15,7 @@ def order(request, id):
         items = OrderItems.objects.filter(order=x)
         for y in items:
             sum += y.product.price * y.quantity
-        price.append(sum)
+        price[x.id] = sum
 
     context = {
         'data' : data,

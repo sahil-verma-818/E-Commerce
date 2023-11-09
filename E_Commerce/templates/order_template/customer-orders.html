@@ -48,14 +48,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {% for obj in data %}
+                      {% for item in data %}
+                      
                       <tr>
-                        <th>{{obj.id}}</th>
-                        <td>{{obj.order_date}}</td>
-                        <td>{{price}}</td>
+                        <th>{{item.id}}</th>
+                        <td>{{item.order_date}}</td>
+                        <td>{{ price.1 }}</td>
                         <td><span class="badge badge-info">Being prepared</span></td>
                         <td><a href="customer-order.html" class="btn btn-primary btn-sm">View</a></td>
                       </tr>
+                    
                       {% endfor %}                 
                     </tbody>
                   </table>

@@ -76,9 +76,9 @@
                   <div class="flip-container">
                     <div class="flipper">
                       <div class="front"><a href=/product/{{x.id}}><img src= "{{x.image1}}" class="img-fluid"></a></div>
-                      <div class="back"><a href="/product/{{x.id}}"><img src="{% static 'img/product1_2.jpg' %}" alt="" class="img-fluid"></a></div>
+                      <div class="back"><a href="/product/{{x.id}}"><img src="{{x.image2}}" alt="" class="img-fluid"></a></div>
                     </div>
-                  </div><a href=/product/{{x.id}} class="invisible"><img src="{% static 'img/product1.jpg' %}" alt="" class="img-fluid"></a>
+                  </div><a href=/product/{{x.id}} class="invisible"><img src="{{x.image1}}" alt="" class="img-fluid"></a>
                   <div class="text">
                     <h3><a href=/product/{{x.id}}>{{ x.product_name }}</a></h3>
                     <p class="price"> 
