@@ -5,7 +5,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+
+
 # Create your views here.
+
+
 
 def home(request):
     
@@ -15,6 +19,8 @@ def home(request):
     }
     
     return render(request, 'product_template/index.html', context=context)
+
+
 
 def register(request):
 
@@ -32,6 +38,8 @@ def register(request):
             messages.success(request, f"User Successfully Created with username : {username}")
     return render(request, 'users_template/register.html')
 
+
+
 def login_user(request):
     if request.method == 'POST':
        
@@ -41,11 +49,14 @@ def login_user(request):
 
         if user is not None:
             login(request, user=user)
-            
             return redirect(f"account/{request.user}")
+        else:
+            messages.error(request, "Data insufficient or Credentitials not matched")
+            return redirect('/register')
 
-    return render(request, 'users_template/register.html')
+    # return render(request, 'users_template/register.html')    
     
+
 
 @login_required(login_url='/register')
 def account(request, id):
@@ -85,7 +96,6 @@ def account(request, id):
             'city' : request.POST.get('city')
         }
         if Address.objects.filter(user=request.user).exists() == False:
-            # print(User.objects.get(id=request.user))
             updated_address['user'] = User.objects.get(id=request.user.id)
             Address.objects.filter(user=request.user).update_or_create(**updated_address)
         else:
@@ -94,6 +104,8 @@ def account(request, id):
 
         return render(request, 'users_template/customer-account.html')
     
+
+
 @login_required
 def update_password(request, id):
     
@@ -110,6 +122,8 @@ def update_password(request, id):
                 user.set_password(new_password)
                 user.save()
     return redirect(f"/account/{user.username}")
+
+
 
 @login_required
 def logout_user(request, id):

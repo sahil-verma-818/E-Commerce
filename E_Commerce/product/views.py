@@ -4,6 +4,8 @@ from account.models import User
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+
+
 def product_category(request, id):
 
     data = Product.objects.get(id=id)
@@ -13,6 +15,7 @@ def product_category(request, id):
     }
     
     return render(request, 'product_template/detail.html', context)
+
 
 
 def wishlist(request,id):
