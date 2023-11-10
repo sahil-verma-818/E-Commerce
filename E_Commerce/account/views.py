@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from product.models import Product
 from .models import User,Address
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 
@@ -23,18 +24,18 @@ def register(request):
         password = request.POST.get('password')
 
         if User.objects.filter(email=email).exists():
-            print("Data already present.")
+            messages.error(request, "User Already Available")
         else:
             username = email.split('@')[0]
             name = name.split(' ', 1)
             User.objects.create_user(username=username, first_name=name[0], last_name=name[1], email=email, password=password)
-
+            messages.success(request, f"User Successfully Created with username : {username}")
     return render(request, 'users_template/register.html')
 
 def login_user(request):
     if request.method == 'POST':
        
-        username = request.POST.get('login-email')
+        username = request.POST.get('login-username')
         password = request.POST.get('login-password')
         user = authenticate(username=username, password=password)
 
@@ -55,7 +56,9 @@ def account(request, id):
             data2 = Address.objects.get(user=request.user)
             print(data1.first_name)
         except User.DoesNotExist:
-            data = None
+            data1 = None
+        except Address.DoesNotExist:
+            data2 = None
 
         context = {
             'data1' : data1,
@@ -81,8 +84,13 @@ def account(request, id):
             'state' : request.POST.get('state'),
             'city' : request.POST.get('city')
         }
+        if Address.objects.filter(user=request.user).exists() == False:
+            # print(User.objects.get(id=request.user))
+            updated_address['user'] = User.objects.get(id=request.user.id)
+            Address.objects.filter(user=request.user).update_or_create(**updated_address)
+        else:
+            Address.objects.filter(user=request.user).update(**updated_address)
         User.objects.filter(id = request.user.id).update(**updated_user)
-        Address.objects.filter(user=request.user).update(**updated_address)
 
         return render(request, 'users_template/customer-account.html')
     
@@ -102,4 +110,9 @@ def update_password(request, id):
                 user.set_password(new_password)
                 user.save()
     return redirect(f"/account/{user.username}")
+
+@login_required
+def logout_user(request, id):
+    logout(request)
+    return redirect('/')
     

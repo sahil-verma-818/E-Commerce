@@ -24,11 +24,11 @@
               <h3 class="h4 card-title">Customer section</h3>
             </div>
             <div class="card-body">
-              <ul class="nav nav-pills flex-column"><a href="customer-orders.html" class="nav-link active"><i
-                    class="fa fa-list"></i> My orders</a><a href="customer-wishlist.html" class="nav-link"><i
-                    class="fa fa-heart"></i> My wishlist</a><a href="customer-account.html" class="nav-link"><i
-                    class="fa fa-user"></i> My account</a><a href="index.html" class="nav-link"><i
-                    class="fa fa-sign-out"></i> Logout</a></ul>
+              <ul class="nav nav-pills flex-column"><a href="/orders/{{user}}" class="nav-link"><i
+                class="fa fa-list"></i> My orders</a><a href="/wishlist/{{user}}" class="nav-link active"><i
+                class="fa fa-heart"></i> My wishlist</a><a href="/account/{{user}}" class="nav-link"><i
+                class="fa fa-user"></i> My account</a><a href="/logout/{{user}}" class="nav-link"><i
+                class="fa fa-sign-out"></i> Logout</a></ul>
             </div>
           </div>
           <!-- /.col-lg-3-->
@@ -47,22 +47,22 @@
           <div class="row products">
             {% for item in data %}
             <div class="col-lg-3 col-md-4">
-              <div class="product">
+              <div class="product"> 
                 <div class="flip-container">
                   <div class="flipper">
-                    <div class="front"><a href="detail.html"><img src="img/product1.jpg" alt="" class="img-fluid"></a>
+                    <div class="front"><a href="detail.html"><img src="../{{item.product.image1}}" alt="" class="img-fluid"></a>
                     </div>
-                    <div class="back"><a href="detail.html"><img src="img/product1_2.jpg" alt="" class="img-fluid"></a>
+                    <div class="back"><a href="detail.html"><img src="../{{item.product.image2}}" alt="" class="img-fluid"></a>
                     </div>
                   </div>
-                </div><a href="detail.html" class="invisible"><img src="img/product1.jpg" alt="" class="img-fluid"></a>
+                </div><a href="detail.html" class="invisible"><img src="../{{item.product.image1}}" alt="" class="img-fluid"></a>
                 <div class="text">
                   <h3><a href="detail.html">{{item.product.product_name}}</a></h3>
                   <p class="price">
-                    <del></del>&#x20B9; {{item.product.price}}
+                    <del></del> &#x20B9; {{item.product.price}}
                   </p>
-                  <p class="buttons"><a href="detail.html" class="btn btn-outline-secondary">View detail</a><a
-                      href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a></p>
+                  <p class="buttons"><a href="/product/{{item.product.id}}" class="btn btn-outline-secondary">View detail</a><a
+                        href="/cart/add/{{item.product.id}}/{{user}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a></p>
                 </div>
                 <!-- /.text-->
               </div>
