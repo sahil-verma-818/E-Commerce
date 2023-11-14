@@ -27,3 +27,10 @@ def order(request, id):
     
 
     return render(request, 'order_template/customer-orders.html', context)
+
+
+
+def checkout1(request,id):
+    
+
+    return render(request, 'order_template/checkout1.html')
