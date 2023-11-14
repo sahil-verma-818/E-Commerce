@@ -11,16 +11,32 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def cartlist(request,id):
-    total = 0
-    data = CartItems.objects.filter(user=User.objects.get(username=id))
-    for x in data:
-        total += x.product.price * x.quantity
-    context = {
-        'data' : data,
-        'total' : total
-    }
+        
+    if request.method == 'GET':
+        total = 0
+        data = CartItems.objects.filter(user=User.objects.get(username=id))
+        for x in data:
+            total += x.product.price * x.quantity
+        context = {
+            'data' : data,
+            'total' : total
+        }
 
-    return render(request, 'cart_template/basket.html', context)
+        return render(request, 'cart_template/basket.html', context)
+
+    if request.method == 'POST':
+        data = CartItems.objects.filter(user=User.objects.get(username=id))
+
+        for x in data:
+            x.quantity = request.POST.get(f"{x.id}")
+            x.save()
+            print("ram")
+
+        return redirect(f"/cart/{request.user}")
+            
+
+        
+         
 
 
 

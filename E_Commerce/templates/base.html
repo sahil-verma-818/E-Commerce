@@ -44,10 +44,12 @@
               href="#" class="ml-1">Get flat 35% off on orders over $50!</a></div>
           <div class="col-lg-6 text-center text-lg-right">
             <ul class="menu list-inline mb-0">
+              {% if not user.is_authenticated %}
               <li class="list-inline-item"><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
               <li class="list-inline-item"><a href="/register">Register</a></li>
+              {% endif %}
               <li class="list-inline-item"><a href="contact.html">Contact</a></li>
-              <li class="list-inline-item"><a href="#">Recently viewed</a></li>
+              <!-- <li class="list-inline-item"><a href="#">Recently viewed</a></li> -->
             </ul>
           </div>
         </div>
@@ -203,7 +205,7 @@
               </ul>
             </li>
             <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" data-hover="dropdown"
-                data-delay="200" class="dropdown-toggle nav-link">Template<b class="caret"></b></a>
+                data-delay="200" class="dropdown-toggle nav-link">{{user}}<b class="caret"></b></a>
               <ul class="dropdown-menu megamenu">
                 <li>
                   <div class="row">
@@ -222,13 +224,15 @@
                     <div class="col-md-6 col-lg-3">
                       <h5>User</h5>
                       <ul class="list-unstyled mb-3">
-                        <li class="nav-item"><a href="register.html" class="nav-link">Register / login</a></li>
-                        <li class="nav-item"><a href="customer-orders.html" class="nav-link">Orders history</a></li>
-                        <li class="nav-item"><a href="customer-order.html" class="nav-link">Order history detail</a>
-                        </li>
-                        <li class="nav-item"><a href="customer-wishlist.html" class="nav-link">Wishlist</a></li>
-                        <li class="nav-item"><a href="customer-account.html" class="nav-link">Customer account / change
+                        {% if not user.is_authenticated %}
+                        <li class="nav-item"><a href="/register" class="nav-link">Register / login</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a href="/orders/{{user}}" class="nav-link">Orders history</a></li>
+                        
+                        <li class="nav-item"><a href="/wishlist/{{user}}" class="nav-link">Wishlist</a></li>
+                        <li class="nav-item"><a href="/account/{{user}}" class="nav-link">Customer account / change
                             password</a></li>
+                        <li class="nav-item"><a href="/logout/{{user}}" class="nav-link"> Logout </a></li>
                       </ul>
                     </div>
                     <div class="col-md-6 col-lg-3">
@@ -264,9 +268,11 @@
             <div id="search-not-mobile" class="navbar-collapse collapse"></div><a data-toggle="collapse" href="#search"
               class="btn navbar-btn btn-primary d-none d-lg-inline-block"><span class="sr-only">Toggle search</span><i
                 class="fa fa-search"></i></a>
+            {% if user.is_authenticated %}
             <div id="basket-overview" class="navbar-collapse collapse d-none d-lg-block"><a href="../cart/{{user}}"
                 class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span> Your Cart </span></a>
             </div>
+            {% endif %}
           </div>
         </div>
       </div>

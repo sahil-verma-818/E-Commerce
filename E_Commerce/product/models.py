@@ -4,11 +4,16 @@ from django.core.validators import MinValueValidator,MaxValueValidator
 
 # Create your models here.
 
+class product_category(models.Model):
+    category = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return self.category
 
 class Product(models.Model):
     product_name = models.CharField(max_length=100)
     product_desc = models.TextField()
-    category = models.CharField(max_length=30)
+    category = models.ForeignKey(product_category, on_delete=models.SET_NULL, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     stock_quantity = models.PositiveIntegerField()

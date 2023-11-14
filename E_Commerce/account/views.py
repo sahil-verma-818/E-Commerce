@@ -49,7 +49,7 @@ def login_user(request):
 
         if user is not None:
             login(request, user=user)
-            return redirect(f"account/{request.user}")
+            return redirect('/')
         else:
             messages.error(request, "Data insufficient or Credentitials not matched")
             return redirect('/register')
