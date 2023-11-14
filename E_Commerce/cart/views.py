@@ -54,14 +54,7 @@ def add_cart(request,uname, id):
 
 @login_required
 def remove_cart(request, uname, id):
-        print(request.user)
-        print(User.objects.get(username=uname))
         if request.user == User.objects.get(username=uname):
             data = CartItems.objects.get(id=id).delete()
             return redirect(f"/cart/{request.user}")
         
-
-
-@login_required
-def update_cart(request):
-     pass

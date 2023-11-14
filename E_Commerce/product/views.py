@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Product, Wishlist,product_category
 from account.models import User
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger 
+from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
+from django.contrib import messages
+import datetime
 # Create your views here.
 
 
@@ -46,3 +48,14 @@ def wishlist(request,id):
         'data':data
     }
     return render(request, 'product_template/customer-wishlist.html', context)
+
+
+
+def addWishlist(request, uname, id):
+    
+    item = Wishlist.objects.filter(user=User.objects.get(id=request.user.id)).filter(product=Product.objects.get(id=id))
+    if item:
+        messages.error(request, "Item is already available in wishlist")
+    else:
+        Wishlist.objects.create(user=request.user, product=Product.objects.get(id=id), date=datetime.datetime.now)
+    return redirect(f"/wishlist/{request.user}")

@@ -152,7 +152,12 @@
                     <h1 class="text-center">{{data.product_name}}</h1>
                     <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to product details, material &amp; care and sizing</a></p>
                     <p class="price"> 	&#8377; {{data.price}}</p>
-                    <p class="text-center buttons"><a href="/cart/add/{{data.id}}/{{user}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                    <p class="text-center buttons"><a href="/cart/add/{{data.id}}/{{user}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href=/addWishlist/{{user}}/{{data.id}} class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                    {% if messages %}
+                    {% for message in messages %}
+                    {{message}}
+                    {% endfor %}
+                    {% endif %}
                   </div>
                   <div data-slider-id="1" class="owl-thumbs">
                     <button class="owl-thumb-item"><img src=../{{data.image1}} alt="" class="img-fluid"></button>
