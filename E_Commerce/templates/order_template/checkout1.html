@@ -1,6 +1,5 @@
 {% extends '../base.html' %}
 {% load static %}
-{% block title %} Shoppiee {% endblock %}
 {% block content %}
     <div id="all">
       <div id="content">
@@ -10,15 +9,14 @@
               <!-- breadcrumb-->
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
                   <li aria-current="page" class="breadcrumb-item active">Checkout - Address</li>
                 </ol>
               </nav>
             </div>
             <div id="checkout" class="col-lg-9">
               <div class="box">
-                <form method="post" action="checkout2.html">
-                  {% csrf_token %}
+                <form method="get" action="checkout2.html">
                   <h1>Checkout - Address</h1>
                   <div class="nav flex-column flex-md-row nav-pills text-center"><a href="checkout1.html" class="nav-link flex-sm-fill text-sm-center active"> <i class="fa fa-map-marker">                  </i>Address</a><a href="#" class="nav-link flex-sm-fill text-sm-center disabled"> <i class="fa fa-truck">                       </i>Delivery Method</a><a href="#" class="nav-link flex-sm-fill text-sm-center disabled"> <i class="fa fa-money">                      </i>Payment Method</a><a href="#" class="nav-link flex-sm-fill text-sm-center disabled"> <i class="fa fa-eye">                     </i>Order Review</a></div>
                   <div class="content py-3">
@@ -137,6 +135,6 @@
         </div>
       </div>
     </div>
-    {% endblock %}
+{% endblock %}
   </body>
 </html>

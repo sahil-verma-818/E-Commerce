@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 
 
-@login_required
+@login_required(login_url='/register')
 def cartlist(request,id):
         
     if request.method == 'GET':
@@ -40,7 +40,7 @@ def cartlist(request,id):
 
 
 
-@login_required
+@login_required(login_url='/register')
 def add_cart(request,uname, id):
     item = CartItems.objects.filter(user=User.objects.get(id=request.user.id)).filter(product=Product.objects.get(id=id))
     if item:
@@ -52,7 +52,7 @@ def add_cart(request,uname, id):
 
 
 
-@login_required
+@login_required(login_url='/register')
 def remove_cart(request, uname, id):
         if request.user == User.objects.get(username=uname):
             data = CartItems.objects.get(id=id).delete()

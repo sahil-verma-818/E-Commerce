@@ -34,6 +34,7 @@ class Address(models.Model):
     state = models.CharField(max_length=50)
     zip = models.PositiveBigIntegerField()
     address_type = models.CharField(max_length=10, choices=address_choice)
+    primary = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return self.house + " " + self.area

@@ -29,7 +29,7 @@ def order(request, id):
     return render(request, 'order_template/customer-orders.html', context)
 
 
-
+@login_required(login_url='/register')
 def checkout1(request,id):
     
 

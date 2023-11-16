@@ -13,7 +13,7 @@ payment_choices = (
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    delivery_address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    delivery_address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
     order_date = models.DateTimeField(auto_now_add=True)
     order_id = models.CharField(max_length=100)
     transaction_id = models.CharField(max_length=100, blank=True)
@@ -21,7 +21,7 @@ class Order(models.Model):
     is_confirmed = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return self.order_id
+        return self.user.username
 
 
 class OrderItems(models.Model):
@@ -30,4 +30,4 @@ class OrderItems(models.Model):
     quantity = models.PositiveIntegerField()
 
     def __str__(self) -> str:
-        return self.order.order_id
+        return self.order.user.username

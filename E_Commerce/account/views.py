@@ -4,37 +4,26 @@ from .models import User,Address
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
 
 
 
 # Create your views here.
 
 
-
-def home(request):
-    
-    data = Product.objects.all()
-    context = {
-        'data' : data
-    }
-    
-    return render(request, 'product_template/index.html', context=context)
-
-
-
 def register(request):
 
     if request.method == 'POST':
-        name = request.POST.get('name')
+        firstname = request.POST.get('firstname')
+        lastname = request.POST.get('lastname', " ")
         email = request.POST.get('email')
         password = request.POST.get('password')
 
         if User.objects.filter(email=email).exists():
-            messages.error(request, "User Already Available")
+            messages.error(request, "An Existing user already available with this gmail. Try another one.")
         else:
             username = email.split('@')[0]
-            name = name.split(' ', 1)
-            User.objects.create_user(username=username, first_name=name[0], last_name=name[1], email=email, password=password)
+            User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password)
             messages.success(request, f"User Successfully Created with username : {username}")
     return render(request, 'users_template/register.html')
 
@@ -64,7 +53,7 @@ def account(request, id):
         print(request.user.id)
         try:
             data1 = User.objects.get(id=request.user.id)
-            data2 = Address.objects.get(user=request.user)
+            data2 = Address.objects.get(Q(user=request.user) & Q(primary=True))
             print(data1.first_name)
         except User.DoesNotExist:
             data1 = None
@@ -93,7 +82,8 @@ def account(request, id):
             'landmark' : request.POST.get('landmark'),
             'zip' : request.POST.get('zip'),
             'state' : request.POST.get('state'),
-            'city' : request.POST.get('city')
+            'city' : request.POST.get('city'),
+            'primary' : True
         }
         if Address.objects.filter(user=request.user).exists() == False:
             updated_address['user'] = User.objects.get(id=request.user.id)
@@ -106,7 +96,7 @@ def account(request, id):
     
 
 
-@login_required
+@login_required(login_url='/register')
 def update_password(request, id):
     
     if request.method == 'POST':
@@ -125,7 +115,7 @@ def update_password(request, id):
 
 
 
-@login_required
+@login_required(login_url='/register')
 def logout_user(request, id):
     logout(request)
     return redirect('/')
