@@ -41,10 +41,12 @@ def product_categories(request, category):
     
     selected_brand = request.POST.getlist('brand-selections')
     selected_color = request.POST.getlist('color-selections')
-    print(selected_brand)
+    selected_range = request.POST.get('range-selections')
+
+    
     if request.method == 'GET' or (selected_brand == [] and selected_color == []):
         product_data = Product.objects.filter(category=category)
-    if request.method == 'POST':
+    elif request.method == 'POST':
         if selected_color == []:
             product_data = Product.objects.filter(Q(category=category) & Q(brand__in=selected_brand))
         elif selected_brand == []:
@@ -52,10 +54,13 @@ def product_categories(request, category):
         else:
             product_data = product_data = Product.objects.filter(category=category, brand__in=selected_brand, color__in=selected_color)
     
+    if selected_range != None:
+        product_data=product_data.filter(price__lte=selected_range)
+
     category_data = product_category.objects.all()
     brands = Brand.objects.all()
     colors = Color.objects.all()
-    p = Paginator(product_data, 2)
+    p = Paginator(product_data, 6)
     page_number = request.GET.get('page')
 
     try:
