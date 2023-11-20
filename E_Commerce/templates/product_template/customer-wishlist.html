@@ -50,19 +50,19 @@
               <div class="product"> 
                 <div class="flip-container">
                   <div class="flipper">
-                    <div class="front"><a href="detail.html"><img src="../{{item.product.image1}}" alt="" class="img-fluid"></a>
+                    <div class="front"><a href="/product/{{item.product.id}}"><img src="../{{item.product.image1}}" alt="" class="img-fluid"></a>
                     </div>
-                    <div class="back"><a href="detail.html"><img src="../{{item.product.image2}}" alt="" class="img-fluid"></a>
+                    <div class="back"><a href="/product/{{item.product.id}}"><img src="../{{item.product.image2}}" alt="" class="img-fluid"></a>
                     </div>
                   </div>
-                </div><a href="detail.html" class="invisible"><img src="../{{item.product.image1}}" alt="" class="img-fluid"></a>
+                </div><a href="/product/{{item.product.id}}" class="invisible"><img src="../{{item.product.image1}}" alt="" class="img-fluid"></a>
                 <div class="text">
-                  <h3><a href="detail.html">{{item.product.product_name}}</a></h3>
+                  <h3><a href="/product/{{item.product.id}}">{{item.product.product_name}}</a></h3>
                   <p class="price">
                     <del></del> &#x20B9; {{item.product.price}}
                   </p>
                   <p class="buttons"><a href="/product/{{item.product.id}}" class="btn btn-outline-secondary">View detail</a><a
-                        href="/cart/add/{{item.product.id}}/{{user}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a></p>
+                        href="/cart/add/{{item.product.id}}/{{user}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a><a href="/removeWishlist/{{user}}/{{item.id}}" class="btn btn-outline-secondary">Remove item</a></p>
                 </div>
                 <!-- /.text-->
               </div>

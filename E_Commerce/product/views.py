@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Product, Wishlist,product_category
+from .models import Product, Wishlist,product_category, Brand,Color,Mdl
 from account.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from django.contrib import messages
 import datetime
+from django.db.models import Q
 # Create your views here.
 
 def home(request):
@@ -37,9 +38,23 @@ def product_details(request, id):
     return render(request, 'product_template/detail.html', context)
 
 def product_categories(request, category):
-
-    product_data = Product.objects.filter(category=category)
+    
+    selected_brand = request.POST.getlist('brand-selections')
+    selected_color = request.POST.getlist('color-selections')
+    print(selected_brand)
+    if request.method == 'GET' or (selected_brand == [] and selected_color == []):
+        product_data = Product.objects.filter(category=category)
+    if request.method == 'POST':
+        if selected_color == []:
+            product_data = Product.objects.filter(Q(category=category) & Q(brand__in=selected_brand))
+        elif selected_brand == []:
+            product_data = Product.objects.filter(Q(category=category) & Q(color__in=selected_color))
+        else:
+            product_data = product_data = Product.objects.filter(category=category, brand__in=selected_brand, color__in=selected_color)
+    
     category_data = product_category.objects.all()
+    brands = Brand.objects.all()
+    colors = Color.objects.all()
     p = Paginator(product_data, 2)
     page_number = request.GET.get('page')
 
@@ -52,10 +67,13 @@ def product_categories(request, category):
 
     context = {
         'product_data' : page_obj,
-        'category_data' : category_data
+        'category' : category_data,
+        'brands' : brands,
+        'colors' : colors
     }
     
     return render(request, 'product_template/category.html', context)
+
 
 
 @login_required(login_url='/register')
@@ -75,6 +93,10 @@ def addWishlist(request, uname, id):
         messages.error(request, "Item is already available in wishlist")
     else:
         Wishlist.objects.create(user=request.user, product=Product.objects.get(id=id), date=datetime.datetime.now)
+    return redirect(f"/wishlist/{request.user}")
+
+def removeWishlist(request, uname, id):
+    Wishlist.objects.get(id=id).delete()
     return redirect(f"/wishlist/{request.user}")
 
 

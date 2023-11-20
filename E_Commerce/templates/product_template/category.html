@@ -27,8 +27,8 @@
                   <ul class="nav nav-pills flex-column category-menu">
                     <li><a href="category.html" class="nav-link">Men <span class="badge badge-secondary">42</span></a>
                       <ul class="list-unstyled">
-                        {% for data in category_data %}
-                        <li><a href="category.html" class="nav-link"> {{ data.category }}</a></li>
+                        {% for data in category %}
+                        <li><a href="/product_category/{{ data.id }}" class="nav-link"> {{ data.category }}</a></li>
                         {% endfor %}
                       </ul>
                     </li>
@@ -40,72 +40,55 @@
                   <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form method="post" action="">
+                    {% csrf_token %}
                     <div class="form-group">
+                      {% for brand in brands %}
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox"> Armani  (10)
+                          <input type="checkbox" name="brand-selections" value= '{{brand.brand_name}}'> {{ brand.brand_name }}
                         </label>
                       </div>
+                      {% endfor %}
+                    </div>
+                </div>
+                <div class="card-header">
+                  <h3 class="h4 card-title">Colours</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                      {% for color in colors %}
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox"> Versace  (12)
+                          <input type="checkbox" name="color-selections" value="{{color.color_name}}"> {{ color.color_name }}
                         </label>
                       </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> Carlo Bruni  (15)
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"> Jack Honey  (14)
-                        </label>
-                      </div>
+                      {% endfor %}
                     </div>
                     <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
                   </form>
                 </div>
-              </div>
-              <div class="card sidebar-menu mb-4">
+              </div> 
+              <!-- <div class="card sidebar-menu mb-4">
                 <div class="card-header">
                   <h3 class="h4 card-title">Colours <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
                 </div>
                 <div class="card-body">
-                  <form>
+                  <form method="post" action="">
                     <div class="form-group">
+                      {% for color in colors %}
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox"><span class="colour white"></span> White (14)
+                          <input type="checkbox" name="color-selections"> {{ color.color_name }}
                         </label>
                       </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"><span class="colour blue"></span> Blue (10)
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"><span class="colour green"></span>  Green (20)
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"><span class="colour yellow"></span>  Yellow (13)
-                        </label>
-                      </div>
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox"><span class="colour red"></span>  Red (10)
-                        </label>
-                      </div>
+                      {% endfor %}
                     </div>
                     <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
                   </form>
                 </div>
-              </div>
+              </div> -->
               <!-- *** MENUS AND FILTERS END ***-->
-              <div class="banner"><a href="#"><img src="img/banner.jpg" alt="sales 2014" class="img-fluid"></a></div>
             </div>
             <div class="col-lg-9">
               <div class="box">
@@ -135,10 +118,10 @@
                   <div class="product">
                     <div class="flip-container">
                       <div class="flipper">
-                        <div class="front"><a href="/product/{{data.id}}"><img src="../{{data.image1}}" alt="" class="img-fluid"></a></div>
-                        <div class="back"><a href="/product/{{data.id}}"><img src="../{{data.image2}}" alt="" class="img-fluid"></a></div>
+                        <div class="front"><a href="/product/{{data.id}}"><img src="../{{data.image1}}" alt="" class="img-fluid" style="height: 330px;"></a></div>
+                        <div class="back"><a href="/product/{{data.id}}"><img src="../{{data.image2}}" alt="" class="img-fluid" style="height: 330px;"></a></div>
                       </div>
-                    </div><a href="/product/{{data.id}}" class="invisible"><img src="../{{data.image1}}" alt="" class="img-fluid"></a>
+                    </div><a href="/product/{{data.id}}" class="invisible"><img src="../{{data.image1}}" alt="" class="img-fluid" style="height: 330px;"></a>
                     <div class="text">
                       <h3><a href="/product/{{data.id}}">{{ data.product_name }}</a></h3>
                       <p class="price"> 

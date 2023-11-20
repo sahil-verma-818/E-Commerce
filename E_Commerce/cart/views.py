@@ -11,28 +11,27 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/register')
 def cartlist(request,id):
-    if request.user.user_type == 'customer':
-        if request.method == 'GET':
-            total = 0
-            data = CartItems.objects.filter(user=User.objects.get(username=id))
-            for x in data:
-                total += x.product.price * x.quantity
-            context = {
-                'data' : data,
-                'total' : total
-            }
+    
+    if request.method == 'GET':
+        total = 0
+        data = CartItems.objects.filter(user=User.objects.get(username=id))
+        for x in data:
+            total += x.product.price * x.quantity
+        context = {
+            'data' : data,
+            'total' : total
+        }
 
-            return render(request, 'cart_template/basket.html', context)
+        return render(request, 'cart_template/basket.html', context)
 
-        if request.method == 'POST':
-            data = CartItems.objects.filter(user=User.objects.get(username=id))
+    if request.method == 'POST':
+        data = CartItems.objects.filter(user=User.objects.get(username=id))
 
-            for x in data:
-                x.quantity = request.POST.get(f"{x.id}")
-                x.save()
-                print("ram")
+        for x in data:
+            x.quantity = request.POST.get(f"{x.id}")
+            x.save()
 
-            return redirect(f"/cart/{request.user}")
+        return redirect(f"/cart/{request.user}")
             
 
         
@@ -42,14 +41,13 @@ def cartlist(request,id):
 
 @login_required(login_url='/register')
 def add_cart(request,uname, id):
-    if request.user.user_type == 'customer':
-        item = CartItems.objects.filter(user=User.objects.get(id=request.user.id)).filter(product=Product.objects.get(id=id))
-        if item:
-            item[0].quantity += 1
-            item[0].save()
-        else:
-            CartItems.objects.create(user=request.user, product=Product.objects.get(id=id), quantity=1)
-        return redirect(f"/cart/{request.user}")
+    item = CartItems.objects.filter(user=User.objects.get(id=request.user.id)).filter(product=Product.objects.get(id=id))
+    if item:
+        item[0].quantity += 1
+        item[0].save()
+    else:
+        CartItems.objects.create(user=request.user, product=Product.objects.get(id=id), quantity=1)
+    return redirect(f"/cart/{request.user}")
 
 
 
