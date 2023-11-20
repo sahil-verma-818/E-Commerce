@@ -18,12 +18,14 @@ def register(request):
         lastname = request.POST.get('lastname', " ")
         email = request.POST.get('email')
         password = request.POST.get('password')
+        user_type = request.POST.get('user-type')
+        print(user_type)
 
         if User.objects.filter(email=email).exists():
             messages.error(request, "An Existing user already available with this gmail. Try another one.")
         else:
             username = email.split('@')[0]
-            User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password)
+            User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
             messages.success(request, f"User Successfully Created with username : {username}")
     return render(request, 'users_template/register.html')
 
@@ -38,7 +40,10 @@ def login_user(request):
 
         if user is not None:
             login(request, user=user)
-            return redirect('/')
+            if user.user_type == 'seller':
+                return redirect(f"/add-product/{user}")
+            elif user.user_type == 'customer':
+                return redirect('/')
         else:
             messages.error(request, "Data insufficient or Credentitials not matched")
             return redirect('/register')

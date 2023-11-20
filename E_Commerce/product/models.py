@@ -9,11 +9,30 @@ class product_category(models.Model):
 
     def __str__(self) -> str:
         return self.category
+    
+
+
+class Brand(models.Model):
+    brand_name = models.CharField(max_length=255, primary_key=True)
+
+
+
+class Color(models.Model):
+    color_name = models.CharField(max_length=255, primary_key=True)
+
+
+
+class Models(models.Model):
+    model = models.CharField(max_length=255)
+
+
 
 class Product(models.Model):
     product_name = models.CharField(max_length=100)
     product_desc = models.TextField()
     category = models.ForeignKey(product_category, on_delete=models.SET_NULL, null=True)
+    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True)
+    color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     stock_quantity = models.PositiveIntegerField()
@@ -25,6 +44,8 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return self.product_name
+    
+
 
 class Wishlist(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

@@ -78,7 +78,7 @@ def addWishlist(request, uname, id):
     return redirect(f"/wishlist/{request.user}")
 
 
-def addProduct(request):
+def addProduct(request, id):
 
     if request.method == 'POST':
         product_name = request.POST.get('product_name')

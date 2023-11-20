@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser,UserManager
 user_choices = (
     ('seller', 'seller'),
     ('admin', 'admin'),
-    ('user', 'user'),
+    ('customer', 'customer'),
 )
 
 address_choice = (
