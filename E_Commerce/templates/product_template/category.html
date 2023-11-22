@@ -25,7 +25,7 @@
                 </div>
                 <div class="card-body">
                   <ul class="nav nav-pills flex-column category-menu">
-                    <li><a href="category.html" class="nav-link">Men <span class="badge badge-secondary">42</span></a>
+                    <li><a href="category.html" class="nav-link"><span class="badge badge-secondary"></span></a>
                       <ul class="list-unstyled">
                         {% for data in category %}
                         <li><a href="/product_category/{{ data.id }}" class="nav-link"> {{ data.category }}</a></li>
@@ -40,13 +40,12 @@
                   <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
                 </div>
                 <div class="card-body">
-                  <form method="post" action="">
-                    {% csrf_token %}
+                  <form method="get" action="">
                     <div class="form-group">
                       {% for brand in brands %}
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" name="brand-selections" value= '{{brand.brand_name}}'> {{ brand.brand_name }}
+                          <input type="checkbox" name="brandSelections" value= '{{brand.id}}'> {{ brand.brand_name }}
                         </label>
                       </div>
                       {% endfor %}
@@ -60,7 +59,7 @@
                       {% for color in colors %}
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" name="color-selections" value="{{color.color_name}}"> {{ color.color_name }}
+                          <input type="checkbox" name="colorSelections" value="{{color.color_name}}"> {{ color.color_name }}
                         </label>
                       </div>
                       {% endfor %}
@@ -74,17 +73,17 @@
                     <div class="form-group">
                       <div class="radio">
                         <label>
-                          <input type="radio" name="range-selections" value='500'> Under 500 </input>
+                          <input type="radio" name="rangeSelections" value='500'> Under 500 </input>
                         </label>
                       </div>
                       <div class="radio">
                         <label>
-                          <input type="radio" name="range-selections" value='1000'> Under 1000 </input>
+                          <input type="radio" name="rangeSelections" value='1000'> Under 1000 </input>
                         </label>
                       </div>
                       <div class="radio">
                         <label>
-                          <input type="radio" name="range-selections" value='2000'> Under 2000 </input>
+                          <input type="radio" name="rangeSelections" value='2000'> Under 2000 </input>
                         </label>
                       </div>
                     </div>
@@ -97,7 +96,6 @@
             <div class="col-lg-9">
               <div class="box">
                 <h1>{{product_data.object_list | first}}</h1>
-                <p> These are the items in category of {{category_data | first}} </p>
               </div>
               <div class="box info-bar">
                 <div class="row">
@@ -145,17 +143,17 @@
                 <nav aria-label="Page navigation example" class="d-flex justify-content-center">
                   <ul class="pagination">
                     {% if product_data.has_previous %}
-                    <li class="page-item"><a href="?page={{product_data.previous_page_number}}" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
+                    <li class="page-item"><a href="?{{url}}&page={{product_data.previous_page_number}}" aria-label="Previous" class="page-link"><span aria-hidden="true">«</span><span class="sr-only">Previous</span></a></li>
                     {% endif %}
                     {% for x in product_data.paginator.page_range %}
                       {% if x == product_data.number %}
-                      <li class="page-item active"><a href="?page={{x}}" class="page-link"> {{x}} </a></li>
+                      <li class="page-item active"><a href="?brandSelections={{brandSelections}}&page={{x}}" class="page-link"> {{x}} </a></li>
                       {% else %}
-                      <li class="page-item"><a href="?page={{x}}" class="page-link"> {{x}} </a></li>
+                      <li class="page-item"><a href="?{{url}}&page={{x}}" class="page-link"> {{x}} </a></li>
                       {% endif %}
                     {% endfor %}
                     {% if product_data.has_next %}
-                    <li class="page-item"><a href="?page={{product_data.next_page_number}}" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
+                    <li class="page-item"><a href="?{{url}}&page={{product_data.next_page_number}}" aria-label="Next" class="page-link"><span aria-hidden="true">»</span><span class="sr-only">Next</span></a></li>
                     {% endif %}
                   </ul>
                 </nav>

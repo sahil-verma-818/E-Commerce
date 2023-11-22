@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product, Wishlist,product_category, Brand,Color,Mdl
+from .models import Product, Wishlist,product_category,Color,Mdl, Brand
 from account.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
@@ -39,28 +39,29 @@ def product_details(request, id):
 
 def product_categories(request, category):
     
-    selected_brand = request.POST.getlist('brand-selections')
-    selected_color = request.POST.getlist('color-selections')
-    selected_range = request.POST.get('range-selections')
 
-    
-    if request.method == 'GET' or (selected_brand == [] and selected_color == []):
-        product_data = Product.objects.filter(category=category)
-    elif request.method == 'POST':
+
+    selected_brand = request.GET.getlist('brandSelections')
+    selected_color = request.GET.getlist('colorSelections')
+    selected_range = request.GET.get('rangeSelections')
+
+    if selected_brand != [] or selected_color != []:
         if selected_color == []:
             product_data = Product.objects.filter(Q(category=category) & Q(brand__in=selected_brand))
         elif selected_brand == []:
             product_data = Product.objects.filter(Q(category=category) & Q(color__in=selected_color))
         else:
             product_data = product_data = Product.objects.filter(category=category, brand__in=selected_brand, color__in=selected_color)
-    
-    if selected_range != None:
+    else:
+        product_data = Product.objects.filter(category=category)
+
+    if selected_range:
         product_data=product_data.filter(price__lte=selected_range)
 
     category_data = product_category.objects.all()
-    brands = Brand.objects.all()
+    brands = Brand.objects.filter(category=category)
     colors = Color.objects.all()
-    p = Paginator(product_data, 6)
+    p = Paginator(product_data, 1)
     page_number = request.GET.get('page')
 
     try:
@@ -70,11 +71,37 @@ def product_categories(request, category):
     except EmptyPage:
         page_obj = p.page(p.num_pages)
 
+    url = ''
+    if selected_brand:
+        for x in range(len(selected_brand)):
+            if x==0:
+                url += f"brandSelections={selected_brand[x]}"
+            else:
+                url += f"&brandSelections={selected_brand[x]}"
+
+    if selected_color:
+        for x in range(len(selected_color)):
+            if not selected_brand:
+                url += f"brandSelections={selected_brand[x]}"
+            else:
+                url += f"&brandSelections={selected_brand[x]}"
+    if selected_range:
+        if selected_range or selected_color:
+            url += f"&rangeSelections={selected_range}"
+        else:
+            url += f"rangeSelections={selected_range}"
+
+            
+
+                
+
+
     context = {
         'product_data' : page_obj,
         'category' : category_data,
         'brands' : brands,
-        'colors' : colors
+        'colors' : colors,
+        'url' : url
     }
     
     return render(request, 'product_template/category.html', context)
@@ -84,8 +111,10 @@ def product_categories(request, category):
 @login_required(login_url='/register')
 def wishlist(request,id):
     data = Wishlist.objects.filter(user=User.objects.get(username=id))
+    category_data = product_category.objects.all()
     context = {
-        'data':data
+        'data':data,
+        'category' : category_data
     }
     return render(request, 'product_template/customer-wishlist.html', context)
 
@@ -118,12 +147,6 @@ def addProduct(request, id):
         image3 = request.FILES.get('image3')
         image4 = request.FILES.get('image4')
         image5 = request.FILES.get('image5')
-
-        # print(image1)
-        # print(image2)
-        # print(image3)
-        # print(image4)
-        # print(image5)
 
         a, status = product_category.objects.get_or_create(category=product_cat)
         Product.objects.create(product_name=product_name, product_desc=product_desc, category=a,price=product_price,user=User.objects.get(id=request.user.id), stock_quantity=product_stock, image1=image1, image2=image2, image3=image3)

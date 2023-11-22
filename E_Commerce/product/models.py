@@ -13,11 +13,11 @@ class product_category(models.Model):
 
 
 class Brand(models.Model):
-    brand_name = models.CharField(max_length=255, primary_key=True)
+    brand_name = models.CharField(max_length=255)
+    category = models.ForeignKey(product_category, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self) -> str:
         return self.brand_name
-
 
 
 class Color(models.Model):
@@ -31,13 +31,16 @@ class Color(models.Model):
 class Mdl(models.Model):
     mdl = models.CharField(max_length=255)
 
+    def __str__(self) -> str:
+        return self.mdl
+
 
 
 class Product(models.Model):
     product_name = models.CharField(max_length=100)
     product_desc = models.TextField()
     category = models.ForeignKey(product_category, on_delete=models.SET_NULL, null=True)
-    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True)
+    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True) 
     color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
     mdl = models.ForeignKey(Mdl, on_delete=models.CASCADE, null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)

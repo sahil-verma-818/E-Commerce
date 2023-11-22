@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from product.models import Product
+from product.models import Product, product_category
 from .models import User,Address
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -12,6 +12,7 @@ from django.db.models import Q
 
 
 def register(request):
+    category_data = product_category.objects.all()
 
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
@@ -27,7 +28,7 @@ def register(request):
             username = email.split('@')[0]
             User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
             messages.success(request, f"User Successfully Created with username : {username}")
-    return render(request, 'users_template/register.html')
+    return render(request, 'users_template/register.html', {'category': category_data})
 
 
 
@@ -54,12 +55,12 @@ def login_user(request):
 
 @login_required(login_url='/register')
 def account(request, id):
+    category_data = product_category.objects.all()
     if request.method == 'GET':
         print(request.user.id)
         try:
             data1 = User.objects.get(id=request.user.id)
             data2 = Address.objects.get(Q(user=request.user) & Q(primary=True))
-            print(data1.first_name)
         except User.DoesNotExist:
             data1 = None
         except Address.DoesNotExist:
@@ -67,7 +68,8 @@ def account(request, id):
 
         context = {
             'data1' : data1,
-            'data2' : data2
+            'data2' : data2,
+            'category' : category_data
         }
 
         return render(request, 'users_template/customer-account.html', context)
@@ -97,7 +99,7 @@ def account(request, id):
             Address.objects.filter(user=request.user).update(**updated_address)
         User.objects.filter(id = request.user.id).update(**updated_user)
 
-        return render(request, 'users_template/customer-account.html')
+        return render(request, 'users_template/customer-account.html', {'category' : category_data})
     
 
 
