@@ -148,7 +148,8 @@ AUTHENTICATION_BACKENDS = [
     # Other authentication backends, if needed
 ]
 
-LOGIN_URL = 'login'  # Replace 'login' with the actual URL name of your login view.
+
+LOGIN_URL = '/register'  # Replace 'login' with the actual URL name of your login view.
 LOGIN_REDIRECT_URL = 'home'  # Replace 'home' with your desired redirect URL.
 
 

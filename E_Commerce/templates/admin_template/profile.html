@@ -1,0 +1,106 @@
+{% extends './adminBase.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Blank Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h3 class="mb-4">Welcome @{{user}}</h3>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
+        <div class="bg-secondary rounded h-100 p-4">
+            <form action="" method="post">
+                {% csrf_token %}
+            <h3 class="mb-4">Personal Information</h3>
+            <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, qui!</p>
+            <div class="row">
+                <div class="form-floating mb-3 col-md-6">
+                    <input type="text" class="form-control" name="first_name" id="firstname" placeholder="firstname" value="{{data1.first_name}}">
+                    <label for="firstname" class="mx-2">First Name</label>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input type="text" class="form-control" id="lastname" name="last_name" placeholder="lastname" value="{{data1.last_name}}">
+                    <label for="lastname" class="mx-2">Last Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating mb-3 col-md-6">
+                    <input type="text" class="form-control" name="house" id="house" placeholder="House no." value="{{data2.house}}">
+                    <label for="house" class="mx-2">House No.</label>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input type="text" class="form-control" name="area" id="area" placeholder="Area" value="{{data2.area}}">
+                    <label for="area" class="mx-2">Area</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating mb-3 col-md-3">
+                    <input type="text" class="form-control" name="landmark" id="landmark" value="{{data2.landmark}}" placeholder="Landmark">
+                    <label for="landmark" class="mx-2">Landmark</label>
+                </div>
+                <div class="form-floating mb-3 col-md-3">
+                    <input type="number" class="form-control" name="zip" id="zip" value="{{data2.zip}}" placeholder="Zip Code">
+                    <label for="zip" class="mx-2">Zip Code</label>
+                </div>
+                <div class="form-floating mb-3 col-md-3">
+                    <input type="text" class="form-control" name="state" id="state" value="{{data2.state}}" placeholder="State">
+                    <label for="state" class="mx-2">State</label>
+                </div>
+                <div class="form-floating mb-3 col-md-3">
+                    <input type="text" class="form-control" name="city" id="city" value="{{data2.city}}" placeholder="City">
+                    <label for="city" class="mx-2">City</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating mb-3 col-md-6">
+                    <input type="text" class="form-control" name="mobile" id="mobile" value="{{data1.mobile}}" placeholder="Mobile">
+                    <label for="mobile" class="mx-2">Mobile</label>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input type="text" class="form-control" name="email" id="email" value="{{data1.email}}" placeholder="Email">
+                    <label for="email" class="mx-2">Email</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Record</button>
+        </div>
+    </div>
+</div>
+
+<!-- Update Password Block -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
+        <div class="bg-secondary rounded h-100 p-4">
+            <form action="" method="">
+            <h3 class="mb-4">Personal Information</h3>
+            <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, qui!</p>
+            <div class="row">
+                <div class="form-floating mb-3 col-md-6">
+                    <input type="text" class="form-control" id="old_password" placeholder="Old Password">
+                    <label for="old_password" class="mx-2">Old Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-floating mb-3 col-md-6">
+                    <input type="text" class="form-control" name="new_password" id="new_password" placeholder="New Password">
+                    <label for="new_password" class="mx-2">New Password</label>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input type="text" class="form-control" name="cnf_password" id="cnf_password" placeholder="Confirm Password">
+                    <label for="cnf_password" class="mx-2">Confirm Password</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Password</button>
+        </div>
+    </div>
+</div>
+<!-- Blank End -->
+{% endblock %}
+
+            

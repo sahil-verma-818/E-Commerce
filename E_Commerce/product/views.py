@@ -6,14 +6,26 @@ from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from django.contrib import messages
 import datetime
 from django.db.models import Q
+
 # Create your views here.
+
 
 def home(request):
     category = product_category.objects.all()
     if request.method == 'GET':
         search_input = request.GET.get('search-input')
         if search_input:
-            data = Product.objects.filter(product_name__icontains=search_input)
+            product_data = Product.objects.filter(product_name__icontains=search_input)
+            p = Paginator(product_data, 1)
+            page_number = request.GET.get('page')
+
+            try:
+                page_obj = p.get_page(page_number)
+            except PageNotAnInteger:
+                page_obj = p.page(1)
+            except EmptyPage:
+                page_obj = p.page(p.num_pages)
+            return render(request, 'product_template/category.html', {'product_data' : page_obj,})
         else:
             data = Product.objects.all()
 
@@ -39,8 +51,6 @@ def product_details(request, id):
 
 def product_categories(request, category):
     
-
-
     selected_brand = request.GET.getlist('brandSelections')
     selected_color = request.GET.getlist('colorSelections')
     selected_range = request.GET.get('rangeSelections')
@@ -58,9 +68,6 @@ def product_categories(request, category):
     if selected_range:
         product_data=product_data.filter(price__lte=selected_range)
 
-    category_data = product_category.objects.all()
-    brands = Brand.objects.filter(category=category)
-    colors = Color.objects.all()
     p = Paginator(product_data, 1)
     page_number = request.GET.get('page')
 
@@ -82,25 +89,20 @@ def product_categories(request, category):
     if selected_color:
         for x in range(len(selected_color)):
             if not selected_brand:
-                url += f"brandSelections={selected_brand[x]}"
+                url += f"colorSelections={selected_color[x]}"
             else:
-                url += f"&brandSelections={selected_brand[x]}"
+                url += f"&bcolorSelections={selected_color[x]}"
     if selected_range:
         if selected_range or selected_color:
             url += f"&rangeSelections={selected_range}"
         else:
             url += f"rangeSelections={selected_range}"
 
-            
-
-                
-
-
     context = {
         'product_data' : page_obj,
-        'category' : category_data,
-        'brands' : brands,
-        'colors' : colors,
+        'category' : product_category.objects.all(),
+        'brands' : Brand.objects.filter(category=category),
+        'colors' : Color.objects.all(),
         'url' : url
     }
     
@@ -151,3 +153,9 @@ def addProduct(request, id):
         a, status = product_category.objects.get_or_create(category=product_cat)
         Product.objects.create(product_name=product_name, product_desc=product_desc, category=a,price=product_price,user=User.objects.get(id=request.user.id), stock_quantity=product_stock, image1=image1, image2=image2, image3=image3)
     return render(request, 'product_template/add-product.html')
+
+def sellerInventory(request):
+
+    product_data = Product.objects.filter(user=request.user)
+
+    return render(request, 'admin_template/inventory.html',{'product_data' : product_data})

@@ -1,0 +1,27 @@
+{% extends './adminBase.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<!-- Blank Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row bg-secondary rounded mx-0">
+        {% for data in product_data %}
+        <div class="col-sm-12 col-xl-3 mt-4">
+            <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                <img src="{{ data.image1 }}" class="card-img-top" style="width: 330px; height: 330px;" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title" style="display: block; width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{ data.product_name }}</h5>
+                  <p> {{ data.price }}</p>
+                  <p class="card-text" style="display: block; width: 270px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{data.product_desc}}</p>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!-- Blank End -->
+
+{% endblock %}

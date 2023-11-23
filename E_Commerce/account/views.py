@@ -5,11 +5,15 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
+from django.conf import settings
 
 
 
 # Create your views here.
 
+'''
+    Code to register user (Whether Customer or Seller).
+'''
 
 def register(request):
     category_data = product_category.objects.all()
@@ -20,17 +24,19 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         user_type = request.POST.get('user-type')
-        print(user_type)
 
+        # Checking if User with perticular email exists or not
         if User.objects.filter(email=email).exists():
             messages.error(request, "An Existing user already available with this gmail. Try another one.")
         else:
             username = email.split('@')[0]
             User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
             messages.success(request, f"User Successfully Created with username : {username}")
+            if user_type == 'seller':
+                return render(request, 'admin_template/signup.html')
     return render(request, 'users_template/register.html', {'category': category_data})
 
-
+''' Code to login User '''
 
 def login_user(request):
     if request.method == 'POST':
@@ -42,22 +48,18 @@ def login_user(request):
         if user is not None:
             login(request, user=user)
             if user.user_type == 'seller':
-                return redirect(f"/add-product/{user}")
+                return redirect(f"/admin-panel/dashboard")
             elif user.user_type == 'customer':
                 return redirect('/')
         else:
             messages.error(request, "Data insufficient or Credentitials not matched")
-            return redirect('/register')
-
-    # return render(request, 'users_template/register.html')    
+            return redirect('/register')    
     
 
 
 @login_required(login_url='/register')
 def account(request, id):
-    category_data = product_category.objects.all()
     if request.method == 'GET':
-        print(request.user.id)
         try:
             data1 = User.objects.get(id=request.user.id)
             data2 = Address.objects.get(Q(user=request.user) & Q(primary=True))
@@ -69,10 +71,14 @@ def account(request, id):
         context = {
             'data1' : data1,
             'data2' : data2,
-            'category' : category_data
         }
 
-        return render(request, 'users_template/customer-account.html', context)
+        if request.user.user_type == 'seller':
+            return render(request, 'admin_template/profile.html', context)
+        elif request.user.user_type == 'customer':
+            context['category'] = product_category.objects.all()
+            return render(request, 'users_template/customer-account.html', context)
+            
     
     if request.method == 'POST':
             
@@ -98,8 +104,10 @@ def account(request, id):
         else:
             Address.objects.filter(user=request.user).update(**updated_address)
         User.objects.filter(id = request.user.id).update(**updated_user)
-
-        return render(request, 'users_template/customer-account.html', {'category' : category_data})
+        if request.user.user_type == 'seller':
+            return redirect(f"/adminProfile/{request.user}")
+        elif request.user.user_type == 'customer':
+            return redirect(f"/account/{request.user}")
     
 
 
@@ -124,6 +132,23 @@ def update_password(request, id):
 
 @login_required(login_url='/register')
 def logout_user(request, id):
-    logout(request)
-    return redirect('/')
+    if request.user.user_type == 'seller':
+        logout(request)
+        return redirect('/adminlogin')
+    else:
+        logout(request)
+        return redirect('/')
+
+@login_required(login_url='/adminlogin')
+def adminHome(request):
+
+    return render(request, 'admin_template/index.html')
+
+def adminLogin(request):
+    
+    return render(request, 'admin_template/signin.html')
+
+def adminRegister(request):
+    
+    return render(request, 'admin_template/signup.html')    
     

@@ -23,7 +23,8 @@ def cartlist(request,id):
         }
 
         return render(request, 'cart_template/basket.html', context)
-
+    
+    # Implementation of update cart functionality.
     if request.method == 'POST':
         data = CartItems.objects.filter(user=User.objects.get(username=id))
 

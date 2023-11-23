@@ -14,3 +14,24 @@
 ---------------------
 
 - Roboto https://fonts.google.com/specimen/Roboto
+
+
+<!-- <div class="col-lg-4 col-md-6" style="border: 2px solid red;">
+            <div class="product">
+              <div class="flip-container">
+                <div class="flipper">
+                  <div class="front"><a href="#"><img src="../{{data.image1}}" alt="" class="img-fluid" style="height: 330px;"></a></div>
+                  <div class="back"><a href="#"><img src="../{{data.image2}}" alt="" class="img-fluid" style="height: 330px;"></a></div>
+                </div>
+              </div><a href="/product/{{data.id}}" class="invisible"><img src="../{{data.image1}}" alt="" class="img-fluid" style="height: 330px;"></a>
+              <div class="text">
+                <h3><a href="/product/{{data.id}}">{{ data.product_name }}</a></h3>
+                <p class="price"> 
+                  <del></del> {{data.price}}
+                </p>
+                <p class="buttons"><a href="/product/{{data.id}}" class="btn btn-outline-secondary">View detail</a><a href="/cart/add/{{data.id}}/{{user}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a></p>
+              </div>
+              <!-- /.text-->
+            </div>
+            <!-- /.product            -->
+          </div> -->
