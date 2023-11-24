@@ -1,0 +1,91 @@
+{% extends './adminBase.html' %}
+
+
+{% block content %}
+<!-- Title block start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h3 class="mb-4">Welcome @{{user}}</h3>
+            <h6> Expand your inventory details here </h6>
+        </div>
+    </div>
+</div>
+<!-- Title block End -->
+
+<!-- Product details start -->
+<form enctype="multipart/form-data" action="" method="post">
+    {% csrf_token %}
+    <div class="container-fluid pt-4 px-4">
+        <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h3 class="mb-4">Product Information</h3>
+                <h6 class="mb-4"> Try to provide complete & true description for product. </h6>
+                <div class="row">
+                    <div class="form-floating mb-3 col-md-6">
+                        <input type="text" class="form-control" name="product_name" id="product_name"
+                            placeholder="product_name" value="{{product_data.product_name}}">
+                        <label for="product_name" class="mx-2">Product Name</label>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input type="text" class="form-control" name="product_category" id="product_category"
+                            placeholder="product_category" value="{{product_data.product_category}}">
+                        <label for="product_category" class="mx-2">Product Category</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-floating mb-3 col-md-12">
+                        <textarea class="form-control" name="product_desc" cols="30" style="height: fit-content;" rows="10" id="product_desc" placeholder="product_desc">{{product_data.product_desc}}</textarea>
+                        <label for="product_desc" class="mx-2">Product Description</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-floating mb-3 col-md-6">
+                        <input type="number" class="form-control" name="product_price" id="product_price"
+                            placeholder="product_price" value="{{product_data.price}}">
+                        <label for="product_price" class="mx-2">Product Price</label>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input type="number" class="form-control" name="product_stock" id="product_stock"
+                            placeholder="product_stock" value="{{product_data.stock_quantity}}">
+                        <label for="product_stock" class="mx-2">Stock in hand</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Product Details End -->
+
+    <!-- Product Visualisation Start -->
+    <div class="container-fluid pt-4 px-4">
+        <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
+            <div class="bg-secondary rounded h-100 p-4">
+                <h3 class="mb-4">Product Images</h3>
+                <h6> Visualisation of your product </h6>
+                <div class="mb-3">
+                    <label for="image1" class="form-label">Image1</label>
+                    <input class="form-control bg-dark" type="file" id="image1">
+                </div>
+                <div class="mb-3">
+                    <label for="image2" class="form-label">Image2</label>
+                    <input class="form-control bg-dark" type="file" id="image2">
+                </div>
+                <div class="mb-3">
+                    <label for="image3" class="form-label">Image3</label>
+                    <input class="form-control bg-dark" type="file" id="image3">
+                </div>
+                <div class="mb-3">
+                    <label for="image4" class="form-label">Image4</label>
+                    <input class="form-control bg-dark" type="file" id="image4">
+                </div>
+                <div class="mb-3">
+                    <label for="image5" class="form-label">Image5</label>
+                    <input class="form-control bg-dark" type="file" id="image5">
+                </div>
+                <button class="btn btn-primary">Update record</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- Product Visualisation End -->
+{% endblock %}

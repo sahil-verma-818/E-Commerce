@@ -16,7 +16,7 @@
 - Roboto https://fonts.google.com/specimen/Roboto
 
 
-<!-- <div class="col-lg-4 col-md-6" style="border: 2px solid red;">
+<div class="col-lg-4 col-md-6" style="border: 2px solid red;">
             <div class="product">
               <div class="flip-container">
                 <div class="flipper">
@@ -34,4 +34,4 @@
               <!-- /.text-->
             </div>
             <!-- /.product            -->
-          </div> -->
+          </div>

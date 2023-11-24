@@ -88,7 +88,7 @@ def product_categories(request, category):
 
     if selected_color:
         for x in range(len(selected_color)):
-            if not selected_brand:
+            if not selected_brand and x==0:
                 url += f"colorSelections={selected_color[x]}"
             else:
                 url += f"&bcolorSelections={selected_color[x]}"
@@ -136,7 +136,14 @@ def removeWishlist(request, uname, id):
     return redirect(f"/wishlist/{request.user}")
 
 
-def addProduct(request, id):
+def addProduct(request, uname, id=None):
+
+    if request.method == 'GET':
+        if id==None:
+            return render(request, 'admin_template/addProduct.html')
+        else:
+            return render(request, 'admin_template/addProduct.html', {'product_data' : Product.objects.get(id=id)})
+
 
     if request.method == 'POST':
         product_name = request.POST.get('product_name')
@@ -144,6 +151,9 @@ def addProduct(request, id):
         product_desc = request.POST.get('product_desc')
         product_price = request.POST.get('product_price')
         product_stock = request.POST.get('product_stock')
+        brand = request.POST.get('product_brand')
+        color = request.POST.get('product_color')
+        mdl = request.POST.get('product_mdl')
         image1 = request.FILES.get('image1')
         image2 = request.FILES.get('image2')
         image3 = request.FILES.get('image3')
@@ -152,7 +162,7 @@ def addProduct(request, id):
 
         a, status = product_category.objects.get_or_create(category=product_cat)
         Product.objects.create(product_name=product_name, product_desc=product_desc, category=a,price=product_price,user=User.objects.get(id=request.user.id), stock_quantity=product_stock, image1=image1, image2=image2, image3=image3)
-    return render(request, 'product_template/add-product.html')
+        return render(request, 'admin_template/addProduct.html')
 
 def sellerInventory(request):
 
