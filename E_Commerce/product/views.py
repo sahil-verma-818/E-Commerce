@@ -87,32 +87,12 @@ def product_categories(request, category):
     except EmptyPage:
         page_obj = p.page(p.num_pages)
 
-    url = ''
-    if selected_brand:
-        for x in range(len(selected_brand)):
-            if x==0:
-                url += f"brandSelections={selected_brand[x]}"
-            else:
-                url += f"&brandSelections={selected_brand[x]}"
-
-    if selected_color:
-        for x in range(len(selected_color)):
-            if not selected_brand and x==0:
-                url += f"colorSelections={selected_color[x]}"
-            else:
-                url += f"&colorSelections={selected_color[x]}"
-    if selected_range:
-        if selected_range or selected_color:
-            url += f"&rangeSelections={selected_range}"
-        else:
-            url += f"rangeSelections={selected_range}"
 
     context = {
         'product_data' : page_obj,
         'category' : ProductCategory.objects.all(),
         'brands' : Brand.objects.filter(category=category),
-        'colors' : Color.objects.all(),
-        'url' : url
+        'colors' : Color.objects.all()
     }
     
     return render(request, 'product_template/category.html', context)
