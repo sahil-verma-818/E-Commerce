@@ -11,6 +11,8 @@ payment_choices = (
     ('upi', 'UPI'),
 )
 
+
+# Model to store order details
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     delivery_address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
@@ -23,7 +25,7 @@ class Order(models.Model):
     def __str__(self) -> str:
         return self.user.username
 
-
+# Model to store items of any perticular order
 class OrderItems(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

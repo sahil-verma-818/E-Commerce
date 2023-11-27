@@ -29,14 +29,33 @@
                     </div>
                     <div class="form-floating mb-3 col-md-6">
                         <input type="text" class="form-control" name="product_category" id="product_category"
-                            placeholder="product_category" value="{{product_data.product_category}}">
+                            placeholder="product_category" value="{{product_data.category}}">
                         <label for="product_category" class="mx-2">Product Category</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-floating mb-3 col-md-12">
-                        <textarea class="form-control" name="product_desc" cols="30" style="height: fit-content;" rows="10" id="product_desc" placeholder="product_desc">{{product_data.product_desc}}</textarea>
+                        <textarea class="form-control" name="product_desc" cols="30" style="height: fit-content;"
+                            rows="10" id="product_desc"
+                            placeholder="product_desc">{{product_data.product_desc}}</textarea>
                         <label for="product_desc" class="mx-2">Product Description</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-floating mb-3 col-md-4">
+                        <input type="text" class="form-control" name="product_brand" id="product_brand"
+                            placeholder="product_brand" value="{{product_data.brand}}">
+                        <label for="product_brand" class="mx-2">Product Brand</label>
+                    </div>
+                    <div class="form-floating mb-3 col-md-4">
+                        <input type="text" class="form-control" name="product_color" id="product_color"
+                            placeholder="product_color" value="{{product_data.color}}">
+                        <label for="product_color" class="mx-2">Product Color</label>
+                    </div>
+                    <div class="form-floating mb-3 col-md-4">
+                        <input type="text" class="form-control" name="product_mdl" id="product_mdl"
+                            placeholder="product_mdl" value="{{product_data.mdl}}">
+                        <label for="product_mdl" class="mx-2">Product Models</label>
                     </div>
                 </div>
                 <div class="row">
@@ -64,28 +83,45 @@
                 <h6> Visualisation of your product </h6>
                 <div class="mb-3">
                     <label for="image1" class="form-label">Image1</label>
-                    <input class="form-control bg-dark" type="file" id="image1">
+                    <input class="form-control bg-dark" name="image1" type="file" id="image1"
+                        value="{{product_data.image1}}">
                 </div>
                 <div class="mb-3">
                     <label for="image2" class="form-label">Image2</label>
-                    <input class="form-control bg-dark" type="file" id="image2">
+                    <input class="form-control bg-dark" type="file" name="image2" value="{{product_data.image2}}"
+                        id="image2">
                 </div>
                 <div class="mb-3">
                     <label for="image3" class="form-label">Image3</label>
-                    <input class="form-control bg-dark" type="file" id="image3">
+                    <input class="form-control bg-dark" type="file" name="image3" value="{{product_data.image3}}"
+                        id="image3">
                 </div>
                 <div class="mb-3">
                     <label for="image4" class="form-label">Image4</label>
-                    <input class="form-control bg-dark" type="file" id="image4">
+                    <input class="form-control bg-dark" type="file" name="image4" value="" id="image4">
                 </div>
                 <div class="mb-3">
                     <label for="image5" class="form-label">Image5</label>
-                    <input class="form-control bg-dark" type="file" id="image5">
+                    <input class="form-control bg-dark" type="file" name="image5" value="{{product_data.image5}}"
+                        id="image5">
                 </div>
-                <button class="btn btn-primary">Update record</button>
+
+                <button class="btn btn-primary">Update Record</button>
+                <a href="/delete-product/{{user}}/{{product_data.id}}"><button class="btn btn-primary">Delete
+                        record</button></a>
             </div>
         </div>
     </div>
 </form>
 <!-- Product Visualisation End -->
+
+
+<!-- <div class="container-fluid pt-4 px-4">
+    <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
+        <div class="bg-secondary rounded h-100 p-4">
+            <h3 class="mb-4">Welcome @{{user}}</h3>
+            <h6> Expand your inventory details here </h6>
+        </div>
+    </div>
+</div> -->
 {% endblock %}

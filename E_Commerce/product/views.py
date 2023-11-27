@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product, Wishlist,product_category,Color,Mdl, Brand
+from .models import Product, Wishlist,ProductCategory,Color,Mdl, Brand
 from account.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
@@ -9,13 +9,17 @@ from django.db.models import Q
 
 # Create your views here.
 
-
+''' Rendering home page data and implementing search functionality '''
 def home(request):
-    category = product_category.objects.all()
+    category = ProductCategory.objects.all()
     if request.method == 'GET':
+
+        # Implement search feature using product name
         search_input = request.GET.get('search-input')
         if search_input:
             product_data = Product.objects.filter(product_name__icontains=search_input)
+
+            # Implement pagination on searching
             p = Paginator(product_data, 1)
             page_number = request.GET.get('page')
 
@@ -36,10 +40,12 @@ def home(request):
     
     return render(request, 'product_template/index.html', context=context)
 
+
+''' Functionality to view complete details of any perticular product'''
 def product_details(request, id):
 
     data = Product.objects.get(id=id)
-    category = product_category.objects.all()
+    category = ProductCategory.objects.all()
     category_list = Product.objects.filter(category=data.category)[:3]
     context = {
         'data' : data,
@@ -49,12 +55,14 @@ def product_details(request, id):
     
     return render(request, 'product_template/detail.html', context)
 
+''' Category wise sorting and implementation of filters  '''
 def product_categories(request, category):
     
     selected_brand = request.GET.getlist('brandSelections')
     selected_color = request.GET.getlist('colorSelections')
     selected_range = request.GET.get('rangeSelections')
 
+    # Logic to filter the items
     if selected_brand != [] or selected_color != []:
         if selected_color == []:
             product_data = Product.objects.filter(Q(category=category) & Q(brand__in=selected_brand))
@@ -65,6 +73,7 @@ def product_categories(request, category):
     else:
         product_data = Product.objects.filter(category=category)
 
+    # Implementing price range of products
     if selected_range:
         product_data=product_data.filter(price__lte=selected_range)
 
@@ -91,7 +100,7 @@ def product_categories(request, category):
             if not selected_brand and x==0:
                 url += f"colorSelections={selected_color[x]}"
             else:
-                url += f"&bcolorSelections={selected_color[x]}"
+                url += f"&colorSelections={selected_color[x]}"
     if selected_range:
         if selected_range or selected_color:
             url += f"&rangeSelections={selected_range}"
@@ -100,7 +109,7 @@ def product_categories(request, category):
 
     context = {
         'product_data' : page_obj,
-        'category' : product_category.objects.all(),
+        'category' : ProductCategory.objects.all(),
         'brands' : Brand.objects.filter(category=category),
         'colors' : Color.objects.all(),
         'url' : url
@@ -110,17 +119,18 @@ def product_categories(request, category):
 
 
 
+''' Rendering wishlisted data '''
 @login_required(login_url='/register')
 def wishlist(request,id):
     data = Wishlist.objects.filter(user=User.objects.get(username=id))
-    category_data = product_category.objects.all()
+    category_data = ProductCategory.objects.all()
     context = {
         'data':data,
         'category' : category_data
     }
     return render(request, 'product_template/customer-wishlist.html', context)
 
-
+''' Functionality to add items to wishlist'''
 @login_required(login_url='/register')
 def addWishlist(request, uname, id):
     
@@ -131,6 +141,7 @@ def addWishlist(request, uname, id):
         Wishlist.objects.create(user=request.user, product=Product.objects.get(id=id), date=datetime.datetime.now)
     return redirect(f"/wishlist/{request.user}")
 
+''' Functionality to remove items from the wishlist '''
 def removeWishlist(request, uname, id):
     Wishlist.objects.get(id=id).delete()
     return redirect(f"/wishlist/{request.user}")
@@ -146,23 +157,44 @@ def addProduct(request, uname, id=None):
 
 
     if request.method == 'POST':
-        product_name = request.POST.get('product_name')
-        product_cat = request.POST.get('product_category')
-        product_desc = request.POST.get('product_desc')
-        product_price = request.POST.get('product_price')
-        product_stock = request.POST.get('product_stock')
-        brand = request.POST.get('product_brand')
-        color = request.POST.get('product_color')
-        mdl = request.POST.get('product_mdl')
-        image1 = request.FILES.get('image1')
-        image2 = request.FILES.get('image2')
-        image3 = request.FILES.get('image3')
-        image4 = request.FILES.get('image4')
-        image5 = request.FILES.get('image5')
 
-        a, status = product_category.objects.get_or_create(category=product_cat)
-        Product.objects.create(product_name=product_name, product_desc=product_desc, category=a,price=product_price,user=User.objects.get(id=request.user.id), stock_quantity=product_stock, image1=image1, image2=image2, image3=image3)
+        product_data={
+            'product_name' : request.POST.get('product_name'),
+            'product_desc' : request.POST.get('product_desc'),
+            'category' : request.POST.get('product_category'),
+            'brand' : request.POST.get('product_brand'),
+            'color' : request.POST.get('product_color'),
+            'mdl' : request.POST.get('product_mdl'),
+            'price' : request.POST.get('product_price'),
+            'user' : request.user,
+            'stock_quantity' : request.POST.get('product_stock'),
+            'image1' : request.FILES.get('image1'),
+            'image2' : request.FILES.get('image2'),
+            'image3' : request.FILES.get('image3'),
+            'image4' : request.FILES.get('image4'),
+            'image5' : request.FILES.get('image5'),
+        }
+
+        a, status = ProductCategory.objects.get_or_create(category=product_data['category'])
+        product_data['category']=a
+        a, status = Brand.objects.get_or_create(brand_name=product_data['brand'], category=product_data['category'])
+        product_data['brand']=a
+        a, status = Color.objects.get_or_create(color_name=product_data['color'])
+        product_data['color']=a
+        a, status = Mdl.objects.get_or_create(mdl=product_data['mdl'])
+        product_data['mdl']=a
+        if not id:
+            Product.objects.create(**product_data)
+        else:
+            Product.objects.filter(id=id).update(**product_data)
+
         return render(request, 'admin_template/addProduct.html')
+    
+def delete_product(request, uname, id):
+    data = Product.objects.filter(id=id, user=request.user)
+    if data:
+        data.delete()
+    return redirect('/seller-inventory')
 
 def sellerInventory(request):
 

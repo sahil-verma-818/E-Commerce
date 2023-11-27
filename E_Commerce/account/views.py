@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from product.models import Product, product_category
+from product.models import Product, ProductCategory
 from .models import User,Address
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -16,8 +16,8 @@ from django.conf import settings
 '''
 
 def register(request):
-    category_data = product_category.objects.all()
-
+    notiflixScript = """"""
+    ''' Handling POST request for registering data of user '''
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
         lastname = request.POST.get('lastname', " ")
@@ -31,14 +31,19 @@ def register(request):
         else:
             username = email.split('@')[0]
             User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
+            notiflix_script = """Notiflix.Notify.Success('Registered Successfully');"""
             messages.success(request, f"User Successfully Created with username : {username}")
+            
+            # Rendering specific pages for sellers
             if user_type == 'seller':
                 return render(request, 'admin_template/signup.html')
-    return render(request, 'users_template/register.html', {'category': category_data})
+    return render(request, 'users_template/register.html', {'catagory': ProductCategory.objects.all()})
 
 ''' Code to login User '''
 
 def login_user(request):
+
+    # Handleing POST request for login users.
     if request.method == 'POST':
        
         username = request.POST.get('login-username')
@@ -56,9 +61,12 @@ def login_user(request):
             return redirect('/register')    
     
 
+''' Functionality of update or render user profile data through GET or POST request '''
 
 @login_required(login_url='/register')
 def account(request, id):
+
+    # Block to define funtionality of rendering user data
     if request.method == 'GET':
         try:
             data1 = User.objects.get(id=request.user.id)
@@ -76,19 +84,21 @@ def account(request, id):
         if request.user.user_type == 'seller':
             return render(request, 'admin_template/profile.html', context)
         elif request.user.user_type == 'customer':
-            context['category'] = product_category.objects.all()
+            context['category'] = ProductCategory.objects.all()
             return render(request, 'users_template/customer-account.html', context)
             
     
+    # Block to implement functionality of updating profile data of users
     if request.method == 'POST':
-            
+        
+        # Taking inputs for updated data
         updated_user = {
             'first_name' : request.POST.get('first_name'),
             'last_name' : request.POST.get('last_name'),
             'mobile' : request.POST.get('mobile'),
             'email' : request.POST.get('email')
         }
-
+        # taking input of updated data of addresses of users
         updated_address = {
             'house' : request.POST.get('house'),
             'area' : request.POST.get('area'),
@@ -98,9 +108,14 @@ def account(request, id):
             'city' : request.POST.get('city'),
             'primary' : True
         }
+
+        # Checking whether address of specific user exists or not.
         if Address.objects.filter(user=request.user).exists() == False:
+            # if not then create a new address 
             updated_address['user'] = User.objects.get(id=request.user.id)
             Address.objects.filter(user=request.user).update_or_create(**updated_address)
+        
+        # Else update the specific one.
         else:
             Address.objects.filter(user=request.user).update(**updated_address)
         User.objects.filter(id = request.user.id).update(**updated_user)
@@ -110,6 +125,7 @@ def account(request, id):
             return redirect(f"/account/{request.user}")
     
 
+''' Implementation of functionality of update password. '''
 
 @login_required(login_url='/register')
 def update_password(request, id):
@@ -120,7 +136,6 @@ def update_password(request, id):
         cnf_password = request.POST.get('cnf_password')
 
         user = authenticate(username=id, password=old_password)
-        print(user)
 
         if user is not None:
             if new_password == cnf_password:
@@ -129,6 +144,7 @@ def update_password(request, id):
     return redirect(f"/account/{user.username}")
 
 
+# functionality of logout
 
 @login_required(login_url='/register')
 def logout_user(request, id):
@@ -139,16 +155,20 @@ def logout_user(request, id):
         logout(request)
         return redirect('/')
 
+
+''' Implementing functionality of Admin panel '''
+
+
 @login_required(login_url='/adminlogin')
-def adminHome(request):
+def admin_home(request):
 
     return render(request, 'admin_template/index.html')
 
-def adminLogin(request):
+def admin_login(request):
     
     return render(request, 'admin_template/signin.html')
 
-def adminRegister(request):
+def admin_register(request):
     
     return render(request, 'admin_template/signup.html')    
     

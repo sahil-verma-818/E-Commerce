@@ -6,7 +6,7 @@ from .models import *
 admin.site.register(Product)
 admin.site.register(Wishlist)
 admin.site.register(Review)
-admin.site.register(product_category)
+admin.site.register(ProductCategory),
 admin.site.register(Brand)
 admin.site.register(Color)
 admin.site.register(Mdl)

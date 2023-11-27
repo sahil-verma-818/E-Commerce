@@ -14,6 +14,8 @@ address_choice = (
     ('work', 'Work'),
 )
 
+# User table with inherited abstract user.
+
 class User(AbstractUser):
     mobile = models.CharField(max_length=20, blank=True)
     user_type = models.CharField(max_length=10, choices=user_choices, blank=True)
@@ -24,6 +26,8 @@ class User(AbstractUser):
     def __str__(self) -> str:
         return self.username
 
+
+# Address table to store information of addresses of users.
 
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

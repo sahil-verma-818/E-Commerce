@@ -4,7 +4,9 @@ from django.core.validators import MinValueValidator,MaxValueValidator
 
 # Create your models here.
 
-class product_category(models.Model):
+
+# Model for product Category
+class ProductCategory(models.Model):
     category = models.CharField(max_length=255)
 
     def __str__(self) -> str:
@@ -14,7 +16,7 @@ class product_category(models.Model):
 
 class Brand(models.Model):
     brand_name = models.CharField(max_length=255)
-    category = models.ForeignKey(product_category, on_delete=models.SET_NULL, null=True, blank=True)
+    category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self) -> str:
         return self.brand_name
@@ -38,8 +40,8 @@ class Mdl(models.Model):
 
 class Product(models.Model):
     product_name = models.CharField(max_length=100)
-    product_desc = models.TextField()
-    category = models.ForeignKey(product_category, on_delete=models.SET_NULL, null=True)
+    product_desc = models.CharField(max_length=255)
+    category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True)
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True) 
     color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)
     mdl = models.ForeignKey(Mdl, on_delete=models.CASCADE, null=True, blank=True)

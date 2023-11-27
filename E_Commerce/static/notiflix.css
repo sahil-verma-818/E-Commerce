@@ -1,0 +1,140 @@
+* {outline:none;box-sizing:border-box;}
+
+body {
+  padding:10px;
+  margin:0;
+  font-family:"Quicksand",sans-serif;
+  background:#f8f8f8;
+}
+
+div.notiflix {
+ float:left;
+  width:100%;
+  margin:0 0 20px;
+  padding: 0 0 20px;
+  border-bottom:1px solid #cecece;
+}
+
+div.notiflix h1 {
+  font-weight:500;
+  float:left;
+  width:100%;
+  font-size:24px;
+  line-hegiht:26px;
+  text-align:center;
+  margin: 5px 0 10px;
+}
+
+div.notiflix p {
+  float:left;
+  width:100%;
+  font-size:14px;
+  line-hegiht:16px;
+  text-align:center;
+  margin: 5px 0 10px;
+}
+
+div.notiflix p a {
+  transition: all .2s ease-in-out;
+  font-weight:500;
+  color:#00b462;
+}
+div.notiflix p a:hover {
+  color:#1e1e1e;
+}
+
+h2.demo-title {
+  font-weight:500;
+  float:left;
+  width:100%;
+  font-size:20px;
+  line-hegiht:20px;
+  text-align:center;
+  margin: 0 0 10px;
+  padding:0;
+}
+p.demo-desc {
+  font-weight:400;
+  float:left;
+  width:100%;
+  font-size:14px;
+  line-hegiht:16px;
+  text-align:center;
+  margin: 0;
+  padding:0;
+}
+
+div.demo-area {
+  float:left;
+  width:100%;
+}
+div.notify {
+  background:#fff;
+  box-shadow:0 0 20px -10px #000;
+  padding:20px;
+  border-radius:20px;
+  display:block;
+  width:98%;
+  max-width:360px;
+  margin:30px auto 40px;
+}
+
+label {
+  font-weight:500;
+  color:#999;
+  float:left;
+  font-size:12px;
+  line-height:12px;
+  margin: 0 0 6px 6px;
+}
+
+input {
+  transition:all .15s ease-in-out;
+  float:left;
+  width:100%;
+  font-size:15px;
+  line-height:40px;
+  padding:0 14px;
+  margin: 0 0 20px;
+  border-radius:20px;
+  border:1px solid #ccc;
+}
+input.input-success:hover {
+  border-color:#00b462;
+}
+input.input-failure:hover {
+  border-color:#f44336;
+}
+input.input-warning:hover {
+  border-color:#f2bd1d;
+}
+input.input-info:hover {
+  border-color:#00bcd4;
+}
+
+button {
+  display:block;
+  margin:15px auto 0;
+  transition:all .15s ease-in-out;
+  cursor:pointer;
+  color:#fff;
+  background: #00b462;
+  border:none;
+  font-size:18px;
+  padding:8px 24px;
+  border-radius:20px;
+  box-shadow: 0 6px 20px -8px #000;
+}
+button:hover {  
+  box-shadow: 0 3px 10px -5px #000;
+}
+
+button.button-failure {
+  background:#f44336;
+}
+button.button-warning {
+  background:#f2bd1d;
+}
+button.button-info {
+  background:#00bcd4;
+}
