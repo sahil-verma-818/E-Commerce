@@ -1,6 +1,7 @@
 {% extends '../base.html' %}
 {% load template_tags %}
 {% load static %}
+{% query_transform %}
 {% block content %}
     <div id="all">
       <div id="content">
@@ -46,7 +47,7 @@
                       {% for brand in brands %}
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" name="brandSelections"  value= '{{brand.id}}'> {{ brand.brand_name }}
+                          <input type="checkbox" name="brandSelections" {% checked_box brand.id %} value= '{{brand.id}}'> {{ brand.brand_name }}
                         </label>
                       </div>
                       {% endfor %}

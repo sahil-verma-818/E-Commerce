@@ -1,5 +1,5 @@
 {% extends './adminBase.html' %}
-
+{% load static %}
 
 {% block content %}
 <!-- Title block start -->
@@ -106,9 +106,8 @@
                         id="image5">
                 </div>
 
-                <button class="btn btn-primary">Update Record</button>
-                <a href="/delete-product/{{user}}/{{product_data.id}}"><button class="btn btn-primary">Delete
-                        record</button></a>
+                <button type="submit" class="btn btn-primary">Update Record</button>
+                <a href='/delete-product/{{user}}/{{product_data.id}}'><button type="button" class="btn btn-primary">Delete record</button></a>
             </div>
         </div>
     </div>
@@ -116,12 +115,20 @@
 <!-- Product Visualisation End -->
 
 
-<!-- <div class="container-fluid pt-4 px-4">
+<div class="container-fluid pt-4 px-4">
     <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
         <div class="bg-secondary rounded h-100 p-4">
-            <h3 class="mb-4">Welcome @{{user}}</h3>
-            <h6> Expand your inventory details here </h6>
+            {% if product_data.image1 %}
+            <div class="col-sm-12 col-xl-3 mt-4">
+                <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                    <img src="{{ product_data.image1 }}" class="card-img-top" style="width: 330px; height: 330px;" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title" style="display: block; width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"> {{ product_data.image1 }} </h5>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
     </div>
-</div> -->
+</div>
 {% endblock %}

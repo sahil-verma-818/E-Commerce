@@ -87,6 +87,27 @@ def product_categories(request, category):
     except EmptyPage:
         page_obj = p.page(p.num_pages)
 
+    # url = ''
+
+    # if selected_brand:
+    #     for i in range(len(selected_brand)):
+    #         if i == 0:
+    #             url += f"brandSelections={selected_brand[i]}"
+    #         else:
+    #             url += f"&brandSelections={selected_brand[i]}"
+    
+    # if selected_color:
+    #     for i in range(len(selected_brand)):
+    #         if not selected_brand and i==0:
+    #             url += f"colorSelections={selected_color[i]}"
+    #         else:
+    #             url += f"&colorSelections={selected_color[i]}"
+    # if selected_range:
+    #     if not selected_brand or not selected_color:
+    #         url += f"rangeSelections={selected_range}"
+    #     else:
+    #         url += f"&rangeSelections={selected_range}"
+
 
     context = {
         'product_data' : page_obj,
@@ -163,13 +184,16 @@ def addProduct(request, uname, id=None):
         product_data['color']=a
         a, status = Mdl.objects.get_or_create(mdl=product_data['mdl'])
         product_data['mdl']=a
+        
         if not id:
             Product.objects.create(**product_data)
         else:
             Product.objects.filter(id=id).update(**product_data)
+            return redirect(f"/add-product/{uname}/{id}")
 
         return render(request, 'admin_template/addProduct.html')
     
+
 def delete_product(request, uname, id):
     data = Product.objects.filter(id=id, user=request.user)
     if data:
