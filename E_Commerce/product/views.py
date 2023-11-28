@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product, Wishlist,ProductCategory,Color,Mdl, Brand
+from .models import Product, Wishlist,ProductCategory,Color,Mdl, Brand, Review
 from account.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
@@ -50,7 +50,8 @@ def product_details(request, id):
     context = {
         'data' : data,
         'category' : category,
-        'category_list' : category_list
+        'category_list' : category_list,
+        'reviews' : Review.objects.filter(product=Product.objects.get(id=id))
     }
     
     return render(request, 'product_template/detail.html', context)
@@ -169,11 +170,6 @@ def addProduct(request, uname, id=None):
             'price' : request.POST.get('product_price'),
             'user' : request.user,
             'stock_quantity' : request.POST.get('product_stock'),
-            'image1' : request.FILES.get('image1'),
-            'image2' : request.FILES.get('image2'),
-            'image3' : request.FILES.get('image3'),
-            'image4' : request.FILES.get('image4'),
-            'image5' : request.FILES.get('image5'),
         }
 
         a, status = ProductCategory.objects.get_or_create(category=product_data['category'])
@@ -189,6 +185,17 @@ def addProduct(request, uname, id=None):
             Product.objects.create(**product_data)
         else:
             Product.objects.filter(id=id).update(**product_data)
+            fetched_data = Product.objects.get(id=id)
+            fetched_data.image1 = request.FILES.get('image1')
+            fetched_data.image2 = request.FILES.get('image2')
+            fetched_data.image3 = request.FILES.get('image3')
+            fetched_data.image4 = request.FILES.get('image4')
+            fetched_data.image5 = request.FILES.get('image5')
+
+            fetched_data.save()
+
+            
+
             return redirect(f"/add-product/{uname}/{id}")
 
         return render(request, 'admin_template/addProduct.html')

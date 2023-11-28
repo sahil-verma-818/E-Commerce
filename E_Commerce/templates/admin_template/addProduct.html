@@ -83,31 +83,28 @@
                 <h6> Visualisation of your product </h6>
                 <div class="mb-3">
                     <label for="image1" class="form-label">Image1</label>
-                    <input class="form-control bg-dark" name="image1" type="file" id="image1"
-                        value="{{product_data.image1}}">
+                    <input class="form-control bg-dark" name="image1" type="file" id="image1">
                 </div>
                 <div class="mb-3">
                     <label for="image2" class="form-label">Image2</label>
-                    <input class="form-control bg-dark" type="file" name="image2" value="{{product_data.image2}}"
-                        id="image2">
+                    <input class="form-control bg-dark" type="file" name="image2" id="image2">
                 </div>
                 <div class="mb-3">
                     <label for="image3" class="form-label">Image3</label>
-                    <input class="form-control bg-dark" type="file" name="image3" value="{{product_data.image3}}"
-                        id="image3">
+                    <input class="form-control bg-dark" type="file" name="image3" id="image3">
                 </div>
                 <div class="mb-3">
                     <label for="image4" class="form-label">Image4</label>
-                    <input class="form-control bg-dark" type="file" name="image4" value="" id="image4">
+                    <input class="form-control bg-dark" type="file" name="image4" id="image4">
                 </div>
                 <div class="mb-3">
                     <label for="image5" class="form-label">Image5</label>
-                    <input class="form-control bg-dark" type="file" name="image5" value="{{product_data.image5}}"
-                        id="image5">
+                    <input class="form-control bg-dark" type="file" name="image5" id="image5">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update Record</button>
-                <a href='/delete-product/{{user}}/{{product_data.id}}'><button type="button" class="btn btn-primary">Delete record</button></a>
+                <a href='/delete-product/{{user}}/{{product_data.id}}'><button type="button"
+                        class="btn btn-primary">Delete record</button></a>
             </div>
         </div>
     </div>
@@ -117,17 +114,78 @@
 
 <div class="container-fluid pt-4 px-4">
     <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
-        <div class="bg-secondary rounded h-100 p-4">
-            {% if product_data.image1 %}
-            <div class="col-sm-12 col-xl-3 mt-4">
-                <div class="card shadow-lg p-3 mb-5 bg-body rounded">
-                    <img src="{{ product_data.image1 }}" class="card-img-top" style="width: 330px; height: 330px;" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title" style="display: block; width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"> {{ product_data.image1 }} </h5>
+        <div class="bg-secondary rounded">
+            <div class="row">
+                {% if product_data.image1 %}
+                <div class="col-sm-12 col-xl-3 mt-4">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <img src="{{ product_data.image1.url }}" class="card-img-top"
+                            style="width: 330px; height: 330px;" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"
+                                style="display: block; width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                Image 1 </h5>
+                        </div>
                     </div>
                 </div>
+                {% endif %}
+
+                {% if product_data.image2 %}
+                <div class="col-sm-12 col-xl-3 mt-4">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <img src="{{ product_data.image2.url }}" class="card-img-top"
+                            style="width: 330px; height: 330px;" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"
+                                style="display: block; width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                Image 2 </h5>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if product_data.image3 %}
+                <div class="col-sm-12 col-xl-3 mt-4">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <img src="{{ product_data.image3.url }}" class="card-img-top"
+                            style="width: 330px; height: 330px;" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"
+                                style="display: block; width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                Image 3 </h5>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if product_data.image4 %}
+                <div class="col-sm-12 col-xl-3 mt-4">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <img src="{{ product_data.image4.url }}" class="card-img-top"
+                            style="width: 330px; height: 330px;" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"
+                                style="display: block; width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                Image 4 </h5>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if product_data.image5 %}
+                <div class="col-sm-12 col-xl-3 mt-4">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                        <img src="{{ product_data.image5.url }}" class="card-img-top"
+                            style="width: 330px; height: 330px;" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title"
+                                style="display: block; width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                Image 5 </h5>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
     </div>
 </div>
