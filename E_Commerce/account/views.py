@@ -16,7 +16,6 @@ from django.conf import settings
 '''
 
 def register(request):
-    notiflixScript = """"""
     ''' Handling POST request for registering data of user '''
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
@@ -31,7 +30,6 @@ def register(request):
         else:
             username = email.split('@')[0]
             User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
-            notiflix_script = """Notiflix.Notify.Success('Registered Successfully');"""
             messages.success(request, f"User Successfully Created with username : {username}")
             
             # Rendering specific pages for sellers
