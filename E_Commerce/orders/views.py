@@ -1,9 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Order, OrderItems
-from account.models import User
+from account.models import User, Address
 from django.contrib.auth.decorators import login_required
 from product.models import ProductCategory
 from cart.models import CartItems
+import datetime
+from django.db.models import Q
+
 
 # Create your views here.
 
@@ -12,7 +15,7 @@ from cart.models import CartItems
 @login_required
 def order(request, id):
     price = {}
-    data = Order.objects.filter(user=User.objects.get(username=id))
+    data = Order.objects.filter(user=request.user)
     
     # Calculation of gross price for any user
     for x in data:
@@ -30,12 +33,31 @@ def order(request, id):
     return render(request, 'order_template/customer-orders.html', context)
 
 
+def order_details(request, uname, id):
+    
+    order = Order.objects.get(id=id)
+    order_items = OrderItems.objects.filter(order=order)
+    try:
+        invoice_address = Address.objects.get(Q(user=request.user) & Q(primary=True))
+    except Address.DoesNotExist:
+        pass
+
+    context = {
+        'order' : order,
+        'order_items' : order_items,
+        'invoice' : invoice_address
+    }
+
+
+    return render(request, 'order_template/customer-order.html', context)
+
+
 @login_required(login_url='/register')
 def checkout(request,id):
 
     if request.method == 'GET':
         total = 0
-        data = CartItems.objects.filter(user=User.objects.get(id=request.user.id))
+        data = CartItems.objects.filter(user=request.user)
         
         # Calculating gross price for the whole cart of the user
         for x in data:
@@ -47,20 +69,29 @@ def checkout(request,id):
 
         return render(request, 'order_template/checkout.html', context)
     if request.method == 'POST':
-        firstname = request.POST.get('first_name')
-        lastname = request.POST.get('last_name')
-        house = request.POST.get('house')
-        area = request.POST.get('area')
-        landmark = request.POST.get('landmark')
-        zip = request.POST.get('zip')
-        state = request.POST.get('state')
-        city = request.POST.get('city')
-        mobile = request.POST.get('mobile')
-        email = request.POST.get('email')
+
+        order_address = {
+        'house' : request.POST.get('house'),
+        'area' : request.POST.get('area'),
+        'landmark' : request.POST.get('landmark'),
+        'zip' : request.POST.get('zip'),
+        'state' : request.POST.get('state'),
+        'city' : request.POST.get('city'),
+        'user' : request.user,
+        'address_type' : request.POST.get('address-type')
+        }
         payment_method = request.POST.get('payment-method')
-
-        cart = CartItems.objects.filter(user=request.user.id)
-
+        shipping_address, status = Address.objects.get_or_create(**order_address)
+        cart_data = CartItems.objects.filter(user=request.user)
+        order = Order.objects.create(user=request.user, delivery_address=shipping_address, order_date=datetime.datetime.now(), payment_method=payment_method)
+        total = 0
+        for data in cart_data:
+            OrderItems.objects.create(order=order, product=data.product, quantity=data.quantity)
+            total += data.product.price
+            data.delete()
+        order.total_bill=total
+        order.save()
         
+        # sweetify.success(request, 'You did it', text='Your Form has been Updated',persistent='Hell yeah')
 
-        return render(request, 'order_template/checkout.html')
+        return redirect(f"/orders/{request.user}")

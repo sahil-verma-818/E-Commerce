@@ -13,7 +13,7 @@ def cartlist(request,id):
     
     if request.method == 'GET':
         total = 0
-        data = CartItems.objects.filter(user=User.objects.get(username=id))
+        data = CartItems.objects.filter(user=request.user)
         
         # Calculating gross price for the whole cart of the user
         for x in data:

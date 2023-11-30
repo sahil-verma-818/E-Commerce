@@ -18,8 +18,10 @@ class Order(models.Model):
     delivery_address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
     order_date = models.DateTimeField(auto_now_add=True)
     order_id = models.CharField(max_length=100)
+    total_bill = models.IntegerField(blank=True, null=True)
     transaction_id = models.CharField(max_length=100, blank=True)
     payment_method = models.CharField(max_length=20, choices=payment_choices)
+    status = models.CharField(max_length=255, default='Order Placed')
     is_confirmed = models.BooleanField(default=False)
 
     def __str__(self) -> str:

@@ -6,7 +6,7 @@
     <div id="content">
         <div class="container">
             <div class="row">
-                <form method="post" action="/checkout/{{user}}">
+                <form method="post" action="/checkout/{{user}}" class="col-lg-12">
                     {% csrf_token %}
                     <div class="col-lg-12">
                         <!-- breadcrumb -->
@@ -18,134 +18,124 @@
                         </nav>
                     </div>
                     <!-- Address Section -->
-                    <div id="checkout" class="col-lg-12">
+                    <div id="checkout" class="col-md-12">
                         <div class="box">
-                                <h1>Address</h1>
-                                <div class="nav flex-column flex-md-row nav-pills text-center"><a href="checkout1.html"
-                                        class="nav-link flex-sm-fill text-sm-center active"> <i
-                                            class="fa fa-map-marker"> </i>Address</a><a href="#"
-                                        class="nav-link flex-sm-fill text-sm-center disabled"> <i class="fa fa-money">
-                                        </i>Payment Method</a><a href="#"
-                                        class="nav-link flex-sm-fill text-sm-center disabled"> <i class="fa fa-eye">
-                                        </i>Order Review</a></div>
-                                <div class="content py-3">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                          <div class="form-group">
-                                            <label for="firstname">Firstname</label>
-                                            <input id="firstname" name="first_name" type="text" class="form-control" value={{data1.first_name}}>
-                                          </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                          <div class="form-group">
-                                            <label for="lastname">Lastname</label>
-                                            <input id="lastname" name="last_name" type="text" class="form-control" value="{{data1.last_name}}">
-                                          </div>
-                                        </div>
-                                    </div>
-                                    <!-- /.row-->
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                          <div class="form-group">
+                            <div class="nav flex-column flex-md-row nav-pills text-center">
+                                <a href="#" class="nav-link flex-sm-fill text-sm-center active"> <i
+                                        class="fa fa-map-marker"> </i>Address</a>
+                                <a href="#" class="nav-link flex-sm-fill text-sm-center disabled"> <i
+                                        class="fa fa-money"> </i>Payment Method</a>
+                                <a href="#" class="nav-link flex-sm-fill text-sm-center disabled"> <i class="fa fa-eye">
+                                    </i>Order Review</a>
+                            </div>
+                            <h1>Address</h1>
+                            <div class="content py-3 col-lg-12">
+                                <!-- /.row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label for="house">House No.</label>
-                                            <input id="house" name="house" type="text" class="form-control" value="{{data2.house}}">
-                                          </div>
+                                            <input id="house" name="house" type="text" class="form-control"
+                                                value="{{data2.house}}">
                                         </div>
-                                        <div class="col-md-6">
-                                          <div class="form-group">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
                                             <label for="street">Area</label>
-                                            <input id="street" name="area" type="text" class="form-control" value="{{data2.area}}">
-                                          </div>
+                                            <input id="street" name="area" type="text" class="form-control"
+                                                value="{{data2.area}}">
                                         </div>
                                     </div>
-                                    <!-- /.row-->
-                                    <div class="row">
-                                        <div class="col-md-6 col-lg-3">
-                                          <div class="form-group">
-                                            <label for="city">Landmark</label>
-                                            <input id="city" name="landmark" type="text" class="form-control" value="{{data2.landmark}}">
-                                          </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-3">
-                                          <div class="form-group">
-                                            <label for="zip">ZIP</label>
-                                            <input id="zip" name="zip" type="text" class="form-control" value="{{data2.zip}}">
-                                          </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-3">
-                                          <div class="form-group">
-                                            <label for="state">State</label>
-                                            <input id="state" name="state" type="text" class="form-control" value="{{data2.state}}">
-                                          </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-3">
-                                          <div class="form-group">
-                                            <label for="country">City</label>
-                                            <input id="country" name="city" type="text" class="form-control" value="{{data2.city}}">
-                                          </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                          <div class="form-group">
-                                            <label for="phone">Mobile</label>
-                                            <input id="phone" name="mobile" type="text" class="form-control" value="{{data1.mobile}}">
-                                          </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                          <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input id="email" name="email" type="text" class="form-control" value="{{data1.email}}">
-                                          </div>
-                                        </div>
-                                    </div>
-                                    <!-- /.row-->
                                 </div>
+                                <!-- /.row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="city">Landmark</label>
+                                            <input id="city" name="landmark" type="text" class="form-control"
+                                                value="{{data2.landmark}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="zip">ZIP</label>
+                                            <input id="zip" name="zip" type="text" class="form-control"
+                                                value="{{data2.zip}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="state">State</label>
+                                            <input id="state" name="state" type="text" class="form-control"
+                                                value="{{data2.state}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="country">City</label>
+                                            <input id="country" name="city" type="text" class="form-control"
+                                                value="{{data2.city}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="form-group">
+                                          <label for="address-type">Address type</label>
+                                          <select id="address-type" name="address-type" class="form-control">
+                                            <option value="home">Home</option>
+                                            <option value="work">Work</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row-->
+                            </div>
                         </div>
                         <!-- /.box-->
                     </div>
                     <!-- Address Section End -->
 
-                    
+
 
                     <!-- Payment Method Selection -->
                     <div id="checkout" class="col-lg-12">
                         <div class="box">
                             <h1>Payment method</h1>
                             <div class="content py-3">
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="box payment-method">
-                                    <h4>Net Banking</h4>
-                                    <p>We like it all.</p>
-                                    <div class="box-footer text-center">
-                                      <input type="radio" name="payment-method" value="net banking">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="box payment-method">
+                                            <h4>Net Banking</h4>
+                                            <p>We like it all.</p>
+                                            <div class="box-footer text-center">
+                                                <input type="radio" name="payment-method" value="net banking">
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="box payment-method">
-                                    <h4>UPI</h4>
-                                    <p>VISA and Mastercard only.</p>
-                                    <div class="box-footer text-center">
-                                      <input type="radio" name="payment-method" value="upi">
+                                    <div class="col-md-4">
+                                        <div class="box payment-method">
+                                            <h4>UPI</h4>
+                                            <p>VISA and Mastercard only.</p>
+                                            <div class="box-footer text-center">
+                                                <input type="radio" name="payment-method" value="upi">
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-6">
-                                  <div class="box payment-method">
-                                    <h4>Cash on delivery</h4>
-                                    <p>You pay when you get it.</p>
-                                    <div class="box-footer text-center">
-                                      <input type="radio" name="payment-method" value="cod">
+                                    <div class="col-md-4">
+                                        <div class="box payment-method">
+                                            <h4>Cash on delivery</h4>
+                                            <p>You pay when you get it.</p>
+                                            <div class="box-footer text-center">
+                                                <input type="radio" name="payment-method" value="COD">
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
-                              </div>
-                              <!-- /.row-->
+                                <!-- /.row-->
                             </div>
                             <!-- /.content-->
-                          <!-- /.box-->
+                            <!-- /.box-->
                         </div>
-                      </div>
+                    </div>
                     <!-- Payment Method Selection Ends -->
 
                     <!-- Order Review -->
@@ -155,51 +145,55 @@
                             <div class="content">
                                 <div class="table-responsive">
                                     <table class="table">
-                                      <thead>
-                                        <tr>
-                                          <th colspan="2">Product</th>
-                                          <th>Quantity</th>
-                                          <th>Unit price</th>
-                                          <th colspan="2">Total</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        {% for data in data %}
-                                        <tr>
-                                          <td><a href="#"><img src="../{{data.product.image1}}" alt=""></a></td>
-                                          <td><a href="#">{{data.product.product_name}}</a></td>
-                                          <td>{{data.quantity}}</td>
-                                          <td>{{data.product.price}}</td>
-                                          <td>{% widthratio data.product.price 1 data.quantity %}</td>
-                                          <td><a href="/remove-cart/{{user}}/{{data.id}}"><i class="fa fa-trash-o"></i></a></td>
-                                        </tr>
-                                        {% endfor %}
-                                      </tbody>
-                                      <tfoot>
-                                        <tr>
-                                          <th colspan="4">Total</th>
-                                          <th colspan="2">{{total}}</th>
-                                        </tr>
-                                      </tfoot>
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">Product</th>
+                                                <th>Quantity</th>
+                                                <th>Unit price</th>
+                                                <th colspan="2">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for data in data %}
+                                            <tr>
+                                                <td><a href="#"><img src="../{{data.product.image1}}" alt=""></a></td>
+                                                <td><a href="#">{{data.product.product_name}}</a></td>
+                                                <td>{{data.quantity}}</td>
+                                                <td>{{data.product.price}}</td>
+                                                <td>{% widthratio data.product.price 1 data.quantity %}</td>
+                                                <td><a href="/remove-cart/{{user}}/{{data.id}}"><i
+                                                            class="fa fa-trash-o"></i></a></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="4">Total</th>
+                                                <th colspan="2">{{total}}</th>
+                                            </tr>
+                                        </tfoot>
                                     </table>
-                                  </div>
-                              <!-- /.table-responsive-->
+                                </div>
+                                <!-- /.table-responsive-->
                             </div>
                             <!-- /.content-->
                             <div class="box-footer d-flex justify-content-between"><a href="checkout3.html"
-                                class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to payment method</a>
-                              <button type="submit" class="btn btn-primary">Place an order<i class="fa fa-chevron-right"></i></button>
+                                    class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to payment
+                                    method</a>
+                                <button type="submit" class="btn btn-primary">Place an order<i
+                                        class="fa fa-chevron-right"></i></button>
                             </div>
-                            
-                          </form>
-                        </div>
-                        <!-- /.box-->
-                    </div>
-                    <!-- Order Review Ends -->
+
                 </form>
             </div>
+            <!-- /.box-->
         </div>
+        <!-- Order Review Ends -->
+        </form>
     </div>
 </div>
-
+</div>
+</div>
+{% load sweetify %}
+{% sweetify %}
 {% endblock %}
