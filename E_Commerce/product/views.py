@@ -29,7 +29,7 @@ def home(request):
                 page_obj = p.page(1)
             except EmptyPage:
                 page_obj = p.page(p.num_pages)
-            return render(request, 'product_template/category.html', {'product_data' : page_obj,})
+            return render(request, 'product_template/category.html', {'product_data' : page_obj, 'category':ProductCategory.objects.all()})
         else:
             data = Product.objects.all()
 
@@ -88,27 +88,6 @@ def product_categories(request, category):
     except EmptyPage:
         page_obj = p.page(p.num_pages)
 
-    # url = ''
-
-    # if selected_brand:
-    #     for i in range(len(selected_brand)):
-    #         if i == 0:
-    #             url += f"brandSelections={selected_brand[i]}"
-    #         else:
-    #             url += f"&brandSelections={selected_brand[i]}"
-    
-    # if selected_color:
-    #     for i in range(len(selected_brand)):
-    #         if not selected_brand and i==0:
-    #             url += f"colorSelections={selected_color[i]}"
-    #         else:
-    #             url += f"&colorSelections={selected_color[i]}"
-    # if selected_range:
-    #     if not selected_brand or not selected_color:
-    #         url += f"rangeSelections={selected_range}"
-    #     else:
-    #         url += f"&rangeSelections={selected_range}"
-
 
     context = {
         'product_data' : page_obj,
@@ -118,6 +97,7 @@ def product_categories(request, category):
     }
     
     return render(request, 'product_template/category.html', context)
+
 
 
 
@@ -132,6 +112,9 @@ def wishlist(request,id):
     }
     return render(request, 'product_template/customer-wishlist.html', context)
 
+
+
+
 ''' Functionality to add items to wishlist'''
 @login_required(login_url='/register')
 def addWishlist(request, uname, id):
@@ -143,12 +126,17 @@ def addWishlist(request, uname, id):
         Wishlist.objects.create(user=request.user, product=Product.objects.get(id=id), date=datetime.datetime.now)
     return redirect(f"/wishlist/{request.user}")
 
+
+
+
 ''' Functionality to remove items from the wishlist '''
 def removeWishlist(request, uname, id):
     Wishlist.objects.get(id=id).delete()
     return redirect(f"/wishlist/{request.user}")
 
 
+
+@login_required(login_url='/register')
 def addProduct(request, uname, id=None):
 
     if request.method == 'GET':
@@ -201,12 +189,17 @@ def addProduct(request, uname, id=None):
         return render(request, 'admin_template/addProduct.html')
     
 
+
+@login_required(login_url='/register')
 def delete_product(request, uname, id):
     data = Product.objects.filter(id=id, user=request.user)
     if data:
         data.delete()
     return redirect('/seller-inventory')
 
+
+
+@login_required(login_url='/register')
 def sellerInventory(request):
 
     product_data = Product.objects.filter(user=request.user)

@@ -58,55 +58,27 @@
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
                     <tr class="text-white">
-                        <th scope="col">Date</th>
-                        <th scope="col">Customer</th>
-                        <th scope="col">Payment Mode</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" class="text-center">Date</th>
+                        <th scope="col" class="col-2 text-center">Product</th>
+                        <th scope="col" class="text-center">Customer</th>
+                        <th scope="col" class="text-center">Payment Mode</th>
+                        <th scope="col" class="text-center">Amount</th>
+                        <th scope="col" class="text-center">Status</th>
+                        <th scope="col" class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for order in order_detail %}
                     <tr>
-                        <td>01 Jan 2045</td>
-                        <td>Jhon Doe</td>
-                        <td>COD</td>
-                        <td>$123</td>
-                        <td>Shipped</td>
+                        <td class="text-center">{{order.order.order_date}}</td>
+                        <td class="text-center"><a href="/add-product/{{user}}/{{order.product.id}}">{{order.product.product_name}}</a></td>
+                        <td class="text-center">{{order.order.user.first_name}} {{order.order.user.last_name}}</td>
+                        <td class="text-center">{{order.order.payment_method}}</td>
+                        <td class="text-center">{{order.product.price}}</td>
+                        <td class="text-center">{{order.order.status}}</td>
                         <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
                     </tr>
-                    <tr>
-                        <td>01 Jan 2045</td>
-                        <td>INV-0123</td>
-                        <td>Jhon Doe</td>
-                        <td>$123</td>
-                        <td>Paid</td>
-                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                    </tr>
-                    <tr>
-                        <td>01 Jan 2045</td>
-                        <td>INV-0123</td>
-                        <td>Jhon Doe</td>
-                        <td>$123</td>
-                        <td>Paid</td>
-                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                    </tr>
-                    <tr>
-                        <td>01 Jan 2045</td>
-                        <td>INV-0123</td>
-                        <td>Jhon Doe</td>
-                        <td>$123</td>
-                        <td>Paid</td>
-                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                    </tr>
-                    <tr>
-                        <td>01 Jan 2045</td>
-                        <td>INV-0123</td>
-                        <td>Jhon Doe</td>
-                        <td>$123</td>
-                        <td>Paid</td>
-                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

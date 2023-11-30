@@ -157,11 +157,6 @@ def logout_user(request, id):
 ''' Implementing functionality of Admin panel '''
 
 
-@login_required(login_url='/adminlogin')
-def admin_home(request):
-
-    return render(request, 'admin_template/index.html')
-
 def admin_login(request):
     
     return render(request, 'admin_template/signin.html')

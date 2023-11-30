@@ -38,6 +38,7 @@
                 </div>
               </div>
               <div class="card sidebar-menu mb-4">
+                {% if brands %}
                 <div class="card-header">
                   <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
                 </div>
@@ -47,12 +48,18 @@
                       {% for brand in brands %}
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" name="brandSelections" {% checked_box brand.id %} value= '{{brand.id}}'> {{ brand.brand_name }}
+                          {% if brand.id == product_data.object_list.brand.id %}
+                          <input type="checkbox" name="brandSelections" checked value= '{{brand.id}}'> {{ brand.brand_name }}
+                          {% else %}
+                            <input type="checkbox" name="brandSelections" value= '{{brand.id}}'> {{ brand.brand_name }}
+                          {% endif %}
                         </label>
                       </div>
                       {% endfor %}
                     </div>
                 </div>
+                {% endif %}
+                {% if colors %}
                 <div class="card-header">
                   <h3 class="h4 card-title">Colours</h3>
                 </div>
@@ -68,6 +75,7 @@
                     </div>
                     <!-- <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button> -->
                 </div>
+                {% endif %}
                 <div class="card-header">
                   <h3 class="h4 card-title">Select Price Range</h3>
                 </div>

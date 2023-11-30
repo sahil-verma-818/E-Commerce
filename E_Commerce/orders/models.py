@@ -17,7 +17,6 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     delivery_address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
     order_date = models.DateTimeField(auto_now_add=True)
-    order_id = models.CharField(max_length=100)
     total_bill = models.IntegerField(blank=True, null=True)
     transaction_id = models.CharField(max_length=100, blank=True)
     payment_method = models.CharField(max_length=20, choices=payment_choices)

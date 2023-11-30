@@ -11,9 +11,8 @@
               <!-- breadcrumb-->
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item"><a href="#">Ladies</a></li>
-                  <li class="breadcrumb-item"><a href="#">Tops</a></li>
+                  <li class="breadcrumb-item"><a href="/">Home</a></li>
+                  <li class="breadcrumb-item"><a href="/product_category/{{data.category}}">{{data.category}}</a></li>
                   <li aria-current="page" class="breadcrumb-item active">{{data.product_name}}</li>
                 </ol>
               </nav>
@@ -29,10 +28,10 @@
                 </div>
                 <div class="card-body">
                   <ul class="nav nav-pills flex-column category-menu">
-                    <li><a href="" class="nav-link"> Category <span class="badge badge-secondary">42</span></a>
+                    <li><a href="" class="nav-link"> Category</a>
                       <ul class="list-unstyled">
                         {% for category in category %}
-                        <li><a href="/product_category/{{category.id}}" class="nav-link"> {{ category.category }}</a></li>
+                        <li><a href="/product_category/{{category.id}}" class="nav-link {% if category == data.category %} active {% endif %}"> {{ category.category }}</a></li>
                         {% endfor %}
                       </ul>
                     </li>

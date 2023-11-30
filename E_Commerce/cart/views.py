@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import CartItems
 from account.models import User
-from product.models import Product
+from product.models import Product, ProductCategory
 from django.contrib.auth.decorators import login_required
 
 
@@ -17,23 +17,27 @@ def cartlist(request,id):
         
         # Calculating gross price for the whole cart of the user
         for x in data:
-            total += x.product.price * x.quantity
+            if request.GET.get(f"{x.id}"):
+                x.quantity = request.GET.get(f"{x.id}")
+                x.save()
+            total += x.product.price * int(x.quantity)
         context = {
             'data' : data,
-            'total' : total
+            'total' : total,
+            'category' : ProductCategory.objects.all()
         }
 
         return render(request, 'cart_template/basket.html', context)
     
     # Implementation of update cart functionality.
-    if request.method == 'POST':
-        data = CartItems.objects.filter(user=User.objects.get(username=id))
+    # if request.method == 'POST':
+    #     data = CartItems.objects.filter(user=User.objects.get(username=id))
 
-        for x in data:
-            x.quantity = request.POST.get(f"{x.id}")
-            x.save()
+    #     for x in data:
+    #         x.quantity = request.POST.get(f"{x.id}")
+    #         x.save()
 
-        return redirect(f"/cart/{request.user}")
+    #     return redirect(f"/cart/{request.user}")
             
 
 

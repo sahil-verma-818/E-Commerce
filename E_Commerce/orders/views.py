@@ -33,6 +33,7 @@ def order(request, id):
     return render(request, 'order_template/customer-orders.html', context)
 
 
+@login_required(login_url='/register')
 def order_details(request, uname, id):
     
     order = Order.objects.get(id=id)
@@ -95,3 +96,11 @@ def checkout(request,id):
         # sweetify.success(request, 'You did it', text='Your Form has been Updated',persistent='Hell yeah')
 
         return redirect(f"/orders/{request.user}")
+    
+
+
+# ----------------------- Admin Panel -----------------------------
+
+@login_required(login_url='/adminlogin')
+def admin_home(request):
+    return render(request, 'admin_template/index.html', {'order_detail' : OrderItems.objects.filter(product__user=request.user)})
