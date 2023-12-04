@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from product.models import Product, ProductCategory
 from .models import User,Address
 from django.contrib.auth import authenticate, login, logout
@@ -50,6 +51,7 @@ def login_user(request):
 
         if user is not None:
             login(request, user=user)
+            messages.success(request, "Login Successful")
             if user.user_type == 'seller':
                 return redirect(f"/admin-panel/dashboard")
             elif user.user_type == 'customer':
@@ -108,15 +110,15 @@ def account(request, id):
         }
 
         # Checking whether address of specific user exists or not.
-        if Address.objects.filter(user=request.user).exists() == False:
+        if Address.objects.filter(Q(user=request.user) & Q(primary=True)).exists():
+            Address.objects.filter(Q(user=request.user) & Q(primary=True)).update(**updated_address)
+        else:
             # if not then create a new address 
             updated_address['user'] = User.objects.get(id=request.user.id)
-            Address.objects.filter(user=request.user).update_or_create(**updated_address)
-        
-        # Else update the specific one.
-        else:
-            Address.objects.filter(user=request.user).update(**updated_address)
+            Address.objects.create(**updated_address)
+            
         User.objects.filter(id = request.user.id).update(**updated_user)
+        messages.success(request, "Address updated successfully")
         if request.user.user_type == 'seller':
             return redirect(f"/adminProfile/{request.user}")
         elif request.user.user_type == 'customer':
@@ -139,7 +141,12 @@ def update_password(request, id):
             if new_password == cnf_password:
                 user.set_password(new_password)
                 user.save()
-    return redirect(f"/account/{user.username}")
+                messages.success(request, "Password Updated Successfully")
+                login(request, user)
+                HttpResponseRedirect(request.path_info)
+            else:
+                messages.error(request, "Password and Confirm Password Doesn't match")
+                HttpResponseRedirect(request.path_info)
 
 
 # functionality of logout

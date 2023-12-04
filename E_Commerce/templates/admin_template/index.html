@@ -71,7 +71,7 @@
                     {% for order in order_detail %}
                     <tr>
                         <td class="text-center">{{order.order.order_date}}</td>
-                        <td class="text-center"><a href="/add-product/{{user}}/{{order.product.id}}">{{order.product.product_name}}</a></td>
+                        <td class="text-center"><a href="/add-product/{{user}}/{{order.product.id}}" class="text-light">{{order.product.product_name}}</a></td>
                         <td class="text-center">{{order.order.user.first_name}} {{order.order.user.last_name}}</td>
                         <td class="text-center">{{order.order.payment_method}}</td>
                         <td class="text-center">{{order.product.price}}</td>

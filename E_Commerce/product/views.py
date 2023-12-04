@@ -78,7 +78,7 @@ def product_categories(request, category):
     if selected_range:
         product_data=product_data.filter(price__lte=selected_range)
 
-    p = Paginator(product_data, 1)
+    p = Paginator(product_data, 6)
     page_number = request.GET.get('page')
 
     try:
@@ -124,6 +124,7 @@ def addWishlist(request, uname, id):
         messages.error(request, "Item is already available in wishlist")
     else:
         Wishlist.objects.create(user=request.user, product=Product.objects.get(id=id), date=datetime.datetime.now)
+        messages.success(request, "Item added to wishlist")
     return redirect(f"/wishlist/{request.user}")
 
 
@@ -132,6 +133,7 @@ def addWishlist(request, uname, id):
 ''' Functionality to remove items from the wishlist '''
 def removeWishlist(request, uname, id):
     Wishlist.objects.get(id=id).delete()
+    messages.warning(request, "Item removed from the wishlist.")
     return redirect(f"/wishlist/{request.user}")
 
 

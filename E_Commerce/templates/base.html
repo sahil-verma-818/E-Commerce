@@ -31,7 +31,13 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.5/sweetalert2.all.min.js"></script>
-</head>
+
+      <!-- Toastr -->
+      <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="{% static 'toastr/toastr.min.css' %}" media="all">
+      <script type="text/javascript" src="{% static 'toastr/toastr.js' %}"></script>
+
+    </head>
 
 <body>
   <!-- navbar-->
@@ -63,7 +69,7 @@
     <nav class="navbar navbar-expand-lg">
       <div class="container"><a href="/" class="navbar-brand home"><img src="{% static 'img/logo.png' %}"
             alt="Obaju logo" class="d-none d-md-inline-block"><img src="{% static 'img/logo-small.png' %}"
-            alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Obaju - go to homepage</span></a>
+            alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Shoppiee</span></a>
         <div class="navbar-buttons">
           <button type="button" data-toggle="collapse" data-target="#navigation"
             class="btn btn-outline-secondary navbar-toggler"><span class="sr-only">Toggle navigation</span><i

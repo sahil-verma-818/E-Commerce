@@ -79,11 +79,11 @@
                                     </div>
                                     <div class="col-md-6 col-lg-3">
                                         <div class="form-group">
-                                          <label for="address-type">Address type</label>
-                                          <select id="address-type" name="address-type" class="form-control">
-                                            <option value="home">Home</option>
-                                            <option value="work">Work</option>
-                                        </select>
+                                            <label for="address-type">Address type</label>
+                                            <select id="address-type" name="address-type" class="form-control">
+                                                <option value="home">Home</option>
+                                                <option value="work">Work</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -161,8 +161,6 @@
                                                 <td>{{data.quantity}}</td>
                                                 <td>{{data.product.price}}</td>
                                                 <td>{% widthratio data.product.price 1 data.quantity %}</td>
-                                                <td><a href="/remove-cart/{{user}}/{{data.id}}"><i
-                                                            class="fa fa-trash-o"></i></a></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -174,6 +172,19 @@
                                         </tfoot>
                                     </table>
                                 </div>
+                                {% if messages %}
+                                {% for message in messages %}
+                                {% if message.tags == 'success'%}
+                                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+                                {% elif message.tags == 'info' %}
+                                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+                                {% elif message.tags == 'warning' %}
+                                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+                                {% elif message.tags == 'error' %}
+                                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+                                {% endif %}
+                                {% endfor %}
+                                {% endif %}
                                 <!-- /.table-responsive-->
                             </div>
                             <!-- /.content-->
@@ -195,4 +206,7 @@
 </div>
 </div>
 
+
+{% load sweetify %}
+{% sweetify %}
 {% endblock %}

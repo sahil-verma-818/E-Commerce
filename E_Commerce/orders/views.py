@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from .models import Order, OrderItems
 from account.models import User, Address
 from django.contrib.auth.decorators import login_required
-from product.models import ProductCategory
+from product.models import ProductCategory,Product
 from cart.models import CartItems
+from django.contrib import messages
 import datetime
 from django.db.models import Q
 
@@ -87,15 +89,29 @@ def checkout(request,id):
         order = Order.objects.create(user=request.user, delivery_address=shipping_address, order_date=datetime.datetime.now(), payment_method=payment_method)
         total = 0
         for data in cart_data:
-            OrderItems.objects.create(order=order, product=data.product, quantity=data.quantity)
-            total += data.product.price
-            data.delete()
+            stock_remain=Product.objects.get(id=data.product.id)
+            if stock_remain.stock_quantity >= data.quantity:
+                OrderItems.objects.create(order=order, product=data.product, quantity=data.quantity)
+                stock_remain.stock_quantity -= data.quantity
+                stock_remain.save()
+                total += data.product.price
+                data.delete()
+            else:
+                messages.error(request, f"Stock Insufficient !! You can only order {data.product} only a maximum of {stock_remain.stock_quantity}")
+  
         order.total_bill=total
-        order.save()
+        if OrderItems.objects.filter(order=order):
+            order.save()
+            messages.success(request, "Order Placed")
+            return redirect(f"/orders/{request.user}")
+        else:
+            order.delete()
+            messages.error(request, "Order can't be placed due to unavailability of items")
+            return HttpResponseRedirect(request.path_info)
         
         # sweetify.success(request, 'You did it', text='Your Form has been Updated',persistent='Hell yeah')
 
-        return redirect(f"/orders/{request.user}")
+        
     
 
 
