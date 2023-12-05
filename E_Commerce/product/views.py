@@ -6,6 +6,7 @@ from django.core.paginator import Paginator,EmptyPage, PageNotAnInteger
 from django.contrib import messages
 import datetime
 from django.db.models import Q
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -121,11 +122,13 @@ def addWishlist(request, uname, id):
     
     item = Wishlist.objects.filter(user=User.objects.get(id=request.user.id)).filter(product=Product.objects.get(id=id))
     if item:
-        messages.error(request, "Item is already available in wishlist")
+        return JsonResponse({'status':'error'})
+        # messages.error(request, "Item is already available in wishlist")
     else:
         Wishlist.objects.create(user=request.user, product=Product.objects.get(id=id), date=datetime.datetime.now)
-        messages.success(request, "Item added to wishlist")
-    return redirect(f"/wishlist/{request.user}")
+        # messages.success(request, "Item added to wishlist")
+        return JsonResponse({'status': 'success'})
+
 
 
 
@@ -133,8 +136,8 @@ def addWishlist(request, uname, id):
 ''' Functionality to remove items from the wishlist '''
 def removeWishlist(request, uname, id):
     Wishlist.objects.get(id=id).delete()
-    messages.warning(request, "Item removed from the wishlist.")
-    return redirect(f"/wishlist/{request.user}")
+    return JsonResponse({'status':'success', 'message': 'Item removed from the playlist'})
+    
 
 
 

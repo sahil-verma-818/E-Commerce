@@ -50,16 +50,16 @@
                         <form action="/login_user" method="post">
                         {% csrf_token %}
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" name="login-username" id="floatingInput" placeholder="username">
+                            <input type="text" class="form-control" name="loginusername" id="floatingInput" placeholder="username">
                             <label for="floatingInput">Username</label>
                         </div>
                         <div class="form-floating mb-4">
-                            <input type="password" name="login-password" class="form-control" id="floatingPassword" placeholder="Password">
+                            <input type="password" name="loginpassword" class="form-control" id="floatingPassword" placeholder="Password">
                             <label for="floatingPassword">Password</label>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <div class="form-check">
-                                <input type="text" class="form-control" name="user-type" id="exampleCheck1" value="seller" hidden>
+                                <input type="text" class="form-control" name="usertype" id="exampleCheck1" value="seller" hidden>
                                 <!-- <label class="form-check-label" for="exampleCheck1">Check me out</label> -->
                             </div>
                             <a href="">Forgot Password</a>

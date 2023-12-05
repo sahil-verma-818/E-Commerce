@@ -30,7 +30,7 @@
             <p class="text-muted">If you have any questions, please feel free to <a href="contact.html">contact us</a>,
               our customer service center is working for you 24/7.</p>
             <hr>
-            <form action="" method="post">
+            <form action="" id="registerForm" method="post">
               {% csrf_token %}
               <div class="form-group">
                 <label for="name">First Name</label>
@@ -49,28 +49,15 @@
                 <input id="password" type="password" class="form-control" name="password">
               </div>
               <div class="form-group">
-                <label for="user-type">Choose your account type</label>
-                <select name="user-type" id="user-type">
+                <label for="usertype">Choose your account type</label>
+                <select name="usertype" id="usertype">
                   <option value="customer">Customer</option>
                   <option value="seller">Seller</option>
                   <option value="admin">Admin</option>
                 </select>
               </div>
-              {% if messages %}
-              {% for message in messages %}
-              {% if message.tags == 'success'%}
-              <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-              {% elif message.tags == 'info' %}
-              <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-              {% elif message.tags == 'warning' %}
-              <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-              {% elif message.tags == 'error' %}
-              <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-              {% endif %}
-              {% endfor %}
-              {% endif %}
               <div class="text-center">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> Register</button>
+                <button type="submit" id="registerBtn" class="btn btn-primary"><i class="fa fa-user-md"></i> Register</button>
               </div>
             </form>
           </div>
@@ -83,18 +70,18 @@
               egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit
               amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
             <hr>
-            <form action="/login_user" method="post">
+            <form id="loginForm" action="" method="post">
               {% csrf_token %}
               <div class="form-group">
-                <label for="email">Username</label>
-                <input id="email" type="text" class="form-control" name="login-username">
+                <label for="loginUsername">Username</label>
+                <input id="loginUsername" type="text" class="form-control" name="loginusername">
               </div>
               <div class="form-group">
-                <label for="password">Password</label>
-                <input id="password" type="password" class="form-control" name="login-password">
+                <label for="loginPassword">Password</label>
+                <input id="loginPassword" type="password" class="form-control" name="loginpassword">
               </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
+                <button type="submit" id="loginBtn" class="btn btn-primary"><i class="fa fa-sign-in"></i> Log in</button>
               </div>
             </form>
           </div>
@@ -103,6 +90,77 @@
     </div>
   </div>
 </div>
+
+
+<script>
+
+$('#registerBtn').click(function(){
+  event.preventDefault()
+
+  let fn = $('#firstname').val()
+  let ln = $('#lastname').val()
+  let em = $('#email').val()
+  let ps = $('#password').val()
+  let ut = $('#usertype').val()
+  let csr = $('input[name=csrfmiddlewaretoken]').val()
+
+  if((fn == '') || (ln == '') || (em == '') || (ps == '')){
+    toastr.error('Required credentials can not be left empty.')
+  } else {
+    mydata = { firstname:fn, lastname:ln, email:em, password:ps, usertype:ut, csrfmiddlewaretoken : csr }
+
+  }
+
+  $.ajax({
+    url : '/register',
+    method : "POST",
+    data : mydata,
+    success:function(data){
+      if (data.status == 'success'){
+        toastr.success(data.message);
+      } else {
+        toastr.error(data.message)
+      }
+    }
+  })
+})
+
+
+$('#loginBtn').click(function(){
+  console.log('Login Button Clicked')
+  event.preventDefault()
+
+  let loginusername = $('#loginUsername').val()
+  let loginpassword = $('#loginPassword').val()
+  let csr = $('input[name=csrfmiddlewaretoken]').val()
+
+  console.log(loginusername)
+  console.log(loginpassword)
+  
+  if ((loginusername == '') || (loginpassword == '')) {
+    toastr.error("Required credentials can't be left empty.")
+  } else {
+    mydata = {loginusername : loginusername, loginpassword : loginpassword, csrfmiddlewaretoken : csr}
+  }
+
+  $.ajax({
+    url : '/login_user',
+    method : "POST",
+    data : mydata,
+    success : function(data){
+      if (data.status == 'success'){
+        toastr.success(data.message)
+        if (data.redirect){
+          window.location.href = data.redirect;
+        }
+      } else {
+        toastr.error(data.message)
+        $('#loginForm').reset();
+      }
+    }
+  })
+})
+</script>
 
 
 

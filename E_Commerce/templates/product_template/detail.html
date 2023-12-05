@@ -65,9 +65,9 @@
                 <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to product details, material
                     &amp; care and sizing</a></p>
                 <p class="price"> &#8377; {{data.price}}</p>
-                <p class="text-center buttons"><a href="/cart/add/{{data.id}}/{{user}}" class="btn btn-primary"><i
-                      class="fa fa-shopping-cart"></i> Add to cart</a><a href=/addWishlist/{{user}}/{{data.id}}
-                    class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                <p class="text-center buttons"><a href="" class="btn btn-primary" id="addCart"><i
+                      class="fa fa-shopping-cart"></i> Add to cart</a><a
+                    class="btn btn-outline-primary" id="addWishlist"><i class="fa fa-heart"></i> Add to wishlist</a></p>
               </div>
               <div data-slider-id="1" class="owl-thumbs">
                 <button class="owl-thumb-item"><img src=../{{data.image1}} alt="" class="img-fluid"></button>
@@ -128,20 +128,41 @@
     </div>
   </div>
 </div>
+<script>
 
-{% if messages %}
-{% for message in messages %}
-{% if message.tags == 'success'%}
-<script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-{% elif message.tags == 'info' %}
-<script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-{% elif message.tags == 'warning' %}
-<script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-{% elif message.tags == 'error' %}
-<script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-{% endif %}
-{% endfor %}
-{% endif %}
+$('#addWishlist').click(function(){
+  event.preventDefault();
+
+  $.ajax({
+    url : "/addWishlist/{{user}}/{{data.id}}",
+    method : "GET",
+    success: function(data){
+    if (data.status == "success"){
+      toastr.success('Item added to wishlist asjsd')
+    } else {
+      toastr.error('Item already in the wishlist.')
+    }
+    }
+  })
+});
+
+$('#addCart').click(function(){
+  event.preventDefault();
+
+  $.ajax({
+    url : "/cart/add/{{data.id}}/{{user}}",
+    method : "GET",
+    success: function(data){
+      if (data.status == 'success'){
+        toastr.success('Item added to cart!!')
+      }
+    }
+  })
+})
+
+</script>
+
+
 
 
 {% endblock %}

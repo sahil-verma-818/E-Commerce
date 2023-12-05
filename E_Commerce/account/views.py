@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,JsonResponse
 from product.models import Product, ProductCategory
 from .models import User,Address
 from django.contrib.auth import authenticate, login, logout
@@ -20,22 +20,20 @@ def register(request):
     ''' Handling POST request for registering data of user '''
     if request.method == 'POST':
         firstname = request.POST.get('firstname')
-        lastname = request.POST.get('lastname', " ")
+        lastname = request.POST.get('lastname')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        user_type = request.POST.get('user-type')
+        user_type = request.POST.get('usertype')
 
         # Checking if User with perticular email exists or not
         if User.objects.filter(email=email).exists():
-            messages.error(request, "An Existing user already available with this gmail. Try another one.")
+            return JsonResponse({'status': 'error','message' : 'An Existing user already available with this email. Try another one.'})
         else:
             username = email.split('@')[0]
             User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
-            messages.success(request, f"User Successfully Created with username : {username}")
+            return JsonResponse({'status' : 'success' , 'message' : f"New user created with username {username}"})
             
             # Rendering specific pages for sellers
-            if user_type == 'seller':
-                return render(request, 'admin_template/signup.html')
     return render(request, 'users_template/register.html', {'catagory': ProductCategory.objects.all()})
 
 ''' Code to login User '''
@@ -45,20 +43,18 @@ def login_user(request):
     # Handleing POST request for login users.
     if request.method == 'POST':
        
-        username = request.POST.get('login-username')
-        password = request.POST.get('login-password')
+        username = request.POST.get('loginusername')
+        password = request.POST.get('loginpassword')
         user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user=user)
-            messages.success(request, "Login Successful")
             if user.user_type == 'seller':
-                return redirect(f"/admin-panel/dashboard")
+                return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/admin-panel/dashboard'})
             elif user.user_type == 'customer':
-                return redirect('/')
+                return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/'})
         else:
-            messages.error(request, "Data insufficient or Credentitials not matched")
-            return redirect('/register')    
+            return JsonResponse({'status':'error', 'message':'Credentials not matched to any data.'})
     
 
 ''' Functionality of update or render user profile data through GET or POST request '''

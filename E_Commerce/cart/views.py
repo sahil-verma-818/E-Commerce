@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from .models import CartItems
 from account.models import User
 from product.models import Product, ProductCategory
@@ -45,9 +45,8 @@ def add_cart(request,uname, id):
     # Else add a new item to the cart
     else:
         CartItems.objects.create(user=request.user, product=Product.objects.get(id=id), quantity=1)
-    messages.success(request, "Success !! item added to cart")
-    return redirect(f"/cart/{request.user}")
-
+    # messages.success(request, "Success !! item added to cart")
+    return JsonResponse({'status':'success', 'message':'Success !! Item added to cart'})
 
 # Functionality to remove items from the cart
 @login_required(login_url='/register')

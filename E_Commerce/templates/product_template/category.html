@@ -46,11 +46,8 @@
                       {% for brand in brands %}
                       <div class="checkbox">
                         <label>
-                          {% if brand.id == product_data.object_list.brand.id %}
-                          <input type="checkbox" name="brandSelections" checked value= '{{brand.id}}'> {{ brand.brand_name }}
-                          {% else %}
-                            <input type="checkbox" name="brandSelections" value= '{{brand.id}}'> {{ brand.brand_name }}
-                          {% endif %}
+                          <input class="filterbrand" type="checkbox" name="brandSelections" value="{{brand.id}}"> {{ brand.brand_name }}
+
                         </label>
                       </div>
                       {% endfor %}
@@ -66,7 +63,7 @@
                       {% for color in colors %}
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" name="colorSelections" value="{{color.color_name}}"> {{ color.color_name }}
+                          <input class="filtercolor" type="checkbox" name="colorSelections" value="{{color.color_name}}"> {{ color.color_name }}
                         </label>
                       </div>
                       {% endfor %}
@@ -95,7 +92,7 @@
                         </label>
                       </div>
                     </div>
-                    <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
+                    <button id="applyBtn" class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
                   </form>
                 </div>
               </div> 
@@ -136,7 +133,10 @@
                       <p class="price"> 
                         <del></del> {{data.price}}
                       </p>
-                      <p class="buttons"><a href="/product/{{data.id}}" class="btn btn-outline-secondary">View detail</a><a href="/cart/add/{{data.id}}/{{user}}" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a></p>
+                      <p class="buttons">
+                        <a href="/product/{{data.id}}"  class="btn btn-outline-secondary">View detail</a>
+                        <a  class="btn btn-primary addCart" data-id="{{data.id}}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                      </p>
                     </div>
                     <!-- /.text-->
                   </div>
@@ -171,9 +171,61 @@
         </div>
       </div>
     </div>
+
+    <script>
+
+      // Ajax call to add items to cart
+      $('.addCart').click(function(){
+        event.preventDefault()
+        console.log('Button clicked')
+
+        let a = $(this).attr("data-id");
+        console.log(a);
+        
+        $.ajax({
+          // url : '/cart/add/' + a + '/{{user}}',
+          url : `/cart/add/${a}/{{user}}`,
+          method : "GET",
+          success : function(data){
+            if (data.status == 'success'){
+              toastr.success(data.message)
+            }
+          }
+        })
+
+      })
+
+
+      // Ajax call for filters
+      $('#applyBtn').click(function(){
+        function updateOptions(){
+          var brand_ids = []
+          var color_ids = []
+
+          $('.filterbrand:checked').each(function(){
+            brand_ids.push($(this).val())
+          })
+
+          $('.filtercolor:checked').each(function(){
+            color_ids.push($(this).val())
+          })
+
+          $.ajax({
+            url : $(location).attr('href'),
+            method : 'GET',
+            success : function(data){
+              console.log(data)
+            }
+          })
+        }
+      })
+
+    </script>
+
+
+
+
 {% endblock %}
-  </body>
-</html>
 
 
 
