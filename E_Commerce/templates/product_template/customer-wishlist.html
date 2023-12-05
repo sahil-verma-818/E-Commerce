@@ -50,12 +50,12 @@
               <div class="product"> 
                 <div class="flip-container">
                   <div class="flipper">
-                    <div class="front"><a href="/product/{{item.product.id}}"><img src="../{{item.product.image1}}" alt="" class="img-fluid"></a>
+                    <div class="front"><a href="/product/{{item.product.id}}"><img src="../{{item.product.image1}}" style="width: 300px; height: 250px;" alt="" class="img-fluid"></a>
                     </div>
-                    <div class="back"><a href="/product/{{item.product.id}}"><img src="../{{item.product.image2}}" alt="" class="img-fluid"></a>
+                    <div class="back"><a href="/product/{{item.product.id}}"><img src="../{{item.product.image2}}" style="width: 300px; height: 250px;" alt="" class="img-fluid"></a>
                     </div>
                   </div>
-                </div><a href="/product/{{item.product.id}}" class="invisible"><img src="../{{item.product.image1}}" alt="" class="img-fluid"></a>
+                </div><a href="/product/{{item.product.id}}" class="invisible"><img src="../{{item.product.image1}}" style="width: 300px; height: 250px;" alt="" class="img-fluid"></a>
                 <div class="text">
                   <h3><a href="/product/{{item.product.id}}">{{item.product.product_name}}</a></h3>
                   <p class="price">
@@ -85,19 +85,21 @@ $('.addCart').click(function(){
 
   event.preventDefault();
   let a = $(this).attr("data-id");
-
+  let mythis = this
   $.ajax({
     url : `/cart/add/${a}/{{user}}`,
     method : "GET",
     success: function(data){
       if (data.status == 'success'){
         toastr.success('Item added to cart!!')
+        $(mythis).closest('.deleteItem').fadeOut()
       }
     }
   })
 })
 
 $('.removeWishlist').click(function(event){
+  let mythis = this
   console.log("Button clicked")
   event.preventDefault();
   let a = $(this).attr("data-id");
@@ -108,9 +110,8 @@ $('.removeWishlist').click(function(event){
     method : "GET",
     success : function(data){
       if (data.status == 'success'){
-        let b = $(this).closest('.deleteItem')
-        console.log(b)
         toastr.success(data.message)
+        $(mythis).closest('.deleteItem').fadeOut()
       }
     }
   })
