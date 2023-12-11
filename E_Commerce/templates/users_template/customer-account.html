@@ -43,33 +43,33 @@
             <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
               egestas.</p>
             <h3>Change password</h3>
-            <form action="/update_password/{{data1.username}}" method="post">
+            <form action="" method="post">
               {% csrf_token %}
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="password_old">Old password</label>
-                    <input id="password_old" name="old_password" type="password" class="form-control">
+                    <label for="old_password">Old password</label>
+                    <input id="old_password" name="old_password" type="password" class="form-control">
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="password_1">New password</label>
-                    <input id="password_1" name="new_password" type="password" class="form-control">
+                    <label for="new_password">New password</label>
+                    <input id="new_password" name="new_password" type="password" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="password_2">Retype new password</label>
-                    <input id="password_2" name="cnf_password" type="password" class="form-control">
+                    <label for="cnf_password">Retype new password</label>
+                    <input id="cnf_password" name="cnf_password" type="password" class="form-control">
                   </div>
                 </div>
               </div>
               <!-- /.row-->
               <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save new password</button>
+                <button type="submit" id="passwordBtn" class="btn btn-primary"><i class="fa fa-save"></i> Save new password</button>
               </div>
             </form>
             <h3 class="mt-5">Personal details</h3>
@@ -78,14 +78,14 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="firstname">Firstname</label>
-                    <input id="firstname" name="first_name" type="text" class="form-control" value={{data1.first_name}}>
+                    <label for="first_name">Firstname</label>
+                    <input id="first_name" name="first_name" type="text" class="form-control" value={{data1.first_name}}>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="lastname">Lastname</label>
-                    <input id="lastname" name="last_name" type="text" class="form-control" value="{{data1.last_name}}">
+                    <label for="last_name">Lastname</label>
+                    <input id="last_name" name="last_name" type="text" class="form-control" value="{{data1.last_name}}">
                   </div>
                 </div>
               </div>
@@ -94,13 +94,13 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="house">House No.</label>
-                    <input id="company" name="house" type="text" class="form-control" value="{{data2.house}}">
+                    <input id="house" name="house" type="text" class="form-control" value="{{data2.house}}">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="street">Area</label>
-                    <input id="street" name="area" type="text" class="form-control" value="{{data2.area}}">
+                    <label for="area">Area</label>
+                    <input id="area" name="area" type="text" class="form-control" value="{{data2.area}}">
                   </div>
                 </div>
               </div>
@@ -108,8 +108,8 @@
               <div class="row">
                 <div class="col-md-6 col-lg-3">
                   <div class="form-group">
-                    <label for="city">Landmark</label>
-                    <input id="city" name="landmark" type="text" class="form-control" value="{{data2.landmark}}">
+                    <label for="landmark">Landmark</label>
+                    <input id="landmark" name="landmark" type="text" class="form-control" value="{{data2.landmark}}">
                   </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
@@ -126,14 +126,14 @@
                 </div>
                 <div class="col-md-6 col-lg-3">
                   <div class="form-group">
-                    <label for="country">City</label>
-                    <input id="country" name="city" type="text" class="form-control" value="{{data2.city}}">
+                    <label for="city">City</label>
+                    <input id="city" name="city" type="text" class="form-control" value="{{data2.city}}">
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="phone">Mobile</label>
-                    <input id="phone" name="mobile" type="text" class="form-control" value="{{data1.mobile}}">
+                    <label for="mobile">Mobile</label>
+                    <input id="mobile" name="mobile" type="text" class="form-control" value="{{data1.mobile}}">
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -143,30 +143,100 @@
                   </div>
                 </div>
                 <div class="col-md-12 text-center">
-                  <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save changes</button>
+                  <button id="detailBtn" type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save changes</button>
                 </div>
               </div>
             </form>
-            {% if messages %}
-              {% for message in messages %}
-              {% if message.tags == 'success'%}
-              <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-              {% elif message.tags == 'info' %}
-              <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-              {% elif message.tags == 'warning' %}
-              <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-              {% elif message.tags == 'error' %}
-              <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-              {% endif %}
-              {% endfor %}
-              {% endif %}
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-{% endblock %}
-</body>
 
-</html>
+
+<script>
+
+// Ajax Script for updating personal details
+
+$('#detailBtn').click(function(){
+
+  event.preventDefault()
+  let first_name = $('#first_name').val()
+  let last_name = $('#last_name').val()
+  let house = $('#house').val()
+  let area = $('#area').val()
+  let landmark = $('#landmark').val()
+  let zip = $('#zip').val()
+  let state = $('#state').val()
+  let city = $('#city').val()
+  let mobile = $('#mobile').val()
+  let email = $('#email').val()
+  let csr = $('input[name=csrfmiddlewaretoken]').val()
+
+  if ((first_name == '') || (last_name == '') || (house == '') || (area == '') || (landmark == '') || (zip=='') || (state=='') || (city == '') || (mobile=='')|| (email=='')){
+    toastr.message('Address must be provided with proper location.')
+  } else {
+    mydata = {first_name:first_name,last_name:last_name,house:house, area:area,landmark:landmark,zip:zip, state:state, city:city,mobile:mobile, email:email,csrfmiddlewaretoken:csr}
+  }
+
+  $.ajax({
+    url : '/account/{{user}}',
+    method : "POST",
+    data : mydata,
+    success : function(data){
+      if (data.status=='success'){
+        toastr.success(data.message)
+      }
+    }
+  })
+})
+
+// ajax script to update password
+
+$('#passwordBtn').click(function(){
+  console.log('Button Pressed')
+  event.preventDefault()
+
+  let old_password=$('#old_password').val()
+  let new_password=$('#new_password').val()
+  let cnf_password=$('#cnf_password').val()
+  let csr = $('input[name=csrfmiddlewaretoken]').val()
+
+
+  if ((old_password=='')||(new_password=='')||(cnf_password=='')){
+    toastr.warning("Required credentials can't be left empty.")
+  } else if (new_password != cnf_password) {
+    toastr.warning("Password and confirm password doesn't match.")
+    $('form')[0].reset()
+  } else {
+    mydata = {old_password:old_password,new_password:new_password, cnf_password:cnf_password, csrfmiddlewaretoken:csr}
+  }
+
+  $.ajax({
+    url : '/update_password/{{user}}',
+    method : "POST",
+    data : mydata,
+    success : function(data){
+      if (data.status=='success'){
+        toastr.success(data.message)
+      } else if (data.status=='error') {
+        toastr.error(data.message)
+      } else {
+        toastr.message(data.message)
+      }
+    }
+
+
+  })
+})
+
+
+
+
+
+</script>
+
+
+
+{% endblock %}

@@ -100,10 +100,9 @@ $('.addCart').click(function(){
 
 $('.removeWishlist').click(function(event){
   let mythis = this
-  console.log("Button clicked")
   event.preventDefault();
   let a = $(this).attr("data-id");
-  console.log(a)
+
 
   $.ajax({
     url : `/removeWishlist/{{user}}/${a}`,

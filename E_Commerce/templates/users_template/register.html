@@ -127,15 +127,12 @@ $('#registerBtn').click(function(){
 
 
 $('#loginBtn').click(function(){
-  console.log('Login Button Clicked')
   event.preventDefault()
 
   let loginusername = $('#loginUsername').val()
   let loginpassword = $('#loginPassword').val()
   let csr = $('input[name=csrfmiddlewaretoken]').val()
 
-  console.log(loginusername)
-  console.log(loginpassword)
   
   if ((loginusername == '') || (loginpassword == '')) {
     toastr.error("Required credentials can't be left empty.")

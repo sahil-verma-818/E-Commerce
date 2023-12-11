@@ -40,15 +40,15 @@
                         <input type="number" name="{{data.id}}" value="{{data.quantity}}" class="form-control">
                       </td>
                       <td>{{data.product.price}}</td>
-                      <td>{% widthratio data.product.price 1 data.quantity %}</td>
-                      <td><a href="/remove-cart/{{user}}/{{data.id}}"><i class="fa fa-trash-o"></i></a></td>
+                      <td class="price">{% widthratio data.product.price 1 data.quantity %}</td>
+                      <td><a type="button" class="deleteCart" data-id="{{data.id}}"><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                     {% endfor %}
                   </tbody>
                   <tfoot>
                     <tr>
                       <th colspan="4">Total</th>
-                      <th colspan="2">{{total}}</th>
+                      <th colspan="2" id="total">{{total}}</th>
                     </tr>
                   </tfoot>
                 </table>
@@ -82,22 +82,47 @@
     </div>
   </div>
 </div>
-{% if messages %}
-{% for message in messages %}
-{% if message.tags == 'success'%}
-<script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-{% elif message.tags == 'info' %}
-<script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-{% elif message.tags == 'warning' %}
-<script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-{% elif message.tags == 'error' %}
-<script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-{% endif %}
-{% endfor %}
-{% endif %}
+
+
+<script>
+
+
+$('.deleteCart').click(function(){
+  event.preventDefault()
+  console.log('Button clicked')
+  let mythis=this
+  let a = $(mythis).attr('data-id')
+  console.log(a)
+
+  $.ajax({
+    url : `/remove-cart/{{user}}/${a}`,
+    method : "GET",
+    success : function(data){
+      if (data.status=='success'){
+        toastr.success(data.message)
+        $(mythis).closest('tr').remove()
+        let total = 0
+        $('tr').each(function(){
+          // console.log(this)
+          $(this).find('td').each(function(){
+            var price = $(this).closest('.price').html()
+            if (price != undefined){
+              total += parseInt(price)
+            }
+          })
+        })
+        $('#total').text(total)
+      } else{
+        data.warning(data.message)
+      }
+    }
+  })
+})
+
+
+
+</script>
+
+
 
 {% endblock %}
-
-</body>
-
-</html>

@@ -94,7 +94,8 @@ def product_categories(request, category):
         'product_data' : page_obj,
         'category' : ProductCategory.objects.all(),
         'brands' : Brand.objects.filter(category=category),
-        'colors' : Color.objects.all()
+        'colors' : Color.objects.all(),
+        'selected_category' : product_data[0].category
     }
     
     return render(request, 'product_template/category.html', context)

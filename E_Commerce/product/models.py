@@ -40,7 +40,7 @@ class Mdl(models.Model):
 
 class Product(models.Model):
     product_name = models.CharField(max_length=100)
-    product_desc = models.CharField(max_length=255)
+    product_desc = models.CharField(max_length=600)
     category = models.ForeignKey(ProductCategory, on_delete=models.SET_NULL, null=True)
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True) 
     color = models.ForeignKey(Color, on_delete=models.SET_NULL, null=True, blank=True)

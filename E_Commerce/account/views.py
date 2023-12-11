@@ -114,11 +114,8 @@ def account(request, id):
             Address.objects.create(**updated_address)
             
         User.objects.filter(id = request.user.id).update(**updated_user)
-        messages.success(request, "Address updated successfully")
-        if request.user.user_type == 'seller':
-            return redirect(f"/adminProfile/{request.user}")
-        elif request.user.user_type == 'customer':
-            return redirect(f"/account/{request.user}")
+        return JsonResponse({'status':'success', 'message':'Personal Details updated successfully'})
+
     
 
 ''' Implementation of functionality of update password. '''
@@ -133,16 +130,17 @@ def update_password(request, id):
 
         user = authenticate(username=id, password=old_password)
 
-        if user is not None:
+        if user:
             if new_password == cnf_password:
                 user.set_password(new_password)
                 user.save()
-                messages.success(request, "Password Updated Successfully")
                 login(request, user)
-                HttpResponseRedirect(request.path_info)
+                return JsonResponse({'status':'success', 'message':'Password Updated Successfully'})
             else:
-                messages.error(request, "Password and Confirm Password Doesn't match")
-                HttpResponseRedirect(request.path_info)
+                return JsonResponse({'status':'message', 'message': 'Password and confirm password does not match'})
+            
+        else:
+            return JsonResponse({'status':'error', 'message':'Wrong password!! Try Again'})
 
 
 # functionality of logout

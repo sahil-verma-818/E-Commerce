@@ -13,6 +13,7 @@
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"><a href="/">Home</a></li>
                   <li aria-current="page" class="breadcrumb-item active">Category</li>
+                  <li aria-current="page" class="breadcrumb-item active">{{selected_category}}</li>
                 </ol>
               </nav>
             </div>
@@ -28,7 +29,11 @@
                 <div class="card-body">
                   <ul class="nav nav-pills flex-column category-menu">
                         {% for data in category %}
+                        {% if data == selected_category %}
+                        <li><a href="/product_category/{{ data.id }}" class="nav-link active"> {{ data.category }}</a></li>
+                        {% else %}
                         <li><a href="/product_category/{{ data.id }}" class="nav-link"> {{ data.category }}</a></li>
+                        {% endif %}
                         {% endfor %}
                       </ul>
                     </li>
@@ -38,7 +43,7 @@
               <div class="card sidebar-menu mb-4">
                 {% if brands %}
                 <div class="card-header">
-                  <h3 class="h4 card-title">Brands <a href="#" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
+                  <h3 class="h4 card-title">Brands <a href="" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times-circle"></i> Clear</a></h3>
                 </div>
                 <div class="card-body">
                   <form method="get" action="">
@@ -100,14 +105,14 @@
             </div>
             <div class="col-lg-9">
               <div class="box">
-                <h1>{{product_data.object_list | first}}</h1>
+                <h1>{{selected_category}}</h1>
               </div>
               <div class="box info-bar">
                 <div class="row">
                   <div class="col-md-12 col-lg-4 products-showing">Showing <strong>{{ product_data.start_index }} - {{ product_data.end_index }}</strong> of <strong> {{ product_data.paginator.count }} </strong> products</div>
                   <div class="col-md-12 col-lg-7 products-number-sort">
                     <form class="form-inline d-block d-lg-flex justify-content-between flex-column flex-md-row">
-                      <!-- <div class="products-number"><strong>Show</strong><a href="#" class="btn btn-sm btn-primary">12</a><a href="#" class="btn btn-outline-secondary btn-sm">24</a><a href="#" class="btn btn-outline-secondary btn-sm">All</a><span>products</span></div> -->
+                      <!-- <div class="products-number"><strong>Show</strong><a href="" class="btn btn-sm btn-primary">12</a><a href="" class="btn btn-outline-secondary btn-sm">24</a><a href="#" class="btn btn-outline-secondary btn-sm">All</a><span>products</span></div> -->
                       <div class="products-sort-by mt-2 mt-lg-0"><strong>Sort by</strong>
                         <select name="sort-by" id="sorting-filter" class="form-control">
                           <option value="low-to-high">Price (Low to High)</option>
@@ -146,7 +151,7 @@
                 <!-- /.products-->
               </div>
               <div class="pages">
-                <!-- <p class="loadMore"><a href="#" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a></p> -->
+                <!-- <p class="loadMore"><a href="" class="btn btn-primary btn-lg"><i class="fa fa-chevron-down"></i> Load more</a></p> -->
                 <nav aria-label="Page navigation example" class="d-flex justify-content-center">
                   <ul class="pagination">
                     {% if product_data.has_previous %}
@@ -174,14 +179,15 @@
 
     <script>
 
+
       // Ajax call to add items to cart
       $('.addCart').click(function(){
         event.preventDefault()
         console.log('Button clicked')
 
-        let a = $(this).attr("data-id");
-        console.log(a);
+        let mythis = this
         
+        let a = $(mythis).attr("data-id");
         $.ajax({
           // url : '/cart/add/' + a + '/{{user}}',
           url : `/cart/add/${a}/{{user}}`,
@@ -189,6 +195,7 @@
           success : function(data){
             if (data.status == 'success'){
               toastr.success(data.message)
+              $(mythis).html('Added to cart')
             }
           }
         })

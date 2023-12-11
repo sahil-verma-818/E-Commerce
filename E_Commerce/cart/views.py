@@ -53,6 +53,6 @@ def add_cart(request,uname, id):
 def remove_cart(request, uname, id):
         if request.user == User.objects.get(username=uname):
             CartItems.objects.get(id=id).delete()
-            messages.success(request, "Item removed from the cart")
-            return redirect(f"/cart/{request.user}")
+            return JsonResponse({'status':'success', 'message':'Item removed from the cart'})
+            
         

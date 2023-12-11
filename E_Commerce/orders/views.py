@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 from .models import Order, OrderItems
 from account.models import User, Address
 from django.contrib.auth.decorators import login_required
@@ -43,14 +43,14 @@ def order_details(request, uname, id):
     try:
         invoice_address = Address.objects.get(Q(user=request.user) & Q(primary=True))
     except Address.DoesNotExist:
-        pass
+        invoice_address = None
 
     context = {
         'order' : order,
         'order_items' : order_items,
         'invoice' : invoice_address
     }
-
+    print(request.user.user_type)
 
     return render(request, 'order_template/customer-order.html', context)
 
@@ -107,7 +107,7 @@ def checkout(request,id):
         else:
             order.delete()
             messages.error(request, "Order can't be placed due to unavailability of items")
-            return HttpResponseRedirect(request.path_info)
+            
         
         # sweetify.success(request, 'You did it', text='Your Form has been Updated',persistent='Hell yeah')
 
@@ -120,3 +120,19 @@ def checkout(request,id):
 @login_required(login_url='/adminlogin')
 def admin_home(request):
     return render(request, 'admin_template/index.html', {'order_detail' : OrderItems.objects.filter(product__user=request.user)})
+
+
+def admin_order(request, uname, id):
+    order = Order.objects.get(id=id)
+    order_items = OrderItems.objects.filter(order=order)
+    try:
+        invoice_address = Address.objects.get(Q(user=order.user.id) & Q(primary=True))
+    except Address.DoesNotExist:
+        invoice_address = None
+
+    context = {
+        'order' : order,
+        'order_items' : order_items,
+        'invoice' : invoice_address
+    }
+    return render(request, 'admin_template/order-detail.html', context)

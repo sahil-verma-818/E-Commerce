@@ -73,6 +73,11 @@
                 <button class="owl-thumb-item"><img src=../{{data.image1}} alt="" class="img-fluid"></button>
                 <button class="owl-thumb-item"><img src=../{{data.image2}} alt="" class="img-fluid"></button>
                 <button class="owl-thumb-item"><img src=../{{data.image3}} alt="" class="img-fluid"></button>
+                {% if data.image4 %}
+                <button class="owl-thumb-item"><img src=../{{data.image4}}  class="img-fluid"></button>
+                {% elif data.image5 %}
+                <button class="owl-thumb-item"><img src=../{{data.image5}}  class="img-fluid"></button>
+                {% endif %}
               </div>
             </div>
           </div>
@@ -138,7 +143,8 @@ $('#addWishlist').click(function(){
     method : "GET",
     success: function(data){
     if (data.status == "success"){
-      toastr.success('Item added to wishlist asjsd')
+      toastr.success('Item added to wishlist')
+      $('#addWishlist').html('Added to wishlist')
     } else {
       toastr.error('Item already in the wishlist.')
     }
@@ -155,6 +161,7 @@ $('#addCart').click(function(){
     success: function(data){
       if (data.status == 'success'){
         toastr.success('Item added to cart!!')
+        $('#addCart').html('Added to Cart')
       }
     }
   })
