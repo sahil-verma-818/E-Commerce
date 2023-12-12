@@ -6,6 +6,7 @@ urlpatterns = [
     path('order-details/<str:uname>/<int:id>', views.order_details),
     path('checkout/<str:id>', views.checkout),
     path('admin-panel/dashboard', views.admin_home),
-    path('admin-order/<str:uname>/<int:id>', views.admin_order)
+    path('admin-order/<str:uname>/<int:id>', views.admin_order),
+    path('confirm-order/<int:id>', views.confirm_order)
 
 ]

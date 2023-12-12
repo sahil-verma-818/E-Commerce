@@ -7,16 +7,16 @@
     <div class="row bg-secondary rounded  mx-0">
         <div id="order-detail">
             <div class="box">
-                <h1>Order #1123 </h1>
-                <p class="lead">Order #1123 was placed on <strong>17/02/2023</strong> and is currently
-                    <strong>Being Prepared</strong>.
+                <h1>Order #{{order.id}} </h1>
+                <p class="lead">Order #{{order.id}} was placed on <strong>{{order.order_date}}</strong> and is currently
+                    <strong>{{order.status}}</strong>.&nbsp&nbsp <a href=""><i class="bi bi-pencil"></i></a>
                 </p>
                 <hr>
                 <div class="table-responsive mb-4">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th colspan="3">Product</th>
+                                <th colspan="3" class="text-center">Product</th>
                                 <th>Quantity</th>
                                 <th>Unit price</th>
                                 <th>Total</th>
@@ -27,10 +27,10 @@
                             <tr>
                                 <td colspan="2"><a href="#"><img src="{{item.product.image1.url}}"
                                             alt="{{item.product.product_name}}" style="height: 80px; width: 80px;"></a></td>
-                                <td><a href="/product/{{item.product.id}}" class="text-light">{{item.product.product_name}}</a></td>
+                                <td><a href="/add-product/anurag/{{item.product.id}}" class="text-light">{{item.product.product_name}}</a></td>
                                 <td>{{item.quantity}}</td>
                                 <td>&#8377;{{item.product.price}}</td>
-                                <td>&#8377;{% widthratio item.product.price 1 item.quantity %}</td>
+                                <td class="price">&#8377;{% widthratio item.product.price 1 item.quantity %}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -47,14 +47,16 @@
                         <h2>Invoice address</h2>
                         <p>{{order.user.first_name}}&nbsp{{order.user.last_name}}<br>{{invoice.house}},
                             {{invoice.area}}<br>{{invoice.landmark}}<br>{{invoice.city}},
-                            {{invoice.state}}<br>{{invoice.zip}}<br>Mob. no - {{user.mobile}}</p>
+                            {{invoice.state}}<br>{{invoice.zip}}<br>Mob. no - {{user.mobile}}
+                        </p>
                     </div>
                     <div class="col-lg-6">
                         <h2>Shipping address</h2>
-                        <p>{{user.first_name}}&nbsp{{user.last_name}}<br>{{order.delivery_address.house}},
+                        <p>{{order.user.first_name}}&nbsp{{order.user.last_name}}<br>{{order.delivery_address.house}},
                             {{order.delivery_address.area}}<br>{{order.delivery_address.landmark}}<br>{{order.delivery_address.city}},
                             {{order.delivery_address.state}}<br>{{order.delivery_address.zip}}<br>Mob. no -
-                            {{user.mobile}}</p>
+                            {{user.mobile}}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -62,4 +64,8 @@
     </div>
 </div>
 <!-- Blank End -->
+
+
+
+
 {% endblock %}

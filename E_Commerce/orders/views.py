@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from .models import Order, OrderItems
 from account.models import User, Address
 from django.contrib.auth.decorators import login_required
@@ -86,7 +86,7 @@ def checkout(request,id):
         payment_method = request.POST.get('payment-method')
         shipping_address, status = Address.objects.get_or_create(**order_address)
         cart_data = CartItems.objects.filter(user=request.user)
-        order = Order.objects.create(user=request.user, delivery_address=shipping_address, order_date=datetime.datetime.now(), payment_method=payment_method)
+        order = Order.objects.create(user=request.user, delivery_address=shipping_address, status='waiting for confirmation', order_date=datetime.datetime.now(), payment_method=payment_method)
         total = 0
         for data in cart_data:
             stock_remain=Product.objects.get(id=data.product.id)
@@ -107,10 +107,6 @@ def checkout(request,id):
         else:
             order.delete()
             messages.error(request, "Order can't be placed due to unavailability of items")
-            
-        
-        # sweetify.success(request, 'You did it', text='Your Form has been Updated',persistent='Hell yeah')
-
         
     
 
@@ -136,3 +132,9 @@ def admin_order(request, uname, id):
         'invoice' : invoice_address
     }
     return render(request, 'admin_template/order-detail.html', context)
+
+def confirm_order(request, id):
+    order = Order.objects.get(id=id)
+    order.is_confirmed = True
+    order.save()
+    return redirect('/admin-panel/dashboard')

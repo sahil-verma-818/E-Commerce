@@ -11,7 +11,7 @@
                 <i class="fa fa-chart-line fa-3x text-primary"></i>
                 <div class="ms-3">
                     <p class="mb-2">Total Order received</p>
-                    <h6 class="mb-0">$1234</h6>
+                    <h6 class="mb-0" id="order"></h6>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                 <i class="fa fa-chart-bar fa-3x text-primary"></i>
                 <div class="ms-3">
                     <p class="mb-2">Orders delivered</p>
-                    <h6 class="mb-0">$1234</h6>
+                    <h6 class="mb-0" id="delivered"></h6>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                 <i class="fa fa-chart-area fa-3x text-primary"></i>
                 <div class="ms-3">
                     <p class="mb-2">Orders in process</p>
-                    <h6 class="mb-0">$1234</h6>
+                    <h6 class="mb-0" id="process"></h6>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <i class="fa fa-chart-pie fa-3x text-primary"></i>
                 <div class="ms-3">
                     <p class="mb-2">Total Revenue</p>
-                    <h6 class="mb-0">$1234</h6>
+                    <h6 class="mb-0" id="total"></h6>
                 </div>
             </div>
         </div>
@@ -69,15 +69,17 @@
                 </thead>
                 <tbody>
                     {% for order in order_detail %}
-                    <tr>
-                        <td class="text-center">{{order.order.order_date}}</td>
-                        <td class="text-center"><a href="/add-product/{{user}}/{{order.product.id}}" class="text-light">{{order.product.product_name}}</a></td>
-                        <td class="text-center">{{order.order.user.first_name}} {{order.order.user.last_name}}</td>
-                        <td class="text-center">{{order.order.payment_method}}</td>
-                        <td class="text-center">{{order.product.price}}</td>
-                        <td class="text-center">{{order.order.status}}</td>
-                        <td><a class="btn btn-sm btn-primary" href="/admin-order/{{user}}/{{order.order.id}}">Detail</a></td>
-                    </tr>
+                    {% if order.order.is_confirmed == True %}
+                        <tr>
+                            <td class="text-center">{{order.order.order_date}}</td>
+                            <td class="text-center"><a href="/add-product/{{user}}/{{order.product.id}}" class="text-light">{{order.product.product_name}}</a></td>
+                            <td class="text-center">{{order.order.user.first_name}} {{order.order.user.last_name}}</td>
+                            <td class="text-center">{{order.order.payment_method}}</td>
+                            <td class="text-center price">{{order.product.price}}</td>
+                            <td class="text-center status">{{order.order.status}}</td>
+                            <td class="d-flex justify-content-center mt-2"><a class="btn btn-sm btn-primary" href="/admin-order/{{user}}/{{order.order.id}}">Detail</a></td>
+                        </tr>
+                    {% endif %}
                     {% endfor %}
                 </tbody>
             </table>
@@ -90,68 +92,30 @@
 <!-- Widgets Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
-        <div class="col-sm-12 col-md-6 col-xl-4">
+        <div class="col-sm-12 col-md-12 col-xl-6">
             <div class="h-100 bg-secondary rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                    <h6 class="mb-0">Messages</h6>
-                    <a href="">Show All</a>
+                    <h6 class="mb-0">New Orders</h6>
+                    <!-- <a href="">Show All</a> -->
                 </div>
-                <div class="d-flex align-items-center border-bottom py-3">
-                    <img class="rounded-circle flex-shrink-0" src="{% static 'img2/user.jpg' %}" alt=""
-                        style="width: 40px; height: 40px;">
-                    <div class="w-100 ms-3">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-0">Jhon Doe</h6>
-                            <small>15 minutes ago</small>
+                {% for order in order_detail %}
+                    {% if order.order.is_confirmed == False %}
+                        <div class="d-flex align-items-center border-bottom py-3">
+                            <img class="rounded-circle flex-shrink-0" src="{% static 'img2/user.jpg' %}" alt=""
+                                style="width: 40px; height: 40px;">
+                                <div class="w-100 ms-3">
+                                <span>Order to be confirmed</span>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-0">{{order.product.product_name}}</h6>
+                                    <small><a href="/confirm-order/{{order.order.id}}"><button class="btn btn-primary btn-sm">accept</button></a></small>
+                                </div>
+                            </div>
                         </div>
-                        <span>Short message goes here...</span>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center border-bottom py-3">
-                    <img class="rounded-circle flex-shrink-0" src="{% static 'img2/user.jpg' %}" alt=""
-                        style="width: 40px; height: 40px;">
-                    <div class="w-100 ms-3">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-0">Jhon Doe</h6>
-                            <small>15 minutes ago</small>
-                        </div>
-                        <span>Short message goes here...</span>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center border-bottom py-3">
-                    <img class="rounded-circle flex-shrink-0" src="{% static 'img2/user.jpg' %}" alt=""
-                        style="width: 40px; height: 40px;">
-                    <div class="w-100 ms-3">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-0">Jhon Doe</h6>
-                            <small>15 minutes ago</small>
-                        </div>
-                        <span>Short message goes here...</span>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center pt-3">
-                    <img class="rounded-circle flex-shrink-0" src="{% static 'img2/user.jpg' %}" alt=""
-                        style="width: 40px; height: 40px;">
-                    <div class="w-100 ms-3">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-0">Jhon Doe</h6>
-                            <small>15 minutes ago</small>
-                        </div>
-                        <span>Short message goes here...</span>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
-        <div class="col-sm-12 col-md-6 col-xl-4">
-            <div class="h-100 bg-secondary rounded p-4">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Calender</h6>
-                    <a href="">Show All</a>
-                </div>
-                <div id="calender"></div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-6 col-xl-4">
+        <div class="col-sm-12 col-md-12 col-xl-6">
             <div class="h-100 bg-secondary rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0">To Do List</h6>
@@ -218,6 +182,36 @@
             $('#dashboard').addClass('active');
          });
      })
+
+
+
+    $(document).ready(function(){
+        total=0
+        t_order = -1
+        t_delivered = 0
+        t_process = 0
+        $('tr').each(function(){
+            t_order += 1
+            $(this).find('td').each(function(){
+                var price = $(this).closest('.price').html()
+                if (price!=undefined){
+                    total += parseInt(price)
+                }
+                var status = $(this).closest('.status').html()
+                if ((status != undefined) && (status != 'delivered')){
+                    t_process += 1
+                }
+                
+            })
+        })
+        t_delivered = t_order-t_process
+        $('#total').text('₹ ' + total)
+        $('#order').text(t_order)
+        $('#process').text(t_process)
+        $('#delivered').text(t_delivered)
+    })
+
+
 </script>
 
 
