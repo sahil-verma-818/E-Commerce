@@ -142,6 +142,11 @@
                     <input id="email" name="email" type="text" class="form-control" value="{{data1.email}}">
                   </div>
                 </div>
+                <div class="col-md-12 col-lg-12">
+                  <div class="form-group">
+                      <button type="button" id="currentLocation" class="form-control"><i class="bi bi-geo-alt-fill"></i>Get Current Location</button>
+                  </div>
+              </div>
                 <div class="col-md-12 text-center">
                   <button id="detailBtn" type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save changes</button>
                 </div>
@@ -232,6 +237,45 @@ $('#passwordBtn').click(function(){
 })
 
 
+$('#currentLocation').click(function(){
+        if( navigator.geolocation )
+        {
+           // Call getCurrentPosition with success and failure callbacks
+           navigator.geolocation.getCurrentPosition( success, fail );
+        }
+        else
+        {
+           alert("Sorry, your browser does not support geolocation services.");
+        }
+    })
+
+    function success(position)
+     {
+        console.log(position.coords.longitude)
+        console.log(position.coords.latitude)
+
+        var nominatimUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
+        $.ajax({
+            url : nominatimUrl,
+            method:'GET',
+            success:function(data){
+                // alert(data.display_name)
+                var test = data.display_name.split(',')
+                $('#city').val(test[0].split(' ')[0])
+                $('#zip').val(test[4])
+                $('#state').val(test[3])
+                $('#area').val(test[1])
+            },
+            error: function(){
+                alert('There is some error')
+            }
+        })
+     }
+
+     function fail()
+     {
+        // Could not obtain location
+     }
 
 
 

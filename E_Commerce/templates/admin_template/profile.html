@@ -22,11 +22,11 @@
             <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, qui!</p>
             <div class="row">
                 <div class="form-floating mb-3 col-md-6">
-                    <input type="text" class="form-control" name="first_name" id="firstname" placeholder="firstname" value="{{data1.first_name}}">
+                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="firstname" value="{{data1.first_name}}">
                     <label for="firstname" class="mx-2">First Name</label>
                 </div>
                 <div class="form-floating mb-3 col-md-6">
-                    <input type="text" class="form-control" id="lastname" name="last_name" placeholder="lastname" value="{{data1.last_name}}">
+                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="lastname" value="{{data1.last_name}}">
                     <label for="lastname" class="mx-2">Last Name</label>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <label for="landmark" class="mx-2">Landmark</label>
                 </div>
                 <div class="form-floating mb-3 col-md-3">
-                    <input type="number" class="form-control" name="zip" id="zip" value="{{data2.zip}}" placeholder="Zip Code">
+                    <input type="text" class="form-control" name="zip" id="zip" value="{{data2.zip}}" placeholder="Zip Code">
                     <label for="zip" class="mx-2">Zip Code</label>
                 </div>
                 <div class="form-floating mb-3 col-md-3">
@@ -68,7 +68,9 @@
                     <label for="email" class="mx-2">Email</label>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Update Record</button>
+            <button type="submit" id="detailBtn" class="btn btn-primary">Update Record</button>
+            <button type="button" id="currentLocation" class="btn btn-primary"><i class="bi bi-geo-alt-fill"> </i>Get Current Location</button>
+
         </div>
     </div>
 </div>
@@ -96,11 +98,131 @@
                     <label for="cnf_password" class="mx-2">Confirm Password</label>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Update Password</button>
+            <button type="submit" id="passwordBtn" class="btn btn-primary">Update Password</button>
         </div>
     </div>
 </div>
 <!-- Blank End -->
+
+<script>
+
+$('#detailBtn').click(function(){
+
+event.preventDefault()
+let first_name = $('#first_name').val()
+let last_name = $('#last_name').val()
+let house = $('#house').val()
+let area = $('#area').val()
+let landmark = $('#landmark').val()
+let zip = $('#zip').val()
+let state = $('#state').val()
+let city = $('#city').val()
+let mobile = $('#mobile').val()
+let email = $('#email').val()
+let csr = $('input[name=csrfmiddlewaretoken]').val()
+
+if ((first_name == '') || (last_name == '') || (house == '') || (area == '') || (landmark == '') || (zip=='') || (state=='') || (city == '') || (mobile=='')|| (email=='')){
+  toastr.message('Address must be provided with proper location.')
+} else {
+  mydata = {first_name:first_name,last_name:last_name,house:house, area:area,landmark:landmark,zip:zip, state:state, city:city,mobile:mobile, email:email,csrfmiddlewaretoken:csr}
+}
+
+$.ajax({
+  url : '/account/{{user}}',
+  method : "POST",
+  data : mydata,
+  success : function(data){
+    if (data.status=='success'){
+      toastr.success(data.message)
+    }
+  }
+})
+})
+
+// ajax script to update password
+
+$('#passwordBtn').click(function(){
+console.log('Button Pressed')
+event.preventDefault()
+
+let old_password=$('#old_password').val()
+let new_password=$('#new_password').val()
+let cnf_password=$('#cnf_password').val()
+let csr = $('input[name=csrfmiddlewaretoken]').val()
+
+
+if ((old_password=='')||(new_password=='')||(cnf_password=='')){
+  toastr.warning("Required credentials can't be left empty.")
+} else if (new_password != cnf_password) {
+  toastr.warning("Password and confirm password doesn't match.")
+  $('form')[0].reset()
+} else {
+  mydata = {old_password:old_password,new_password:new_password, cnf_password:cnf_password, csrfmiddlewaretoken:csr}
+}
+
+$.ajax({
+  url : '/update_password/{{user}}',
+  method : "POST",
+  data : mydata,
+  success : function(data){
+    if (data.status=='success'){
+      toastr.success(data.message)
+    } else if (data.status=='error') {
+      toastr.error(data.message)
+    } else {
+      toastr.message(data.message)
+    }
+  }
+
+
+})
+})
+
+
+    $('#currentLocation').click(function(){
+        if( navigator.geolocation )
+        {
+           // Call getCurrentPosition with success and failure callbacks
+           navigator.geolocation.getCurrentPosition( success, fail );
+        }
+        else
+        {
+           alert("Sorry, your browser does not support geolocation services.");
+        }
+    })
+
+    function success(position)
+     {
+        console.log(position.coords.longitude)
+        console.log(position.coords.latitude)
+
+        var nominatimUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
+        $.ajax({
+            url : nominatimUrl,
+            method:'GET',
+            success:function(data){
+                alert(data.display_name)
+                // var test = data.display_name.split(',')
+                // $('#city').val(test[0].split(' ')[0])
+                // $('#zip').val(test[4])
+                // $('#state').val(test[3])
+                // $('#area').val(test[1])
+            },
+            error: function(){
+                alert('There is some error')
+            }
+        })
+     }
+
+     function fail()
+     {
+        // Could not obtain location
+     }
+
+</script>
+
+
+
 {% endblock %}
 
             

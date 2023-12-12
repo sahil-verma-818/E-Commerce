@@ -6,13 +6,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DarkPan - Bootstrap 5 Admin Template</title>
+    <title>Shoppiee - ECommerce you need</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="{% static 'img2/favicon.ico' %}" rel="icon">
+    <link href="{% static 'logo/image.png' %}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,6 +35,15 @@
 
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="js/jquery-ui-datepicker.min.js"></script>
+
+
+    <!-- Toastr css and js -->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'toastr/toastr.min.css' %}" media="all">
+    <script type="text/javascript" src="{% static 'toastr/toastr.js' %}"></script>
+
 
 </head>
 
@@ -44,7 +53,7 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
                 <a href="/admin-panel/dashboard" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>Admin | Shoppiee </h3>
+                    <h5 class="text-primary"><i class="fa fa-user-edit me-2"></i>Admin | Shoppiee </h5>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">

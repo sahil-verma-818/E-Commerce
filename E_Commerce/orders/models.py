@@ -20,7 +20,7 @@ class Order(models.Model):
     total_bill = models.IntegerField(blank=True, null=True)
     transaction_id = models.CharField(max_length=100, blank=True)
     payment_method = models.CharField(max_length=20, choices=payment_choices)
-    status = models.CharField(max_length=255, default='Order Placed')
+    
     is_confirmed = models.BooleanField(default=False)
 
     def __str__(self) -> str:
@@ -31,6 +31,7 @@ class OrderItems(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
+    status = models.CharField(max_length=255, default='order placed')
 
     def __str__(self) -> str:
         return self.order.user.username

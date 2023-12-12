@@ -41,8 +41,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="street">Area</label>
-                                            <input id="street" name="area" type="text" class="form-control"
+                                            <label for="area">Area</label>
+                                            <input id="area" name="area" type="text" class="form-control"
                                                 value="{{data2.area}}">
                                         </div>
                                     </div>
@@ -51,8 +51,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="city">Landmark</label>
-                                            <input id="city" name="landmark" type="text" class="form-control"
+                                            <label for="landmark">Landmark</label>
+                                            <input id="landmark" name="landmark" type="text" class="form-control"
                                                 value="{{data2.landmark}}">
                                         </div>
                                     </div>
@@ -72,18 +72,24 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="country">City</label>
-                                            <input id="country" name="city" type="text" class="form-control"
+                                            <label for="city">City</label>
+                                            <input id="city" name="city" type="text" class="form-control"
                                                 value="{{data2.city}}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-lg-3">
+                                    <div class="col-md-6 col-lg-6">
                                         <div class="form-group">
                                             <label for="address-type">Address type</label>
                                             <select id="address-type" name="address-type" class="form-control">
                                                 <option value="home">Home</option>
                                                 <option value="work">Work</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="currentLocation">  </label>
+                                            <button type="button" id="currentLocation" class="form-control"><i class="bi bi-geo-alt-fill"></i>Get Current Location</button>
                                         </div>
                                     </div>
                                 </div>
@@ -205,6 +211,58 @@
 </div>
 </div>
 </div>
+
+
+<script>
+
+    $('#currentLocation').click(function(){
+        if( navigator.geolocation )
+        {
+           // Call getCurrentPosition with success and failure callbacks
+           navigator.geolocation.getCurrentPosition( success, fail );
+        }
+        else
+        {
+           alert("Sorry, your browser does not support geolocation services.");
+        }
+    })
+
+    function success(position)
+     {
+        console.log(position.coords.longitude)
+        console.log(position.coords.latitude)
+
+        var nominatimUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
+        $.ajax({
+            url : nominatimUrl,
+            method:'GET',
+            success:function(data){
+                // alert(data.display_name)
+                var test = data.display_name.split(',')
+                $('#city').val(test[0].split(' ')[0])
+                $('#zip').val(test[4])
+                $('#state').val(test[3])
+                $('#area').val(test[1])
+            },
+            error: function(){
+                alert('There is some error')
+            }
+        })
+
+        
+        //  document.getElementById('long').value = position.coords.longitude;
+        //  document.getElementById('lat').value = position.coords.latitude
+     }
+
+     function fail()
+     {
+        // Could not obtain location
+     }
+
+
+
+</script>
+
 
 
 
