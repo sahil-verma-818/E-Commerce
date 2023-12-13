@@ -133,8 +133,10 @@ def admin_order(request, uname, id):
     }
     return render(request, 'admin_template/order-detail.html', context)
 
-def confirm_order(request, id):
-    order = Order.objects.get(id=id)
-    order.is_confirmed = True
-    order.save()
-    return redirect('/admin-panel/dashboard')
+def update_status(request, id):
+    
+    if request.method == 'POST':
+        status = request.POST.get('selectedOption')
+        order = OrderItems.objects.get(id=id)
+        order.status=status
+        order.save()

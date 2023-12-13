@@ -39,9 +39,7 @@
           <div class="box">
             <h1>Order #{{order.id}}</h1>
             <p class="lead">Order #{{order.id}} was placed on <strong>{{order.order_date}}</strong> and is currently
-              <strong>{{order.status}}</strong>.</p>
-            <p class="text-muted">If you have any questions, please feel free to <a href="contact.html">contact us</a>,
-              our customer service center is working for you 24/7.</p>
+              <strong>{% if order.is_delivered == True %} Delivered {% else %} Not Delivered {% endif %}</strong>.</p>
             <hr>
             <div class="table-responsive mb-4">
               <table class="table">

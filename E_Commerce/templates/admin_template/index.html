@@ -51,8 +51,7 @@
 <div class="container-fluid pt-4 px-4">
     <div class="bg-secondary text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">Sales history</h6>
-            <a href="">Show All</a>
+            <h2 class="mb-0">Sales history</h2>
         </div>
         <div class="table-responsive">
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -69,14 +68,14 @@
                 </thead>
                 <tbody>
                     {% for order in order_detail %}
-                    {% if order.order.is_confirmed == True %}
+                    {% if order.order.is_confirmed == True %} 
                         <tr>
                             <td class="text-center">{{order.order.order_date}}</td>
                             <td class="text-center"><a href="/add-product/{{user}}/{{order.product.id}}" class="text-light">{{order.product.product_name}}</a></td>
                             <td class="text-center">{{order.order.user.first_name}} {{order.order.user.last_name}}</td>
                             <td class="text-center">{{order.order.payment_method}}</td>
                             <td class="text-center price">{{order.product.price}}</td>
-                            <td class="text-center status">{{order.status}}</td>
+                            <td class="text-center status" data-order-id={{order.id}} data-order-status="{{order.status}}">{{order.status}}<i class="bi bi-pencil"  data-bs-toggle="modal" data-bs-target="#myModal"></i></td>
                             <td class="d-flex justify-content-center mt-2"><a class="btn btn-sm btn-primary" href="/admin-order/{{user}}/{{order.order.id}}">Detail</a></td>
                         </tr>
                     {% endif %}
@@ -87,7 +86,30 @@
     </div>
 </div>
 <!-- Recent Sales End -->
-
+<!-- Popup Model Functionality -->
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-secondary">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select to change status</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="order-id" value={{order.id}}>
+                    <p class="text-white"><input type="radio" name="statusUpdate" value="order placed"> Order Placed </p>
+                    <p class="text-white"><input type="radio" name="statusUpdate" value="shipped"> Shipped </p>
+                    <p class="text-white"><input type="radio" name="statusUpdate" value="delivered"> Delivered </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="statusUpdateBtn" data-bs-dismiss="modal" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- Popup Model Functionality End  -->
 
 <!-- Widgets Start -->
 <div class="container-fluid pt-4 px-4">
@@ -95,8 +117,7 @@
         <div class="col-sm-12 col-md-8 col-xl-8">
             <div class="h-100 bg-secondary rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-2">
-                    <h6 class="mb-0">New Orders</h6>
-                    <!-- <a href="">Show All</a> -->
+                    <h2 class="mb-0">New Orders</h2>
                 </div>
                 {% for order in order_detail %}
                     {% if order.order.is_confirmed == False %}
@@ -118,7 +139,7 @@
         <div class="col-sm-12 col-md-4 col-xl-4">
             <div class="h-100 bg-secondary rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0">Calender</h6>
+                    <h2 class="mb-0">Calender</h2>
                     <a href="">Show All</a>
                 </div>
                 <div id="calender"></div>
@@ -149,7 +170,7 @@
                 if (price!=undefined){
                     total += parseInt(price)
                 }
-                var status = $(this).closest('.status').html()
+                var status = $(this).attr('data-order-status');
                 if ((status != undefined) && (status != 'delivered')){
                     t_process += 1
                 }
@@ -161,6 +182,33 @@
         $('#order').text(t_order)
         $('#process').text(t_process)
         $('#delivered').text(t_delivered)
+    })
+
+    var a = "";
+    $('.status').click(function(){
+        a = $(this).attr('data-order-id');
+    })
+    
+    
+    $('#statusUpdateBtn').click(function(){
+        event.preventDefault()
+        var selectedOption = $('input[name="statusUpdate"]:checked').val()
+        let csr = $('input[name=csrfmiddlewaretoken]').val()
+        console.log(selectedOption);
+       
+        
+        $.ajax({
+            url: `/update-status/${a}`,
+            method: "POST",
+            data : {selectedOption:selectedOption, csrfmiddlewaretoken:csr},
+            success: function(data){
+                location.reload()
+                // $('#myModal').modal('hide');
+            }
+        })
+
+        
+        
     })
 
 

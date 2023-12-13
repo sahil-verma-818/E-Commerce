@@ -12,6 +12,10 @@ from django.http import JsonResponse
 
 ''' Rendering home page data and implementing search functionality '''
 def home(request):
+
+    if request.user.user_type == 'seller':
+        return redirect('/admin-panel/dashboard')
+
     category = ProductCategory.objects.all()
     if request.method == 'GET':
 

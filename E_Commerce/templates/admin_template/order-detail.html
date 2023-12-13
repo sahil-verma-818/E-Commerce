@@ -7,9 +7,9 @@
     <div class="row bg-secondary rounded  mx-0">
         <div id="order-detail">
             <div class="box">
-                <h1>Order #{{order.id}} </h1>
+                <h1 class="mt-2">Order #{{order.id}} </h1>
                 <p class="lead">Order #{{order.id}} was placed on <strong>{{order.order_date}}</strong> and is currently
-                    <strong>not completed</strong>.&nbsp&nbsp <a href=""><i class="bi bi-pencil"></i></a>
+                    <strong id="orderStatus">{% if order.is_delivered == True %} Delivered {% else %} Not Delivered {% endif %}</strong>.&nbsp&nbsp <a id="statusUpdate" href=""><i class="bi bi-pencil">Update Status</i></a>
                 </p>
                 <hr>
                 <div class="table-responsive mb-4">
@@ -65,6 +65,24 @@
 </div>
 <!-- Blank End -->
 
+
+<script>
+
+$('#statusUpdate').click(function(){
+    event.preventDefault();
+    $.ajax({
+        url: '/status-update/'+ {{order.id}},
+        method: "GET",
+        data: {'delivered': true},
+        success: function(data) {
+            $('#orderStatus').text('delivered')
+        }
+    });
+});
+
+
+
+</script>
 
 
 

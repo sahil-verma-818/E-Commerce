@@ -20,6 +20,7 @@ class Order(models.Model):
     total_bill = models.IntegerField(blank=True, null=True)
     transaction_id = models.CharField(max_length=100, blank=True)
     payment_method = models.CharField(max_length=20, choices=payment_choices)
+    is_delivered = models.BooleanField(default=False)
     
     is_confirmed = models.BooleanField(default=False)
 
