@@ -86,7 +86,7 @@ def checkout(request,id):
         payment_method = request.POST.get('payment-method')
         shipping_address, status = Address.objects.get_or_create(**order_address)
         cart_data = CartItems.objects.filter(user=request.user)
-        order = Order.objects.create(user=request.user, delivery_address=shipping_address, status='waiting for confirmation', order_date=datetime.datetime.now(), payment_method=payment_method)
+        order = Order.objects.create(user=request.user, delivery_address=shipping_address, order_date=datetime.datetime.now(), payment_method=payment_method)
         total = 0
         for data in cart_data:
             stock_remain=Product.objects.get(id=data.product.id)
@@ -140,3 +140,13 @@ def update_status(request, id):
         order = OrderItems.objects.get(id=id)
         order.status=status
         order.save()
+        confirmation=OrderItems.objects.filter(order=order.order)
+        for data in confirmation:
+            if data.status != 'delivered':
+                break
+        else:
+            cnf=Order.objects.get(id=order.order.id)
+            cnf.is_delivered=True
+            cnf.save()
+
+

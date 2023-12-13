@@ -32,7 +32,7 @@ class OrderItems(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
-    status = models.CharField(max_length=255, default='order placed')
+    status = models.CharField(max_length=255, default='waiting for confirmation')
 
     def __str__(self) -> str:
         return self.order.user.username
