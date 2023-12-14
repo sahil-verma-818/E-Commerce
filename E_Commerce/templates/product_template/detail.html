@@ -142,11 +142,15 @@ $('#addWishlist').click(function(){
     url : "/addWishlist/{{user}}/{{data.id}}",
     method : "GET",
     success: function(data){
+      if (data.redirect=='required'){
+        console.log('redirection required')
+        window.location.href=data.url
+      }
     if (data.status == "success"){
-      toastr.success('Item added to wishlist')
+      toastr.success(data.message)
       $('#addWishlist').html('Added to wishlist')
     } else {
-      toastr.error('Item already in the wishlist.')
+      toastr.error(data.message)
     }
     }
   })
@@ -159,6 +163,10 @@ $('#addCart').click(function(){
     url : "/cart/add/{{data.id}}/{{user}}",
     method : "GET",
     success: function(data){
+      if (data.redirect=='required'){
+        console.log('redirection required')
+        window.location.href=data.url
+      }
       if (data.status == 'success'){
         toastr.success('Item added to cart!!')
         $('#addCart').html('Added to Cart')

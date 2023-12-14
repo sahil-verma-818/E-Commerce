@@ -59,7 +59,7 @@
                     <th>{{item.id}}</th>
                     <td>{{item.order_date}}</td>
                     <td>&#8377; {{ item.total_bill }}</td>
-                    <td><span class="badge badge-info">{{item.status}}</span></td>
+                    <td><span class="badge badge-info">{% if order.is_delivered == True %} Delivered {% else %} Not Delivered {% endif %}</span></td>
                     <td><a href="/order-details/{{user}}/{{item.id}}" class="btn btn-primary btn-sm">View</a></td>
                   </tr>
 

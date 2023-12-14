@@ -64,12 +64,11 @@ def product_categories(request, category):
     selected_brand = request.GET.getlist('brandSelections')
     selected_color = request.GET.getlist('colorSelections')
     selected_range = request.GET.get('rangeSelections')
-
     # Logic to filter the items
-    if selected_brand != [] or selected_color != []:
-        if selected_color == []:
+    if selected_brand or selected_color:
+        if not selected_color:
             product_data = Product.objects.filter(Q(category=category) & Q(brand__in=selected_brand))
-        elif selected_brand == []:
+        elif not selected_brand:
             product_data = Product.objects.filter(Q(category=category) & Q(color__in=selected_color))
         else:
             product_data = product_data = Product.objects.filter(category=category, brand__in=selected_brand, color__in=selected_color)
@@ -79,10 +78,9 @@ def product_categories(request, category):
     # Implementing price range of products
     if selected_range:
         product_data=product_data.filter(price__lte=selected_range)
-
+    
     p = Paginator(product_data, 6)
     page_number = request.GET.get('page')
-
     try:
         page_obj = p.get_page(page_number)
     except PageNotAnInteger:
@@ -96,8 +94,9 @@ def product_categories(request, category):
         'category' : ProductCategory.objects.all(),
         'brands' : Brand.objects.filter(category=category),
         'colors' : Color.objects.all(),
-        'selected_category' : product_data[0].category
     }
+    if product_data:
+        context['selected_category']=product_data[0].category
     
     return render(request, 'product_template/category.html', context)
 
@@ -107,6 +106,8 @@ def product_categories(request, category):
 ''' Rendering wishlisted data '''
 @login_required(login_url='/register')
 def wishlist(request,id):
+    if not request.user.is_authenticated:
+        return redirect('/register')
     data = Wishlist.objects.filter(user=User.objects.get(username=id))
     category_data = ProductCategory.objects.all()
     context = {
@@ -119,17 +120,16 @@ def wishlist(request,id):
 
 
 ''' Functionality to add items to wishlist'''
-@login_required(login_url='/register')
+# @login_required(login_url='/register')
 def addWishlist(request, uname, id):
-    
+    if not request.user.is_authenticated:
+        return JsonResponse({ 'redirect':'required', 'url': '/register'})
     item = Wishlist.objects.filter(user=User.objects.get(id=request.user.id)).filter(product=Product.objects.get(id=id))
     if item:
-        return JsonResponse({'status':'error'})
-        # messages.error(request, "Item is already available in wishlist")
+        return JsonResponse({'status':'error', 'message':'Item is already available in wishlist'})
     else:
         Wishlist.objects.create(user=request.user, product=Product.objects.get(id=id), date=datetime.datetime.now)
-        # messages.success(request, "Item added to wishlist")
-        return JsonResponse({'status': 'success'})
+        return JsonResponse({'status': 'success', 'message':'Item added to wishlist'})
 
 
 
@@ -137,6 +137,8 @@ def addWishlist(request, uname, id):
 
 ''' Functionality to remove items from the wishlist '''
 def removeWishlist(request, uname, id):
+    if not request.user.is_authenticated:
+        return JsonResponse({ 'redirect':'required', 'url': '/register'})
     Wishlist.objects.get(id=id).delete()
     return JsonResponse({'status':'success', 'message': 'Item removed from the playlist'})
     
@@ -145,6 +147,8 @@ def removeWishlist(request, uname, id):
 
 @login_required(login_url='/register')
 def addProduct(request, uname, id=None):
+    if not request.user.is_authenticated:
+        return JsonResponse({ 'redirect':'required', 'url': '/register'})
 
     if request.method == 'GET':
         if id==None:
@@ -199,6 +203,8 @@ def addProduct(request, uname, id=None):
 
 @login_required(login_url='/register')
 def delete_product(request, uname, id):
+    if not request.user.is_authenticated:
+        return JsonResponse({ 'redirect':'required', 'url': '/register'})
     data = Product.objects.filter(id=id, user=request.user)
     if data:
         data.delete()
@@ -208,6 +214,8 @@ def delete_product(request, uname, id):
 
 @login_required(login_url='/register')
 def sellerInventory(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({ 'redirect':'required', 'url': '/register'})
 
     product_data = Product.objects.filter(user=request.user)
 

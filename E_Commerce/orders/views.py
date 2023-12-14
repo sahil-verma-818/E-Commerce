@@ -14,7 +14,7 @@ from django.db.models import Q
 
 
 # Functionality to render order items to any user
-@login_required
+@login_required(login_url='/register')
 def order(request, id):
     price = {}
     data = Order.objects.filter(user=request.user)
@@ -71,7 +71,7 @@ def checkout(request,id):
 
         return render(request, 'order_template/checkout.html', context)
     if request.method == 'POST':
-
+        response = {}
         order_address = {
         'house' : request.POST.get('house'),
         'area' : request.POST.get('area'),
@@ -80,9 +80,9 @@ def checkout(request,id):
         'state' : request.POST.get('state'),
         'city' : request.POST.get('city'),
         'user' : request.user,
-        'address_type' : request.POST.get('address-type')
+        'address_type' : request.POST.get('address_type')
         }
-        payment_method = request.POST.get('payment-method')
+        payment_method = request.POST.get('payment_method')
         shipping_address, status = Address.objects.get_or_create(**order_address)
         cart_data = CartItems.objects.filter(user=request.user)
         order = Order.objects.create(user=request.user, delivery_address=shipping_address, order_date=datetime.datetime.now(), payment_method=payment_method)
@@ -96,16 +96,24 @@ def checkout(request,id):
                 total += data.product.price
                 data.delete()
             else:
-                messages.error(request, f"Stock Insufficient !! You can only order {data.product} only a maximum of {stock_remain.stock_quantity}")
+                response= {
+                    'status':'error',
+                    'message': f"Stock Insufficient !! You can only order {data.product} only a maximum of {stock_remain.stock_quantity}"
+                    }
   
         order.total_bill=total
         if OrderItems.objects.filter(order=order):
             order.save()
-            messages.success(request, "Order Placed")
-            return redirect(f"/orders/{request.user}")
+            return JsonResponse({
+                'status':'success',
+                'message':'Order Placed Successfully!!!',
+                'redirect': 'required',
+                'url': f"/orders/{request.user}",
+                'message1': response['message']
+            })
         else:
             order.delete()
-            messages.error(request, "Order can't be placed due to unavailability of items")
+            return JsonResponse({'message1': response['message'], 'status':'error', 'message':"Order can't be placed due to unavailability of items. Sorry for inconvinience occured."})
         
     
 
@@ -142,7 +150,13 @@ def update_status(request, id):
         confirmation=OrderItems.objects.filter(order=order.order)
         if status == 'order placed':
             response = {
-                'order': order
+                'id' : order.order.id,
+                'date' : order.order.order_date,
+                'product' : order.product.product_name,
+                'customer' : order.order.user.first_name,
+                'payment' : order.order.payment_method,
+                'amount' : order.product.price,
+                'status' : order.status,
             }
         for data in confirmation:
             if data.status != 'delivered':
@@ -151,6 +165,5 @@ def update_status(request, id):
             cnf=Order.objects.get(id=order.order.id)
             cnf.is_delivered=True
             cnf.save()
-        response['status']='success'
         return JsonResponse(response)
 

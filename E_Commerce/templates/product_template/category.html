@@ -189,10 +189,12 @@
         
         let a = $(mythis).attr("data-id");
         $.ajax({
-          // url : '/cart/add/' + a + '/{{user}}',
           url : `/cart/add/${a}/{{user}}`,
           method : "GET",
           success : function(data){
+            if (data.redirect=='required'){
+            window.location.href=data.url
+            }
             if (data.status == 'success'){
               toastr.success(data.message)
               $(mythis).html('Added to cart')

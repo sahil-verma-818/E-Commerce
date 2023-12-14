@@ -2,7 +2,7 @@
 
 
 <!DOCTYPE html>
-<html data-bs-theme="dark">
+<html>
 
 <head>
   <meta charset="utf-8">
@@ -42,32 +42,9 @@
 <body>
   <!-- navbar-->
   <header class="header mb-5">
-    <!--
-      *** TOPBAR ***
-      _________________________________________________________
-      -->
-    <div id="top">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 offer mb-3 mb-lg-0"><a href="#" class="btn btn-success btn-sm">Offer of the day</a><a
-              href="#" class="ml-1">Get flat 35% off on orders over $50!</a></div>
-          <div class="col-lg-6 text-center text-lg-right">
-            <ul class="menu list-inline mb-0">
-              {% if not user.is_authenticated %}
-              <li class="list-inline-item"><a href="/register">Register/Login</a></li>
-              {% endif %}
-              <li class="list-inline-item"><a href="#">Contact</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <!-- *** TOP BAR END ***-->
-
-
     </div>
     <nav class="navbar navbar-expand-lg">
-      <div class="container"><a href="/" class="navbar-brand home"><img src="{% static 'img/logo.png' %}"
+      <div class="container"><a class="navbar-brand home"><img src="{% static 'img/logo.png' %}"
             alt="Obaju logo" class="d-none d-md-inline-block"><img src="{% static 'img/logo-small.png' %}"
             alt="Obaju logo" class="d-inline-block d-md-none"><span class="sr-only">Shoppiee</span></a>
         <div class="navbar-buttons">
@@ -82,7 +59,7 @@
         <div id="navigation" class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a href="/" class="nav-link active">Home</a></li>
-            <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" data-hover="dropdown"
+            <li class="nav-item dropdown menu-large"><a data-toggle="dropdown" data-hover="dropdown"
                 data-delay="200" class="dropdown-toggle nav-link"> Categories <b class="caret"></b></a>
               <ul class="dropdown-menu megamenu">
                 <li>
@@ -99,7 +76,7 @@
                 </li>
               </ul>
             </li>
-            <li class="nav-item dropdown menu-large"><a href="#" data-toggle="dropdown" data-hover="dropdown"
+            <li class="nav-item dropdown menu-large"><a data-toggle="dropdown" data-hover="dropdown"
                 data-delay="200" class="dropdown-toggle nav-link">{{user}}<b class="caret"></b></a>
               <ul class="dropdown-menu megamenu" >
                 <li>
@@ -183,11 +160,6 @@
             <li><a href="#">Contact us</a></li>
           </ul>
           <hr>
-          <h4 class="mb-3">User section</h4>
-          <ul class="list-unstyled">
-            <li><a href="#" data-toggle="modal" data-target="#login-modal">Login</a></li>
-            <li><a href="/register">Register</a></li>
-          </ul>
         </div>
         <!-- /.col-lg-3-->
         <div class="col-lg-3 col-md-6">

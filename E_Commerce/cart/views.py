@@ -35,8 +35,10 @@ def cartlist(request,id):
 
 
 # Functionality to implement addition of items to the cart
-@login_required(login_url='/register')
+
 def add_cart(request,uname, id):
+    if not request.user.is_authenticated:
+        return JsonResponse({ 'redirect':'required', 'url': '/register'})
     item = CartItems.objects.filter(user=User.objects.get(id=request.user.id)).filter(product=Product.objects.get(id=id))
     # If item is already present in cart just update the cart with a "+1" quantity
     if item:

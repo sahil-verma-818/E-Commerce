@@ -6,7 +6,7 @@
     <div id="content">
         <div class="container">
             <div class="row">
-                <form method="post" action="/checkout/{{user}}" class="col-lg-12">
+                <form method="post" action="" class="col-lg-12">
                     {% csrf_token %}
                     <div class="col-lg-12">
                         <!-- breadcrumb -->
@@ -178,26 +178,12 @@
                                         </tfoot>
                                     </table>
                                 </div>
-                                {% if messages %}
-                                {% for message in messages %}
-                                {% if message.tags == 'success'%}
-                                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-                                {% elif message.tags == 'info' %}
-                                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-                                {% elif message.tags == 'warning' %}
-                                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-                                {% elif message.tags == 'error' %}
-                                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
-                                {% endif %}
-                                {% endfor %}
-                                {% endif %}
+                                
                                 <!-- /.table-responsive-->
                             </div>
                             <!-- /.content-->
-                            <div class="box-footer d-flex justify-content-between"><a href="checkout3.html"
-                                    class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to payment
-                                    method</a>
-                                <button type="submit" class="btn btn-primary">Place an order<i
+                            <div class="box-footer d-flex justify-content-between"><a class="btn btn-outline-secondary"><i class="fa fa-chevron-left"></i>Back to Cart</a>
+                                <button type="button" id="orderPlaced" class="btn btn-primary">Place an order<i
                                         class="fa fa-chevron-right"></i></button>
                             </div>
 
@@ -215,6 +201,47 @@
 
 <script>
 
+    $('#orderPlaced').click(function(){
+        let house = $('#house').val()
+        let area = $('#area').val()
+        let landmark = $('#landmark').val()
+        let zip = $('#zip').val()
+        let state =  $('#state').val()
+        let city = $('#city').val()
+        let address_type = $('#address-type').val()
+        let payment_method = $('input[name="payment-method"]:checked').val()
+        let csr = $('input[name=csrfmiddlewaretoken]').val()
+
+        if ((house=='')||(area=='')||(landmark=='')||(zip=='')||(state=='')||(city=='')||(address_type=='')||(payment_method=='')){
+            toastr.warning('Fields are empty. Fill it to move ahead')
+        } else {
+            myData = {house:house, area:area, landmark:landmark, zip:zip, state:state, city:city, address_type:address_type, payment_method:payment_method, csrfmiddlewaretoken:csr}
+            
+        }
+        $.ajax({
+                url: '/checkout/{{user}}',
+                method: "POST",
+                data:myData,
+                success: function(data){
+                    if (data.status=='success'){
+                        toastr.success(data.message)
+                    } if (data.status=='error'){
+                        toastr.error(data.message)
+                    } if (data.message1){
+                        toastr.error(data.message1)
+                    }
+
+                    if (data.redirect=='required'){
+                        window.location.href=data.url
+                    }
+                }
+            })
+
+        
+
+    })
+
+
     $('#currentLocation').click(function(){
         if( navigator.geolocation )
         {
@@ -229,9 +256,6 @@
 
     function success(position)
      {
-        console.log(position.coords.longitude)
-        console.log(position.coords.latitude)
-
         var nominatimUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
         $.ajax({
             url : nominatimUrl,
