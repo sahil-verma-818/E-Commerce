@@ -21,7 +21,6 @@ def cartlist(request,id):
         for x in data:
             if request.GET.get(f"{x.id}"):
                 x.quantity = request.GET.get(f"{x.id}")
-                messages.success(request, "Cart Information Updated Successfully !!")
                 x.save()
             total += x.product.price * int(x.quantity)
         context = {

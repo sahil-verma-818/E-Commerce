@@ -37,7 +37,7 @@
                       <td><a href="#"><img src="../{{data.product.image1}}" alt=""></a></td>
                       <td><a href="/product/{{data.product.id}}">{{data.product.product_name}}</a></td>
                       <td>
-                        <input type="number" name="{{data.id}}" value="{{data.quantity}}" class="form-control">
+                        <input type="number" name="{{data.id}}" style="width: 60px;" value="{{data.quantity}}" class="form-control">
                       </td>
                       <td>{{data.product.price}}</td>
                       <td class="price">{% widthratio data.product.price 1 data.quantity %}</td>
@@ -113,7 +113,7 @@ $('.deleteCart').click(function(){
         $('#total').text(total)
       } else{
         data.warning(data.message)
-      }
+      } 
     }
   })
 })
