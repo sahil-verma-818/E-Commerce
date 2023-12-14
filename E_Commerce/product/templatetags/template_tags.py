@@ -21,7 +21,7 @@ def query_transform(context, **kwargs):
 def checked_box(context):
     global filters
     filters = dict(filters)
-    print("Filters : ", filters)
+    # print("Filters : ", filters)
 
     
     

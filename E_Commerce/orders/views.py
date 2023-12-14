@@ -50,7 +50,6 @@ def order_details(request, uname, id):
         'order_items' : order_items,
         'invoice' : invoice_address
     }
-    print(request.user.user_type)
 
     return render(request, 'order_template/customer-order.html', context)
 
@@ -141,6 +140,10 @@ def update_status(request, id):
         order.status=status
         order.save()
         confirmation=OrderItems.objects.filter(order=order.order)
+        if status == 'order placed':
+            response = {
+                'order': order
+            }
         for data in confirmation:
             if data.status != 'delivered':
                 break
@@ -148,5 +151,6 @@ def update_status(request, id):
             cnf=Order.objects.get(id=order.order.id)
             cnf.is_delivered=True
             cnf.save()
-
+        response['status']='success'
+        return JsonResponse(response)
 
