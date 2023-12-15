@@ -44,6 +44,52 @@
     <script type="text/javascript" src="{% static 'toastr/toastr.js' %}"></script>
 
 
+    <style>
+        .profile-pic {
+        width: 200px;
+        max-height: 200px;
+        display: inline-block;
+        }
+
+        .file-upload {
+            display: none;
+        }
+        .circle {
+            border-radius: 100% !important;
+            overflow: hidden;
+            width: 128px;
+            height: 128px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: absolute;
+            top: 72px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .p-image {
+        position: absolute;
+        top: 167px;
+        right: 30px;
+        color: #666666;
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+        }
+        .p-image:hover {
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+        }
+        .upload-button {
+        font-size: 1.2em;
+        }
+
+        .upload-button:hover {
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+        color: #999;
+        }
+    </style>
+
+
+
+
 </head>
 
 <body>
@@ -56,7 +102,7 @@
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
-                        <img class="rounded-circle" src="img2/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle" src="{{user.profile_pic.url}}" alt="" style="width: 40px; height: 40px;">
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
@@ -152,7 +198,7 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="{% static 'img2/user.jpg' %}" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2" src="{{user.profile_pic.url}}" alt="" style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">@{{user}}</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">

@@ -6,6 +6,18 @@
 <div class="container-fluid pt-4 px-4">
     <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
         <div class="bg-secondary rounded h-100 p-4">
+            <div class="row">
+                <div class="small-12 medium-2 large-2 columns">
+                  <div class="circle">
+                    <img class="profile-pic" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg">
+             
+                  </div>
+                  <div class="p-image">
+                    <i class="fa fa-camera upload-button"></i>
+                     <input class="file-upload" type="file" accept="image/*"/>
+                  </div>
+               </div>
+             </div>
             <h3 class="mb-4">Welcome @{{user}}</h3>
         </div>
     </div>
@@ -22,11 +34,11 @@
             <p> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ab, qui!</p>
             <div class="row">
                 <div class="form-floating mb-3 col-md-6">
-                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="firstname" value="{{data1.first_name}}">
+                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="firstname" value="{{user.first_name}}">
                     <label for="firstname" class="mx-2">First Name</label>
                 </div>
                 <div class="form-floating mb-3 col-md-6">
-                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="lastname" value="{{data1.last_name}}">
+                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="lastname" value="{{user.last_name}}">
                     <label for="lastname" class="mx-2">Last Name</label>
                 </div>
             </div>
@@ -60,11 +72,11 @@
             </div>
             <div class="row">
                 <div class="form-floating mb-3 col-md-6">
-                    <input type="text" class="form-control" name="mobile" id="mobile" value="{{data1.mobile}}" placeholder="Mobile">
+                    <input type="text" class="form-control" name="mobile" id="mobile" value="{{user.mobile}}" placeholder="Mobile">
                     <label for="mobile" class="mx-2">Mobile</label>
                 </div>
                 <div class="form-floating mb-3 col-md-6">
-                    <input type="text" class="form-control" name="email" id="email" value="{{data1.email}}" placeholder="Email">
+                    <input type="text" class="form-control" name="email" id="email" value="{{user.email}}" placeholder="Email">
                     <label for="email" class="mx-2">Email</label>
                 </div>
             </div>
