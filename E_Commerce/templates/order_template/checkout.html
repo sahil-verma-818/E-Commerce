@@ -1,7 +1,6 @@
 {% extends '../base.html' %}
 {% load static %}
-{% load sweetify %}
-{% sweetify %}
+
 
 {% block content %}
 <div id="all">
@@ -225,14 +224,15 @@
                 method: "POST",
                 data:myData,
                 success: function(data){
-                    if (data.status=='success'){
-                        toastr.success(data.message)
-                    } if (data.status=='error'){
-                        toastr.error(data.message)
-                    } if (data.message1){
-                        toastr.error(data.message1)
-                    }
-
+                    console.log(data)
+                    $.each(data.message, function(index, message){
+                        let status = data.status[index]
+                        if (status == 'success') {
+                            toastr.success(message)
+                        } else {
+                            toastr.error(message)
+                        }
+                    })
                     if (data.redirect=='required'){
                         window.location.href=data.url
                     }
@@ -274,10 +274,6 @@
                 alert('There is some error')
             }
         })
-
-        
-        //  document.getElementById('long').value = position.coords.longitude;
-        //  document.getElementById('lat').value = position.coords.latitude
      }
 
      function fail()

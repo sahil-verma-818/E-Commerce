@@ -1,3 +1,5 @@
+
+# Imports
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,JsonResponse
 from product.models import Product, ProductCategory
@@ -7,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.conf import settings
-
+# ===========================================================================-------------- #
 
 
 # Create your views here.
@@ -17,8 +19,11 @@ from django.conf import settings
 '''
 
 def register(request):
+
     ''' Handling POST request for registering data of user '''
     if request.method == 'POST':
+
+        # Fetching all the inputs
         firstname = request.POST.get('firstname')
         lastname = request.POST.get('lastname')
         email = request.POST.get('email')
@@ -36,6 +41,8 @@ def register(request):
             # Rendering specific pages for sellers
     return render(request, 'users_template/register.html', {'catagory': ProductCategory.objects.all()})
 
+# ===============================================================================================
+
 ''' Code to login User '''
 
 def login_user(request):
@@ -47,20 +54,32 @@ def login_user(request):
         password = request.POST.get('loginpassword')
         user = authenticate(username=username, password=password)
 
+        #==============================================================
+
         if user is not None:
             login(request, user=user)
+
+            # ==========================================================
             if user.user_type == 'seller':
                 return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/admin-panel/dashboard'})
             elif user.user_type == 'customer':
                 return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/'})
+            # ============================================================
         else:
             return JsonResponse({'status':'error', 'message':'Credentials not matched to any data.'})
+        
+        # =================================================================
     
+#================================================================================================
+
+
+# ===============================================================================================
 
 ''' Functionality of update or render user profile data through GET or POST request '''
-
 @login_required(login_url='/register')
 def account(request, id):
+
+    # ======================================================
 
     # Block to define funtionality of rendering user data
     if request.method == 'GET':
@@ -77,16 +96,20 @@ def account(request, id):
             'data2' : data2,
         }
 
+        # =======================================================================
+
         if request.user.user_type == 'seller':
             return render(request, 'admin_template/profile.html', context)
         elif request.user.user_type == 'customer':
             context['category'] = ProductCategory.objects.all()
             return render(request, 'users_template/customer-account.html', context)
             
-    
+        # =======================================================================
+
     # Block to implement functionality of updating profile data of users
     if request.method == 'POST':
 
+        # Update profile picture
         profile_pic = request.FILES.get('profile_pic')
         if profile_pic:
             user=User.objects.get(id=request.user.id)

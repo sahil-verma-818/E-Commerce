@@ -15,7 +15,6 @@ address_choice = (
 )
 
 # User table with inherited abstract user.
-
 class User(AbstractUser):
     mobile = models.CharField(max_length=20, blank=True)
     user_type = models.CharField(max_length=10, choices=user_choices, blank=True)
@@ -29,7 +28,6 @@ class User(AbstractUser):
 
 
 # Address table to store information of addresses of users.
-
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     house = models.CharField(max_length=100)
