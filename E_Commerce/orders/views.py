@@ -8,6 +8,7 @@ from cart.models import CartItems
 from django.contrib import messages
 import datetime
 from django.db.models import Q
+import sweetify
 
 
 # Create your views here.
@@ -70,6 +71,8 @@ def checkout(request,id):
         }
 
         return render(request, 'order_template/checkout.html', context)
+    
+
     if request.method == 'POST':
         response = {}
         order_address = {
@@ -82,10 +85,15 @@ def checkout(request,id):
         'user' : request.user,
         'address_type' : request.POST.get('address_type')
         }
+
+
         payment_method = request.POST.get('payment_method')
         shipping_address, status = Address.objects.get_or_create(**order_address)
+
+
         cart_data = CartItems.objects.filter(user=request.user)
         order = Order.objects.create(user=request.user, delivery_address=shipping_address, order_date=datetime.datetime.now(), payment_method=payment_method)
+        
         total = 0
         for data in cart_data:
             stock_remain=Product.objects.get(id=data.product.id)
@@ -109,7 +117,6 @@ def checkout(request,id):
                 'message':'Order Placed Successfully!!!',
                 'redirect': 'required',
                 'url': f"/orders/{request.user}",
-                'message1': response['message']
             })
         else:
             order.delete()
