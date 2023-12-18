@@ -65,9 +65,13 @@
                 <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to product details, material
                     &amp; care and sizing</a></p>
                 <p class="price"> &#8377; {{data.price}}</p>
-                <p class="text-center buttons"><a href="" class="btn btn-primary" id="addCart"><i
-                      class="fa fa-shopping-cart"></i> Add to cart</a><a
-                    class="btn btn-outline-primary" id="addWishlist"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                <p class="text-center buttons">
+                  {% if data.stocl_quantity > 0 %}
+                  <a href="" class="btn btn-primary" id="addCart"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                  {% else %}
+                  <a href="" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                  {% endif %}
+                  <a class="btn btn-outline-primary" id="addWishlist"><i class="fa fa-heart"></i> Add to wishlist</a></p>
               </div>
               <div data-slider-id="1" class="owl-thumbs">
                 <button class="owl-thumb-item"><img src=../{{data.image1}} alt="" class="img-fluid"></button>

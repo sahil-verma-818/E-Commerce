@@ -140,7 +140,11 @@
                       </p>
                       <p class="buttons">
                         <a href="/product/{{data.id}}"  class="btn btn-outline-secondary">View detail</a>
+                        {% if data.stock_quantity > 0 %}
                         <a  class="btn btn-primary addCart" data-id="{{data.id}}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        {% else %}
+                        <a  class="btn btn-primary" data-id="{{data.id}}"><i class="fa fa-shopping-cart"></i>Out of Stock</a>
+                        {% endif %}
                       </p>
                     </div>
                     <!-- /.text-->
