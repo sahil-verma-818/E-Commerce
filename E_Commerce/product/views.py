@@ -181,7 +181,15 @@ def addProduct(request, uname, id=None):
         product_data['mdl']=a
         
         if not id:
-            Product.objects.create(**product_data)
+            fetched_data=Product.objects.create(**product_data)
+            fetched_data.image1 = request.FILES.get('image1')
+            fetched_data.image2 = request.FILES.get('image2')
+            fetched_data.image3 = request.FILES.get('image3')
+            fetched_data.image4 = request.FILES.get('image4')
+            fetched_data.image5 = request.FILES.get('image5')
+
+            fetched_data.save()
+            
         else:
             Product.objects.filter(id=id).update(**product_data)
             fetched_data = Product.objects.get(id=id)

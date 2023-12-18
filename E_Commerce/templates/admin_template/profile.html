@@ -5,20 +5,19 @@
 <!-- Blank Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
-        <div class="bg-secondary rounded h-100 p-4">
-            <div class="row">
-                <div class="small-12 medium-2 large-2 columns">
-                  <div class="circle">
-                    <img class="profile-pic" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg">
-             
-                  </div>
-                  <div class="p-image">
+        <div class="h-100 bg-secondary rounded p-4">
+            <div class="intro" style="display: inline;">
+                <div class="circle">
+                    <img class="profile-pic" id="profile-pic-show" src="{{ user.profile_pic.url }}">
+                </div>
+                <div class="p-image">
                     <i class="fa fa-camera upload-button"></i>
-                     <input class="file-upload" type="file" accept="image/*"/>
-                  </div>
-               </div>
-             </div>
-            <h3 class="mb-4">Welcome @{{user}}</h3>
+                    <input class="file-upload" name="profile-pic" id="profile-pic-upload" type="file" accept="image/*"/>
+                </div>
+            </div>
+            <div class="welcome-msg" style="display: inline;">
+                <h3>Welcome @{{user}}</h3>
+            </div>
         </div>
     </div>
 </div>
@@ -213,11 +212,11 @@ $.ajax({
             method:'GET',
             success:function(data){
                 alert(data.display_name)
-                // var test = data.display_name.split(',')
-                // $('#city').val(test[0].split(' ')[0])
-                // $('#zip').val(test[4])
-                // $('#state').val(test[3])
-                // $('#area').val(test[1])
+                var test = data.display_name.split(',')
+                $('#city').val(test[0].split(' ')[0])
+                $('#zip').val(test[4])
+                $('#state').val(test[3])
+                $('#area').val(test[1])
             },
             error: function(){
                 alert('There is some error')
@@ -229,6 +228,66 @@ $.ajax({
      {
         // Could not obtain location
      }
+
+
+
+    //  jQuery for profile picture save
+
+    $(document).ready(function() {
+        event.preventDefault()
+
+    
+        var readURL = function(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.profile-pic').attr('src', e.target.result);
+                    // var imageUrl = e.target.result
+                    // console.log(imageUrl)
+                }
+
+                reader.readAsDataURL(input.files[0]);
+               
+            }
+        }
+
+
+        $(".file-upload").on('change', function(){
+            let image = $('.file-upload')[0].files[0]
+            let csr = $('input[name=csrfmiddlewaretoken]').val()
+            var formData = new FormData()
+            formData.append('profile_pic', image)
+            formData.append('csrfmiddlewaretoken', csr)
+
+            // console.log(formData)
+            $.ajax({
+                url : '/account/{{user}}',
+                method: 'POST',
+                processData:false,
+                contentType:false,
+                data: formData,
+                beforeSend: function (xhr, settings) {
+                // Add the CSRF token to the headers
+                xhr.setRequestHeader("X-CSRFToken", csr);
+                },
+                success:function(data){
+                    console.log(data)
+                },
+            })
+            readURL(this);
+            
+        });
+
+        $(".upload-button").on('click', function() {
+        $(".file-upload").click();
+
+        
+        });
+        });
+
+
+
 
 </script>
 

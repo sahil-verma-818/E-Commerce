@@ -86,6 +86,13 @@ def account(request, id):
     
     # Block to implement functionality of updating profile data of users
     if request.method == 'POST':
+
+        profile_pic = request.FILES.get('profile_pic')
+        if profile_pic:
+            user=User.objects.get(id=request.user.id)
+            user.profile_pic=profile_pic
+            user.save()
+            return JsonResponse({'status':'success', 'message': 'Profile Picture updated successfully'})
         
         # Taking inputs for updated data
         updated_user = {

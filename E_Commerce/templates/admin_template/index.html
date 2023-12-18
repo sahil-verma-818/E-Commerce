@@ -199,8 +199,6 @@
         var selectedOption = $('input[name="statusUpdate"]:checked').val()
         let csr = $('input[name=csrfmiddlewaretoken]').val()
         
-       
-        
         $.ajax({
             url: `/update-status/${a}`,
             method: "POST",
