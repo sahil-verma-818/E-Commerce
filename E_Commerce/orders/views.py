@@ -74,6 +74,7 @@ def checkout(request,id):
     
 
     if request.method == 'POST':
+        
         response = {}
         order_address = {
         'house' : request.POST.get('house'),

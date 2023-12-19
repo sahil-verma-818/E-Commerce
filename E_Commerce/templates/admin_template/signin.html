@@ -101,11 +101,7 @@
             let loginusername = $('#loginUsername').val()
             let loginpassword = $('#loginPassword').val()
             let csr = $('input[name=csrfmiddlewaretoken]').val()
-
-            console.log(loginpassword)
-            console.log(loginusername)
-
-
+            
             if ((loginusername == '') || (loginpassword == '')) {
                 toastr.error("Required credentials can't be left empty.")
             } else {

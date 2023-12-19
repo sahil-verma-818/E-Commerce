@@ -224,15 +224,9 @@
                 method: "POST",
                 data:myData,
                 success: function(data){
-                    console.log(data)
-                    $.each(data.message, function(index, message){
-                        let status = data.status[index]
-                        if (status == 'success') {
-                            toastr.success(message)
-                        } else {
-                            toastr.error(message)
-                        }
-                    })
+                    if (data.status == 'success'){
+                        toastr.success(data.message)
+                    } 
                     if (data.redirect=='required'){
                         window.location.href=data.url
                     }

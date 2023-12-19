@@ -37,7 +37,7 @@
                       <td><a href="#"><img src="../{{data.product.image1}}" alt=""></a></td>
                       <td><a href="/product/{{data.product.id}}">{{data.product.product_name}}</a></td>
                       <td>
-                        <input type="number" min="1" name="{{data.id}}" style="width: 60px;" value="{{data.quantity}}" class="form-control qty">
+                        <input type="number" min="1" max="{{data.product.stock_quantity}}" name="{{data.id}}" style="width: 60px;" value="{{data.quantity}}" class="form-control qty">
                       </td>
                       <td>{{data.product.price}}</td>
                       <td class="price">{% widthratio data.product.price 1 data.quantity %}</td>

@@ -36,7 +36,7 @@ def register(request):
         else:
             username = email.split('@')[0]
             User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
-            return JsonResponse({'status' : 'success' , 'message' : f"New user created with username {username}"})
+            return JsonResponse({'status' : 'success' , 'message' : f"New user created with username {username}" , 'redirect' : '/adminlogin'})
             
             # Rendering specific pages for sellers
     return render(request, 'users_template/register.html', {'catagory': ProductCategory.objects.all()})

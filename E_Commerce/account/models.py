@@ -18,7 +18,7 @@ address_choice = (
 class User(AbstractUser):
     mobile = models.CharField(max_length=20, blank=True)
     user_type = models.CharField(max_length=10, choices=user_choices, blank=True)
-    profile_pic = models.ImageField(upload_to='static/', blank=True, null=True)
+    profile_pic = models.ImageField(upload_to='static/', default='./static/default_profile_pic.webp', blank=True, null=True)
 
     objects = UserManager()
     USERNAME_FIELD = 'username'
