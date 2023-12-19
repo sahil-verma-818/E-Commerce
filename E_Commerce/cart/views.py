@@ -49,6 +49,8 @@ def add_cart(request,uname, id):
     # messages.success(request, "Success !! item added to cart")
     return JsonResponse({'status':'success', 'message':'Success !! Item added to cart'})
 
+
+
 # Functionality to remove items from the cart
 @login_required(login_url='/register')
 def remove_cart(request, uname, id):

@@ -5,18 +5,18 @@
 <!-- Blank Start -->
 <div class="container-fluid pt-4 px-4">
     <div class="row bg-secondary rounded align-items-center justify-content-center mx-0">
-        <div class="h-100 bg-secondary rounded p-4">
-            <div class="intro" style="display: inline;">
+        <div class="h-100 bg-secondary rounded p-4" style="display: flex; flex-direction: row;">
+            <div class="intro" style="display: flex; align-items: center; justify-content: center;">
                 <div class="circle">
-                    <img class="profile-pic" id="profile-pic-show" src="{{ user.profile_pic.url }}" onerror="this.onerror=null; this.src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fblank-profile&psig=AOvVaw3FuNikT9O3cQ87g4xchMhk&ust=1703055640383000&source=images&cd=vfe&ved=0CBIQjRxqFwoTCIi4-uX2moMDFQAAAAAdAAAAABAE'">
+                    <img class="profile-pic" id="profile-pic-show" src="{{ user.profile_pic.url }}">
                 </div>
                 <div class="p-image">
                     <i class="fa fa-camera upload-button"></i>
                     <input class="file-upload" name="profile-pic" id="profile-pic-upload" type="file" accept="image/*"/>
                 </div>
             </div>
-            <div class="welcome-msg" style="display: inline;">
-                <h3>Welcome @{{user}}</h3>
+            <div class="welcome-msg" style="display: flex; align-items: center;">
+                <h1>Welcome @{{user}}</h1>
             </div>
         </div>
     </div>
@@ -116,42 +116,44 @@
 
 <script>
 
-$('#detailBtn').click(function(){
+    // ***************Ajax to update profile*****************
+    $('#detailBtn').click(function(){
 
-event.preventDefault()
-let first_name = $('#first_name').val()
-let last_name = $('#last_name').val()
-let house = $('#house').val()
-let area = $('#area').val()
-let landmark = $('#landmark').val()
-let zip = $('#zip').val()
-let state = $('#state').val()
-let city = $('#city').val()
-let mobile = $('#mobile').val()
-let email = $('#email').val()
-let csr = $('input[name=csrfmiddlewaretoken]').val()
+    event.preventDefault()
+    let first_name = $('#first_name').val()
+    let last_name = $('#last_name').val()
+    let house = $('#house').val()
+    let area = $('#area').val()
+    let landmark = $('#landmark').val()
+    let zip = $('#zip').val()
+    let state = $('#state').val()
+    let city = $('#city').val()
+    let mobile = $('#mobile').val()
+    let email = $('#email').val()
+    let csr = $('input[name=csrfmiddlewaretoken]').val()
 
-if ((first_name == '') || (last_name == '') || (house == '') || (area == '') || (landmark == '') || (zip=='') || (state=='') || (city == '') || (mobile=='')|| (email=='')){
-  toastr.message('Address must be provided with proper location.')
-} else {
-  mydata = {first_name:first_name,last_name:last_name,house:house, area:area,landmark:landmark,zip:zip, state:state, city:city,mobile:mobile, email:email,csrfmiddlewaretoken:csr}
-}
-
-$.ajax({
-  url : '/account/{{user}}',
-  method : "POST",
-  data : mydata,
-  success : function(data){
-    if (data.status=='success'){
-      toastr.success(data.message)
+    if ((first_name == '') || (last_name == '') || (house == '') || (area == '') || (landmark == '') || (zip=='') || (state=='') || (city == '') || (mobile=='')|| (email=='')){
+    toastr.message('Address must be provided with proper location.')
+    } else {
+    mydata = {first_name:first_name,last_name:last_name,house:house, area:area,landmark:landmark,zip:zip, state:state, city:city,mobile:mobile, email:email,csrfmiddlewaretoken:csr}
     }
-  }
-})
-})
 
-// ajax script to update password
+    $.ajax({
+    url : '/account/{{user}}',
+    method : "POST",
+    data : mydata,
+    success : function(data){
+        if (data.status=='success'){
+        toastr.success(data.message)
+        }
+    }
+    })
+    })
+    // **************** Ajax End ****************************
 
-$('#passwordBtn').click(function(){
+
+    // *****************ajax script to update password**************
+    $('#passwordBtn').click(function(){
 console.log('Button Pressed')
 event.preventDefault()
 
@@ -187,8 +189,11 @@ $.ajax({
 
 })
 })
+    // ********************* Ajax End ******************************
 
 
+
+    // ******************* Function for fetching geolocation ************
     $('#currentLocation').click(function(){
         if( navigator.geolocation )
         {
@@ -201,17 +206,17 @@ $.ajax({
         }
     })
 
+
+
+    // ************* Function to fetch location based on geolocation *******
     function success(position)
      {
-        console.log(position.coords.longitude)
-        console.log(position.coords.latitude)
 
         var nominatimUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
         $.ajax({
             url : nominatimUrl,
             method:'GET',
             success:function(data){
-                alert(data.display_name)
                 var test = data.display_name.split(',')
                 $('#city').val(test[0].split(' ')[0])
                 $('#zip').val(test[4])
@@ -223,16 +228,11 @@ $.ajax({
             }
         })
      }
-
-     function fail()
-     {
-        // Could not obtain location
-     }
+    // ****************Function End *******************************
 
 
 
-    //  jQuery for profile picture save
-
+    // ***************** jQuery for profile picture save ***********
     $(document).ready(function() {
         event.preventDefault()
 
@@ -285,7 +285,7 @@ $.ajax({
         
         });
         });
-
+    // ***************** JQuery End ********************************
 
 
 

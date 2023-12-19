@@ -14,15 +14,15 @@ from django.conf import settings
 
 # Create your views here.
 
-'''
-    Code to register user (Whether Customer or Seller).
-'''
 
+# ******************** Code to register user *****************************
 def register(request):
 
+    # ===================================================================
     ''' Handling POST request for registering data of user '''
     if request.method == 'POST':
 
+        #================================================================
         # Fetching all the inputs
         firstname = request.POST.get('firstname')
         lastname = request.POST.get('lastname')
@@ -30,6 +30,7 @@ def register(request):
         password = request.POST.get('password')
         user_type = request.POST.get('usertype')
 
+        # ===============================================================
         # Checking if User with perticular email exists or not
         if User.objects.filter(email=email).exists():
             return JsonResponse({'status': 'error','message' : 'An Existing user already available with this email. Try another one.'})
@@ -37,14 +38,14 @@ def register(request):
             username = email.split('@')[0]
             User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
             return JsonResponse({'status' : 'success' , 'message' : f"New user created with username {username}" , 'redirect' : '/adminlogin'})
-            
-            # Rendering specific pages for sellers
+        # ==================================================================================  
+    # Rendering specific pages for sellers
     return render(request, 'users_template/register.html', {'catagory': ProductCategory.objects.all()})
 
 # ===============================================================================================
 
-''' Code to login User '''
 
+# ************************ Code to login user *****************************
 def login_user(request):
 
     # Handleing POST request for login users.
@@ -191,6 +192,8 @@ def logout_user(request, id):
 def admin_login(request):
     
     return render(request, 'admin_template/signin.html')
+
+
 
 def admin_register(request):
     

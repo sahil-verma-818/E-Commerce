@@ -8,7 +8,6 @@ from cart.models import CartItems
 from django.contrib import messages
 import datetime
 from django.db.models import Q
-import sweetify
 
 
 # Create your views here.
@@ -147,6 +146,7 @@ def admin_order(request, uname, id):
         'invoice' : invoice_address
     }
     return render(request, 'admin_template/order-detail.html', context)
+
 
 def update_status(request, id):
     

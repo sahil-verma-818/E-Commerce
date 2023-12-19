@@ -54,7 +54,7 @@
             <h2 class="mb-0">Sales history</h2>
         </div>
         <div class="table-responsive">
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
+            <table id="orderTable" class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
                     <tr class="text-white">
                         <th scope="col" class="text-center">Date</th>
@@ -115,7 +115,7 @@
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
         <div class="col-sm-12 col-md-8 col-xl-8">
-            <div class="h-100 bg-secondary rounded p-4">
+            <div class="bg-secondary rounded p-4" style="height: 332px; overflow: auto;">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <h2 class="mb-0">New Orders</h2>
                 </div>
@@ -156,18 +156,15 @@
          });
      })
 
-    $(document).click(function(){
-        console.log('clickeddd')
-    })
 
 
 
-    $('table').on('ready click change', function(){
+    $('#orderTable').click(function(){
         total=0
         t_order = -1
         t_delivered = 0
         t_process = 0
-        $('tr').each(function(){
+        $(this).find('tr').each(function(){
             t_order += 1
             $(this).find('td').each(function(){
                 var price = $(this).closest('.price').html()

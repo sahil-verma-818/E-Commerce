@@ -58,6 +58,7 @@ def product_details(request, id):
     
     return render(request, 'product_template/detail.html', context)
 
+
 ''' Category wise sorting and implementation of filters  '''
 def product_categories(request, category):
     
@@ -99,7 +100,6 @@ def product_categories(request, category):
         context['selected_category']=product_data[0].category
     
     return render(request, 'product_template/category.html', context)
-
 
 
 
