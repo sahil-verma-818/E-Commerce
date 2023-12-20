@@ -53,7 +53,7 @@
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h2 class="mb-0">Sales history</h2>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive" style="height: 700px; overflow: auto;">
             <table id="orderTable" class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
                     <tr class="text-white">
@@ -224,15 +224,16 @@
                             <td class="text-center"><a href="/add-product/{{user}}/{{order.product.id}}" class="text-light">${data.product}</a></td>
                             <td class="text-center">${data.customer}</td>
                             <td class="text-center">${data.payment}</td>
-                            <td class="text-center price">${data.price}</td>
+                            <td class="text-center price">${data.amount}</td>
                             <td class="text-center status" data-order-id={{order.id}} data-order-status="{{order.status}}">${data.status}<i class="bi bi-pencil"  data-bs-toggle="modal" data-bs-target="#myModal"></i></td>
                             <td class="d-flex justify-content-center mt-2"><a class="btn btn-sm btn-primary" href="/admin-order/{{user}}/${data.id}">Detail</a></td>
                         </tr>
                 `
+                console.log(result)
 
-                let table = $('table').find('tbody').html()
+                let table = $('#orderTable').find('tbody').html()
                 table += result
-                $('table').find('tbody').html(table)
+                $('#orderTable').find('tbody').html(table)
             }
         })
 

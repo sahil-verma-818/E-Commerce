@@ -74,7 +74,10 @@ def checkout(request,id):
 
     if request.method == 'POST':
         
-        response = {}
+        response = {
+            'status' : [],
+            'message' : []
+        }
         order_address = {
         'house' : request.POST.get('house'),
         'area' : request.POST.get('area'),
@@ -103,24 +106,22 @@ def checkout(request,id):
                 stock_remain.save()
                 total += data.product.price
                 data.delete()
+                response['message'].append(f"Order placed for {data.product.product_name}")
+                response['status'].append('success')
             else:
-                response= {
-                    'status':'error',
-                    'message': f"Stock Insufficient !! You can only order {data.product} only a maximum of {stock_remain.stock_quantity}"
-                    }
+                response['status'].append('error')
+                response['message'].append(f"Stock Insufficient !! You can only order {data.product} only a maximum of {stock_remain.stock_quantity}")
+                    
   
         order.total_bill=total
-        if OrderItems.objects.filter(order=order):
+        if OrderItems.objects.filter(order=53):
             order.save()
-            return JsonResponse({
-                'status':'success',
-                'message':'Order Placed Successfully!!!',
-                'redirect': 'required',
-                'url': f"/orders/{request.user}",
-            })
         else:
-            order.delete()
-            return JsonResponse({'message1': response['message'], 'status':'error', 'message':"Order can't be placed due to unavailability of items. Sorry for inconvinience occured."})
+            # order.delete()
+            response['message'].append("Order can't be placed due to unavailability of items. Sorry for inconvinience occured.")
+            response['status'].append('error')
+        response['redirect']='required'
+        return JsonResponse(response)    
         
     
 
@@ -163,7 +164,7 @@ def update_status(request, id):
                 'product' : order.product.product_name,
                 'customer' : order.order.user.first_name,
                 'payment' : order.order.payment_method,
-                'amount' : order.product.price,
+                'amount' : order.product.price * order.quantity,
                 'status' : order.status,
             }
         for data in confirmation:

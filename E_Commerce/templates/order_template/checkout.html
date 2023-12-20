@@ -199,6 +199,9 @@
 </div>
 </div>
 
+<!-- Popup model for order confirmation -->
+
+<!-- Button trigger modal -->
 
 <script>
 
@@ -224,17 +227,22 @@
                 method: "POST",
                 data:myData,
                 success: function(data){
-                    if (data.status == 'success'){
-                        toastr.success(data.message)
-                    } 
-                    if (data.redirect=='required'){
-                        window.location.href=data.url
-                    }
+                    $.each(data.message, function(index, message){
+                        var status = data.status[index];
+                        if (status == 'success') {
+                            toastr.success(message)
+                        } else {
+                            toastr.error(message)
+                        }
+                    })   
                 }
-            })
 
-        
+        })
 
+        setTimeout(function() {
+            // Redirect to '/orders/akash122'
+            window.location.href = '/orders/{{user}}';
+        }, 3000);
     })
 
 
