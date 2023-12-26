@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'product',
-    'sweetify',
+    
 
 ]
 

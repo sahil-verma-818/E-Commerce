@@ -162,8 +162,7 @@
 
 <script>
 
-// Ajax Script for updating personal details
-
+// ****************Ajax Script for updating personal details**************
 $('#detailBtn').click(function(){
 
   event.preventDefault()
@@ -172,7 +171,7 @@ $('#detailBtn').click(function(){
   let house = $('#house').val()
   let area = $('#area').val()
   let landmark = $('#landmark').val()
-  let zip = $('#zip').val()
+  let zip = $('#zip').val()    
   let state = $('#state').val()
   let city = $('#city').val()
   let mobile = $('#mobile').val()
@@ -200,7 +199,6 @@ $('#detailBtn').click(function(){
 // ajax script to update password
 
 $('#passwordBtn').click(function(){
-  console.log('Button Pressed')
   event.preventDefault()
 
   let old_password=$('#old_password').val()

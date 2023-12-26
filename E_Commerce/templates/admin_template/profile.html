@@ -154,145 +154,142 @@
 
     // *****************ajax script to update password**************
     $('#passwordBtn').click(function(){
-console.log('Button Pressed')
-event.preventDefault()
-
-let old_password=$('#old_password').val()
-let new_password=$('#new_password').val()
-let cnf_password=$('#cnf_password').val()
-let csr = $('input[name=csrfmiddlewaretoken]').val()
-
-
-if ((old_password=='')||(new_password=='')||(cnf_password=='')){
-  toastr.warning("Required credentials can't be left empty.")
-} else if (new_password != cnf_password) {
-  toastr.warning("Password and confirm password doesn't match.")
-  $('form')[0].reset()
-} else {
-  mydata = {old_password:old_password,new_password:new_password, cnf_password:cnf_password, csrfmiddlewaretoken:csr}
-}
-
-$.ajax({
-  url : '/update_password/{{user}}',
-  method : "POST",
-  data : mydata,
-  success : function(data){
-    if (data.status=='success'){
-      toastr.success(data.message)
-    } else if (data.status=='error') {
-      toastr.error(data.message)
-    } else {
-      toastr.message(data.message)
-    }
-  }
-
-
-})
-})
-    // ********************* Ajax End ******************************
-
-
-
-    // ******************* Function for fetching geolocation ************
-    $('#currentLocation').click(function(){
-        if( navigator.geolocation )
-        {
-           // Call getCurrentPosition with success and failure callbacks
-           navigator.geolocation.getCurrentPosition( success, fail );
-        }
-        else
-        {
-           alert("Sorry, your browser does not support geolocation services.");
-        }
-    })
-
-
-
-    // ************* Function to fetch location based on geolocation *******
-    function success(position)
-     {
-
-        var nominatimUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
-        $.ajax({
-            url : nominatimUrl,
-            method:'GET',
-            success:function(data){
-                var test = data.display_name.split(',')
-                $('#city').val(test[0].split(' ')[0])
-                $('#zip').val(test[4])
-                $('#state').val(test[3])
-                $('#area').val(test[1])
-            },
-            error: function(){
-                alert('There is some error')
-            }
-        })
-     }
-
-     function fail()
-     {
-        // Could not obtain location
-     }
-    // ****************Function End *******************************
-
-
-
-    // ***************** jQuery for profile picture save ***********
-    $(document).ready(function() {
         event.preventDefault()
 
-    
-        var readURL = function(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+        let old_password=$('#old_password').val()
+        let new_password=$('#new_password').val()
+        let cnf_password=$('#cnf_password').val()
+        let csr = $('input[name=csrfmiddlewaretoken]').val()
 
-                reader.onload = function (e) {
-                    $('.profile-pic').attr('src', e.target.result);
-                    // var imageUrl = e.target.result
-                    // console.log(imageUrl)
-                }
 
-                reader.readAsDataURL(input.files[0]);
-               
+        if ((old_password=='')||(new_password=='')||(cnf_password=='')){
+        toastr.warning("Required credentials can't be left empty.")
+        } else if (new_password != cnf_password) {
+        toastr.warning("Password and confirm password doesn't match.")
+        $('form')[0].reset()
+        } else {
+        mydata = {old_password:old_password,new_password:new_password, cnf_password:cnf_password, csrfmiddlewaretoken:csr}
+        }
+
+        $.ajax({
+        url : '/update_password/{{user}}',
+        method : "POST",
+        data : mydata,
+        success : function(data){
+            if (data.status=='success'){
+            toastr.success(data.message)
+            } else if (data.status=='error') {
+            toastr.error(data.message)
+            } else {
+            toastr.message(data.message)
             }
         }
 
 
-        $(".file-upload").on('change', function(){
-            let image = $('.file-upload')[0].files[0]
-            let csr = $('input[name=csrfmiddlewaretoken]').val()
-            var formData = new FormData()
-            formData.append('profile_pic', image)
-            formData.append('csrfmiddlewaretoken', csr)
+        })
+        })
+        // ********************* Ajax End ******************************
 
-            // console.log(formData)
+
+
+        // ******************* Function for fetching geolocation ************
+        $('#currentLocation').click(function(){
+            if( navigator.geolocation )
+            {
+            // Call getCurrentPosition with success and failure callbacks
+            navigator.geolocation.getCurrentPosition( success, fail );
+            }
+            else
+            {
+            alert("Sorry, your browser does not support geolocation services.");
+            }
+        })
+
+
+
+        // ************* Function to fetch location based on geolocation *******
+        function success(position)
+        {
+
+            var nominatimUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
             $.ajax({
-                url : '/account/{{user}}',
-                method: 'POST',
-                processData:false,
-                contentType:false,
-                data: formData,
-                beforeSend: function (xhr, settings) {
-                // Add the CSRF token to the headers
-                xhr.setRequestHeader("X-CSRFToken", csr);
-                },
+                url : nominatimUrl,
+                method:'GET',
                 success:function(data){
-                    console.log(data)
+                    var test = data.display_name.split(',')
+                    $('#city').val(test[0].split(' ')[0])
+                    $('#zip').val(test[4])
+                    $('#state').val(test[3])
+                    $('#area').val(test[1])
                 },
+                error: function(){
+                    alert('There is some error')
+                }
             })
-            readURL(this);
-            
-        });
+        }
 
-        $(".upload-button").on('click', function() {
-        $(".file-upload").click();
+        function fail()
+        {
+            // Could not obtain location
+        }
+        // ****************Function End *******************************
+
+
+
+        // ***************** jQuery for profile picture save ***********
+        $(document).ready(function() {
+            event.preventDefault()
 
         
-        });
-        });
-    // ***************** JQuery End ********************************
+            var readURL = function(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('.profile-pic').attr('src', e.target.result);
+                        // var imageUrl = e.target.result
+                        // console.log(imageUrl)
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                
+                }
+            }
 
 
+            $(".file-upload").on('change', function(){
+                let image = $('.file-upload')[0].files[0]
+                let csr = $('input[name=csrfmiddlewaretoken]').val()
+                var formData = new FormData()
+                formData.append('profile_pic', image)
+                formData.append('csrfmiddlewaretoken', csr)
+
+                // console.log(formData)
+                $.ajax({
+                    url : '/account/{{user}}',
+                    method: 'POST',
+                    processData:false,
+                    contentType:false,
+                    data: formData,
+                    beforeSend: function (xhr, settings) {
+                    // Add the CSRF token to the headers
+                    xhr.setRequestHeader("X-CSRFToken", csr);
+                    },
+                    success:function(data){
+                        console.log(data)
+                    },
+                })
+                readURL(this);
+                
+            });
+
+            $(".upload-button").on('click', function() {
+            $(".file-upload").click();
+
+            
+            });
+            });
+        // ***************** JQuery End ********************************
 
 </script>
 
