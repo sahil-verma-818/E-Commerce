@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-i5lw^a&@ipuraty1_)bw^w_=&+@bh4fm$l5m&0k%hi2ul)e@nb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,11 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'account',
     'cart',
     'orders',
     'product',
-    
+    'twilio',
 
 ]
 
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -150,8 +152,18 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
+# STRIPE PAYMENT INTEGRATION
 
+# settings.py
+STRIPE_PUBLIC_KEY = 'pk_test_51OU6kzSHPBt4R92PnuBWQh56AlbwMYtGXpah04uciTv06dBvnyblUIooF8nTwkvQAv03lOKfDLCq1oW5sSm3kcVM00g9IL4Jmb'
+STRIPE_SECRET_KEY = 'sk_test_51OU6kzSHPBt4R92PJNFgnbzCkfifIpYDkEV98b1V7Y7sXdlOlCvEBKqRDLrJCszrDqqoWFgrOf9C9p0LoiywDDol00aBdnFuLe'
 
+CORS_ALLOWED_ORIGIN = ['*']
+
+# Twilio Keys
+
+TWILIO_ACCOUNT_SID = 'AC7093d1c810c085035c1cfa54745d1a7b'
+TWILIO_AUTH_TOKEN = '20a4e449a9906e9542fcf4ff46a6df48'
 
 
 

@@ -174,7 +174,7 @@
                                         <tfoot>
                                             <tr>
                                                 <th colspan="4">Total</th>
-                                                <th colspan="2">{{total}}</th>
+                                                <th id="total_val" colspan="2">{{total}}</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -215,11 +215,13 @@
         let address_type = $('#address-type').val()
         let payment_method = $('input[name="payment-method"]:checked').val()
         let csr = $('input[name=csrfmiddlewaretoken]').val()
+        let total_val = $('#total_val').text()
+        console.log(total_val)
 
         if ((house=='')||(area=='')||(landmark=='')||(zip=='')||(state=='')||(city=='')||(address_type=='')||(payment_method=='')){
             toastr.warning('Fields are empty. Fill it to move ahead')
         } else {
-            myData = {house:house, area:area, landmark:landmark, zip:zip, state:state, city:city, address_type:address_type, payment_method:payment_method, csrfmiddlewaretoken:csr}
+            myData = {house:house, area:area, total_val:total_val, landmark:landmark, zip:zip, state:state, city:city, address_type:address_type, payment_method:payment_method, csrfmiddlewaretoken:csr}
             
         }
         $.ajax({
@@ -231,10 +233,12 @@
                         var status = data.status[index];
                         if (status == 'success') {
                             toastr.success(message)
+                            
                         } else {
                             toastr.error(message)
                         }
-                    })   
+                    }) 
+                    window.location.href = data.redirect  
                 }
 
         })

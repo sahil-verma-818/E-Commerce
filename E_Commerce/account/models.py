@@ -1,5 +1,7 @@
+from collections.abc import Iterable
 from django.db import models
 from django.contrib.auth.models import AbstractUser,UserManager
+from django.utils import timezone
 
 # Create your models here.
 
@@ -19,7 +21,7 @@ class User(AbstractUser):
     mobile = models.CharField(max_length=20, blank=True)
     user_type = models.CharField(max_length=10, choices=user_choices, blank=True)
     profile_pic = models.ImageField(upload_to='static/', default='./static/default_profile_pic.webp', blank=True, null=True)
-
+    is_verified = models.BooleanField(default=False)
     objects = UserManager()
     USERNAME_FIELD = 'username'
 
@@ -41,6 +43,24 @@ class Address(models.Model):
 
     def __str__(self) -> str:
         return self.house + " " + self.area
+    
+
+class otp_validation(models.Model):
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    otp = models.CharField(max_length=6)
+    created_at = models.DateTimeField(default=timezone.now)
+    expires_at = models.DateTimeField()
+    context = models.CharField(max_length=255)
+    is_verified = models.BooleanField(default=False)
+    
+
+    def save(self, *args, **kwargs):
+        self.expires_at = timezone.now() + timezone.timedelta(minutes=5)
+
+    
+
+
 
 
 

@@ -8,6 +8,10 @@ from cart.models import CartItems
 from django.contrib import messages
 import datetime
 from django.db.models import Q
+import stripe
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 # Create your views here.
@@ -114,10 +118,37 @@ def checkout(request,id):
                     
   
         order.total_bill=total
-        if OrderItems.objects.filter(order=53):
-            order.save()
+        order.save()
+        if OrderItems.objects.filter(order=order):
+            if payment_method != 'cod':
+                url = f'http://127.0.0.1:8000/payment-success/{order.id}'
+                stripe.api_key = settings.STRIPE_SECRET_KEY
+
+                total_val = request.POST.get('total_val')
+                total_val = int(total_val.split('.')[0])
+
+                session = stripe.checkout.Session.create(
+                    payment_method_types=['card'],
+                    line_items=[{
+                        'price_data': {
+                            'currency': 'usd',
+                            'product_data': {
+                                'name' : f'Order Id : {order.id}',
+                            },
+                            'unit_amount': total_val*100,  # in cents
+                        },
+                        'quantity': 1,
+                    }],
+                    mode='payment',
+                    
+                    success_url = url + '?session_id={CHECKOUT_SESSION_ID}',
+                    cancel_url=f"http://127.0.0.1:8000/cart/{request.user}",
+                )
+                
+                return JsonResponse({'redirect': session.url})
+            
         else:
-            # order.delete()
+            order.delete()
             response['message'].append("Order can't be placed due to unavailability of items. Sorry for inconvinience occured.")
             response['status'].append('error')
         response['redirect']='required'
@@ -175,4 +206,18 @@ def update_status(request, id):
             cnf.is_delivered=True
             cnf.save()
         return JsonResponse(response)
+    
 
+# ----------------------- PAYMENT GATEWAY (STRIPE) -----------------------------
+
+
+def payment_success(request, id):
+
+    order=Order.objects.get(id=id)
+    order.is_confirmed=True
+    order.transaction_id = request.GET.get('session_id')
+    order.save()
+    return redirect(f'/orders/{request.user}')
+
+def payment_failure(request):
+    pass

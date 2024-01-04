@@ -1,14 +1,17 @@
 
 # Imports
+from twilio.rest import Client
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,JsonResponse
 from product.models import Product, ProductCategory
-from .models import User,Address
+from .models import User,Address, otp_validation
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.conf import settings
+from django.utils import timezone
+
 # ===========================================================================-------------- #
 
 
@@ -36,13 +39,20 @@ def register(request):
             return JsonResponse({'status': 'error','message' : 'An Existing user already available with this email. Try another one.'})
         else:
             username = email.split('@')[0]
-            User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
-            return JsonResponse({'status' : 'success' , 'message' : f"New user created with username {username}" , 'redirect' : '/adminlogin'})
+            user = User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
+            client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+            message = client.messages.create(
+                body='The otp for verify your registration is 654897',
+                from_='+13038168118',
+                to='+917050876135'
+            )
+            return JsonResponse({'status' : 'success' , 'message' : "Otp sent successfully" , 'redirect' : '/adminlogin'})
         # ==================================================================================  
     # Rendering specific pages for sellers
     return render(request, 'users_template/register.html', {'catagory': ProductCategory.objects.all()})
 
 # ===============================================================================================
+
 
 
 # ************************ Code to login user *****************************
@@ -57,21 +67,40 @@ def login_user(request):
 
         #==============================================================
 
-        if user is not None:
-            login(request, user=user)
+        if user:
+            if user.is_verified == True:
+                login(request, user=user)
 
-            # ==========================================================
-            if user.user_type == 'seller':
-                return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/admin-panel/dashboard'})
-            elif user.user_type == 'customer':
-                return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/'})
-            # ============================================================
+                # ==========================================================
+                if user.user_type == 'seller':
+                    return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/admin-panel/dashboard'})
+                elif user.user_type == 'customer':
+                    return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/'})
+                # ============================================================
         else:
             return JsonResponse({'status':'error', 'message':'Credentials not matched to any data.'})
         
         # =================================================================
     
 #================================================================================================
+
+def verify_otp(request):
+    if request.method == 'POST':
+        user = request.user  # Assuming the user is authenticated
+        entered_otp = request.POST.get('otp')  # Assuming you have an HTML form with a field named 'otp'
+
+        try:
+            otp_obj = otp_validation.objects.get(user=user, is_verified=False, expires_at__gt=timezone.now())
+            if otp_obj.otp_code == entered_otp:
+                # Mark the OTP as verified
+                otp_obj.is_verified = True
+                otp_obj.save()
+                messages.success(request, 'OTP verification successful!')
+                return redirect('success_page')  # Redirect to a success page after successful verification
+            else:
+                messages.error(request, 'Invalid OTP. Please try again.')
+        except otp_validation.DoesNotExist:
+            messages.error(request, 'OTP has expired or is invalid. Please request a new OTP.')
 
 
 # ===============================================================================================

@@ -8,5 +8,8 @@ urlpatterns = [
     path('admin-panel/dashboard', views.admin_home),
     path('admin-order/<str:uname>/<int:id>', views.admin_order),
     path('update-status/<int:id>', views.update_status),
+    path('payment-success/<int:id>', views.payment_success),
+    path('payment_failure/', views.payment_failure)
+
 
 ]
