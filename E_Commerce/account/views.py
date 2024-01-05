@@ -75,15 +75,13 @@ def login_user(request):
         #==============================================================
 
         if user:
-            if user.is_verified == True:
-                login(request, user=user)
-
-                # ==========================================================
-                if user.user_type == 'seller':
-                    return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/admin-panel/dashboard'})
-                elif user.user_type == 'customer':
-                    return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/'})
-                # ============================================================
+            login(request, user=user)
+            # ==========================================================
+            if user.user_type == 'seller':
+                return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/admin-panel/dashboard'})
+            elif user.user_type == 'customer':
+                return JsonResponse({'status':'success', 'message':'Login Successful', 'redirect' : '/'})
+            # ============================================================
         else:
             return JsonResponse({'status':'error', 'message':'Credentials not matched to any data.'})
         

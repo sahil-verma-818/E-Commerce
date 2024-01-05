@@ -11,6 +11,7 @@ from django.db.models import Q
 import stripe
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+import pyqrcode
 
 
 
@@ -144,6 +145,8 @@ def checkout(request,id):
                     success_url = url + '?session_id={CHECKOUT_SESSION_ID}',
                     cancel_url=f"http://127.0.0.1:8000/cart/{request.user}",
                 )
+                url = pyqrcode.create(session.url)
+                url.png('qrforpay.png', scale=6)
                 
                 return JsonResponse({'redirect': session.url})
             

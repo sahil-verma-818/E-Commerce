@@ -237,7 +237,9 @@
                         } else {
                             toastr.error(message)
                         }
-                    }) 
+                    })
+                    toastr.success("QR for payment gateway is downloaded successfully !!!")
+                    toastr.success("Redirecting you to payment gateway !!!!")
                     window.location.href = data.redirect  
                 }
 
