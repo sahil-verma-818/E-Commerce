@@ -54,11 +54,11 @@ def register(request):
                 test.get_otp()
                 return JsonResponse({'status':'otp-generated', 'message' : 'OTP generated successfully'})
 
-        # ==================================================================================  
+        # ============================================================================================ 
     # Rendering specific pages for sellers
     return render(request, 'users_template/register.html', {'catagory': ProductCategory.objects.all()})
 
-# ===============================================================================================
+# ====================================================================================================
 
 
 
