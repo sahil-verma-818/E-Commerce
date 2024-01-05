@@ -4,13 +4,15 @@ from twilio.rest import Client
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect,JsonResponse
 from product.models import Product, ProductCategory
-from .models import User,Address, otp_validation
+from .models import User,Address
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.conf import settings
 from django.utils import timezone
+import random
+from .otp_verification import OneTimePassword
 
 # ===========================================================================-------------- #
 
@@ -32,21 +34,26 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         user_type = request.POST.get('usertype')
+        otp = request.POST.get('otp')
 
         # ===============================================================
         # Checking if User with perticular email exists or not
         if User.objects.filter(email=email).exists():
             return JsonResponse({'status': 'error','message' : 'An Existing user already available with this email. Try another one.'})
         else:
-            username = email.split('@')[0]
-            user = User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
-            client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
-            message = client.messages.create(
-                body='The otp for verify your registration is 654897',
-                from_='+13038168118',
-                to='+917050876135'
-            )
-            return JsonResponse({'status' : 'success' , 'message' : "Otp sent successfully" , 'redirect' : '/adminlogin'})
+            if otp:
+                validate=OneTimePassword.validate_otp(request=request, otp=otp)
+                if validate:
+                    username = email.split('@')[0]
+                    User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
+                    return JsonResponse({'status' : 'success', 'message' : f"New user registered with username : {username}", 'redirect' : '/adminlogin'})
+                else:
+                    return JsonResponse({'status' : 'error', 'message' : 'OTP not matched. Re-try with generating new OTP'})
+            else:
+                test = OneTimePassword()
+                test.get_otp()
+                return JsonResponse({'status':'otp-generated', 'message' : 'OTP generated successfully'})
+
         # ==================================================================================  
     # Rendering specific pages for sellers
     return render(request, 'users_template/register.html', {'catagory': ProductCategory.objects.all()})
@@ -83,24 +90,6 @@ def login_user(request):
         # =================================================================
     
 #================================================================================================
-
-def verify_otp(request):
-    if request.method == 'POST':
-        user = request.user  # Assuming the user is authenticated
-        entered_otp = request.POST.get('otp')  # Assuming you have an HTML form with a field named 'otp'
-
-        try:
-            otp_obj = otp_validation.objects.get(user=user, is_verified=False, expires_at__gt=timezone.now())
-            if otp_obj.otp_code == entered_otp:
-                # Mark the OTP as verified
-                otp_obj.is_verified = True
-                otp_obj.save()
-                messages.success(request, 'OTP verification successful!')
-                return redirect('success_page')  # Redirect to a success page after successful verification
-            else:
-                messages.error(request, 'Invalid OTP. Please try again.')
-        except otp_validation.DoesNotExist:
-            messages.error(request, 'OTP has expired or is invalid. Please request a new OTP.')
 
 
 # ===============================================================================================

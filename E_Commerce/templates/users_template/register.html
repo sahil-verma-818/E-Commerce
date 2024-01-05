@@ -49,15 +49,14 @@
                 <input id="password" type="password" class="form-control" name="password">
               </div>
               <div class="form-group">
-                <label for="usertype">Choose your account type</label>
-                <select name="usertype" id="usertype">
+                <select name="usertype" hidden id="usertype">
                   <option value="customer">Customer</option>
                   <option value="seller">Seller</option>
                   <option value="admin">Admin</option>
                 </select>
               </div>
               <div class="text-center">
-                <button type="submit" id="registerBtn" class="btn btn-primary"><i class="fa fa-user-md"></i> Register</button>
+                <button type="submit" id="registerBtn" class="btn btn-primary submission"><i class="fa fa-user-md"></i> Register</button>
               </div>
             </form>
           </div>
@@ -92,9 +91,45 @@
 </div>
 
 
+<!-- POPUP Model for OTP Verification -->
+<!-- Button trigger modal -->
+<button type="button" id="otp-trigger-btn" hidden class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Validate OTP</h5>
+        <button type="button" id="close-btn" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+          <div class="form-group">
+            <label for="otp">Enter the OTP</label>
+            <input id="otp" type="otp" class="form-control" name="otp">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="otp-submission" class="btn btn-primary submission">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- POPUP Model for OTP Verification ends -->
+
+
+
+
 <script>
 
-$('#registerBtn').click(function(){
+$('.submission').click(function(){
   event.preventDefault()
 
   let fn = $('#firstname').val()
@@ -103,11 +138,12 @@ $('#registerBtn').click(function(){
   let ps = $('#password').val()
   let ut = $('#usertype').val()
   let csr = $('input[name=csrfmiddlewaretoken]').val()
+  let otp = $('#otp').val()
 
   if((fn == '') || (ln == '') || (em == '') || (ps == '')){
     toastr.error('Required credentials can not be left empty.')
   } else {
-    mydata = { firstname:fn, lastname:ln, email:em, password:ps, usertype:ut, csrfmiddlewaretoken : csr }
+    mydata = { firstname:fn, lastname:ln, email:em, password:ps, usertype:ut, csrfmiddlewaretoken : csr, otp }
 
   }
 
@@ -116,9 +152,14 @@ $('#registerBtn').click(function(){
     method : "POST",
     data : mydata,
     success:function(data){
-      if (data.status == 'success'){
+      if (data.status == 'otp-generated'){
+        
+        $('#otp-trigger-btn').click()
         toastr.success(data.message);
-      } else {
+      } else if (data.status == 'success') {
+        toastr.success(data.message)
+        $('#close-btn').click()
+      } else if (data.status == 'error') {
         toastr.error(data.message)
       }
     }
