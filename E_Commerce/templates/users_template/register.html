@@ -114,6 +114,8 @@
             <input id="otp" type="otp" class="form-control" name="otp">
           </div>
         </form>
+
+        <p class="otp-countdown"> OTP expires in : <span class="countdown"></span> </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -128,6 +130,9 @@
 
 
 <script>
+
+let interval = null;
+
 
 $('.submission').click(function(){
   event.preventDefault()
@@ -164,9 +169,30 @@ $('.submission').click(function(){
     data : mydata,
     success:function(data){
       if (data.status == 'otp-generated'){
-        
-        $('#otp-trigger-btn').click()
+        $('#otp-trigger-btn').click();
         toastr.success(data.message);
+        clearInterval(interval);
+        var timer2 = "0:30";
+        interval = setInterval(function() {
+          var timer = timer2.split(':');
+
+          var minutes = parseInt(timer[0], 10);
+          var seconds = parseInt(timer[1], 10);
+          --seconds;
+          minutes = (seconds < 0) ? --minutes : minutes;
+          
+          seconds = (seconds < 0) ? 59 : seconds;
+          seconds = (seconds < 10) ? '0' + seconds : seconds;
+          $('.countdown').html(minutes + ':' + seconds);
+          timer2 = minutes + ':' + seconds;
+          if ((minutes == 0) && (seconds == 0)) {
+            clearInterval(interval);
+            $('#close-btn').click();
+          
+          }
+        }, 1000);
+
+
       } else if (data.status == 'success') {
         toastr.success(data.message)
         $('#close-btn').click()
@@ -176,6 +202,7 @@ $('.submission').click(function(){
     }
   })
 })
+
 
 
 $('#loginBtn').click(function(){
