@@ -1,0 +1,5819 @@
+// ------------------------------------------ Variables ------------------------------------------
+// Light mode ----
+$pera-fs: 16px;
+$cf-green: #51B255;
+$cf-light-green: #B8DB45;
+$cf-white: #F0F2E7;
+$cf-black: #3B363A;
+$cf-grey: #A1A1A1;
+
+$df-dark-green: #21402B;
+$df-black: #000;
+$df-white: #fff;
+$df-red: #ff0000;
+
+// Dark mode ----
+$cf-dark-black: #232323;
+
+// ------------------------------------------ Global Style ------------------------------------------
+body{
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+    font-style: normal;
+    line-height: normal;
+    background-color: #fff;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+      
+    /* Track */
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px $cf-dark-black; 
+        border-radius: 10px;
+    }
+    
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: $cf-green; 
+        border-radius: 10px;
+    }
+    
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: $cf-light-green; 
+    }
+
+    // Semantic UI tooltip update
+    [data-tooltip]{
+        &:after{
+            width: 300px;
+            text-wrap: wrap;
+            text-align: center;
+        }
+    }
+
+    // Order Ahead Iframe
+    #order_ahead_iframe{
+        width: 100%;
+        height: 800px; 
+    }
+
+    .segment.cf-response-handler{
+        cursor: unset;
+        opacity: 1;
+        i.fa-thumbs-up, i.fa-solid{
+            font-size: 4rem;
+        }
+    }
+    
+    #main-loader-container {
+        width: 100vw;
+        position: fixed;
+        top: 0px;
+        z-index: 1000;
+        #main-loader {
+            width: 0;
+            left: 0;
+            height: 4px;
+            z-index: 100;
+            position: absolute;
+            background-color: $cf-green;
+        }
+    }
+
+    // Dark Mode Settings
+    &.cf-dark-mode{
+        background-color: #232323;
+        .cf-white{
+            color: $cf-black;
+        }
+        .cf-white-bg{
+            background-color: $cf-dark-black;
+        }
+        .cf-black{
+            color: $cf-white;
+        }
+        .cf-black-bg{
+            background-color: $cf-white;
+        }
+
+        h1, .cf-super-heading{
+            color: $cf-white;
+        }
+        h2, .cf-sub-super-heading{
+            color: $cf-white;
+        }
+        h3, .cf-heading{
+            color: $cf-white;
+        }
+        h4, .cf-sub-heading{
+            color: $cf-white;
+        }
+        h5, .cf-small-heading{
+            color: $cf-white;
+        }
+        h6, .smallest-heading{
+            color: $cf-white;
+        }
+        p, .cf-pera{
+            color: $cf-white;
+        }
+
+        #sign-up-thanks{
+            .cf-response-handler{
+                background-color: $cf-white;
+                h3{
+                    color: $cf-black;
+                }
+                p.cf-grey{
+                    color: $cf-dark-black;
+                }
+            }
+        }
+
+        // cf navigation / paginator
+        .cf-pagination{
+            ul{
+                li.page-item{
+                    .page-link{
+                        background-color: $cf-dark-black;
+                        color: $cf-white;
+
+                    }
+                    &.active .page-link{
+                        color: $df-black;
+                    }
+                }
+            }
+        }
+
+        form.cf-form, .cf-form-grid{
+            &.old-bordered-form{
+                background: $cf-white;
+                .field, .field .ui.dropdown{
+                    // input
+                    input, input.search, .ui.selection.dropdown{
+                        color: $cf-black !important;
+                        &:-webkit-autofill,
+                        &:-webkit-autofill:hover, 
+                        &:-webkit-autofill:focus, 
+                        &:-webkit-autofill:active{
+                            -webkit-box-shadow: 0 0 0 30px $cf-white inset !important;
+                            -webkit-text-fill-color: $cf-black !important;
+                        }
+                    }
+                }
+                .ui.dropdown{
+                    .menu{
+                        background-color: $cf-white;
+                        border: 1px solid rgb(35 35 35);
+                    }
+                    &.selection.active{
+                        .menu {
+                            border-color: $cf-grey;
+                            -webkit-box-shadow: 0 2px 3px 0 rgba(34,36,38,.15);
+                            box-shadow: 0 2px 3px 0 rgb(35 35 35 / 37%);
+                        }
+                    }
+                }
+
+                textarea{
+                    color: $cf-black;
+                }
+            }
+
+            label{
+                color: $cf-grey;
+                &:hover{
+                    color: $cf-grey;
+                }
+            }
+            .field, .field .ui.dropdown{    
+                // label
+                label{
+                    color: $cf-grey;
+                }
+
+                // input
+                input, input.search, .ui.selection.dropdown{
+                    color: $cf-white !important;
+                    &:-webkit-autofill,
+                    &:-webkit-autofill:hover, 
+                    &:-webkit-autofill:focus, 
+                    &:-webkit-autofill:active{
+                        -webkit-box-shadow: 0 0 0 30px $cf-dark-black inset !important;
+                        -webkit-text-fill-color: $cf-white !important;
+                    }
+                }
+            }
+            .inline{
+                &.field{
+                    .checkbox{
+                        label{
+                            &:before{
+                                background: transparent;
+                                border-color: $cf-white;
+                            }
+                            &:after{
+                                color: $cf-white;
+                            }
+                        }
+                    }
+                }
+            }
+
+            #event-contract{
+                .accordion-item{
+                    .accordion-button {
+                        color: $df-black;
+                        &:focus, &:focus:not(.collapsed), &:not(.collapsed){
+                            color: $cf-black;
+                        }
+                    }
+                }
+
+                .accordion-body p{
+                    color: $df-black;
+                }
+            }
+
+            textarea{
+                color: $cf-white;
+            }
+        }
+
+        // Owl Carousel
+        .owl-carousel{
+            &.cf-owlnav-btn{
+                .owl-nav{
+                    button{
+                        &.owl-next{
+                            background-color: $cf-dark-black;
+                            border: solid 1px $cf-white;
+                            &:before{
+                                color: $cf-white;
+                            }
+                        }
+                    }
+                }
+                .owl-dots{
+                    button{
+                        &.owl-dot{
+                            &:before{
+                                color: $cf-grey;
+                            }
+                            &.active{
+                                &:before{
+                                    color: $df-black;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        header{
+            background-color: $cf-dark-black;
+
+            nav.navbar{
+                background-color: $cf-dark-black !important;
+                &.cf-navbar-sticky{
+                    border-bottom: solid 1px $cf-grey;
+                }
+
+                // Navbar menu items
+                ul.navbar-nav{
+                    li.nav-item{
+                        a{
+                            color: $cf-white;
+                        }
+                        &.dropdown{
+                            ul.dropdown-menu{
+                                background-color: $cf-dark-black;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+
+        // modals
+        .modal{
+            &#login{
+                .modal-dialog{
+                    max-width: 550px;
+                    .modal-content{
+                        background-color: $cf-dark-black;
+                    }
+                    .modal-header{
+                        button.btn-close{
+                            color: $df-white;
+                            background-color: $df-white;
+                        }
+                    }
+                }
+            }
+        }
+
+        // breadcrumb
+        .cf-breadcrumb{
+            nav .breadcrumb{
+                .breadcrumb-item{
+                    &:before{
+                        color: $cf-white;
+                    }
+                }
+            }
+        }
+        
+        // Section Style
+        section{
+            // City Flavor Work Section
+            #city-flavor-work{
+                // Work Tabs Style
+                ul#city-flavor-work-tab{
+                    li{
+                        color: $df-white;
+                        button{
+                            &:after{
+                                background-color: $cf-white;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Catered Companies
+            #catered-companies{
+                padding: 2rem 0;
+                background-color: $cf-white;
+                h3{
+                    color: $cf-black;
+                }
+                p{
+                    color: $cf-black;
+                }
+            }
+
+            // Food Truck Search
+            #food-truck-search{
+                .section-content{
+                    h2{
+                        color: $cf-white;
+                    }
+                }
+            }
+
+            // CF Support Section
+            #cf-support{
+                .col-md-4{
+                    .support-content{
+                        // background-color: $cf-black;
+                        h4{
+                            color: $cf-black;
+                        }
+                        p{
+                            color: $cf-black;
+                        }
+                    }
+                }
+            }
+
+            // Query Section
+            #cf-queries{
+                .query-item{
+                    h4{
+                        color: $cf-white;
+                    }
+                }
+            }
+
+            // Why City Flavor Section
+            #why-cityflavor{
+                h3,p{
+                    color: $cf-black;
+                }
+                .feature-item{
+                    h4,p{
+                        color: $cf-black;
+                    }
+                }
+            }
+
+            &#cf-home{
+                // Hero Section
+                #hero-section{
+                    .hero-text{
+                        color: $df-white;
+                        h1{
+                            color: $cf-white;
+                        }
+                        
+                    }
+                }
+                
+                // Learn more Section
+                #learn-more{
+                    background-color: $cf-dark-black;
+                }
+                
+                
+                // All Cities
+                #cf-all-cities{
+                    .col-md-4{
+                        .city-link{
+                            p.cf-pera-2{
+                                a{
+                                    color: $cf-white;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &#about-tech-page{
+                #ordering-experience{
+                    h3,h4,p{
+                        color: $cf-black;
+                    }
+                }
+                #cf-offers{
+                    .row{
+                        .box-container{
+                            &.enterprise{
+                                background-color: $cf-white;
+                                
+                                p, h4, h6{
+                                    color: $cf-black;
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+            }
+
+            &#cities-page{
+                // Sub header Section
+                #sub-header-section{
+                    .cf-form-grid{
+                        #select-city.cf-bs-dropdown{
+                            .dropdown-menu{
+                                top: 12px;
+                                background-color: $cf-dark-black;
+                                border: solid 1px $cf-white;
+                                a {
+                                    color: $cf-white;
+                                }
+                            }
+                        }
+                    }
+                }
+                // Filter Truckss Section
+                #filter-trucks{
+                    .cf-title{
+                        margin-bottom: 18px;
+                    }
+                    // Filter Grid Style
+                    .filter-btn-grid{
+                        .cf-grid-item{
+                            button{
+                                color: $cf-white;
+                                &.show-more-btn{
+                                    background-color: $cf-black;
+                                }
+                            }
+                        }
+                    }
+
+                    // Filter Result Style
+                    .filter-results{
+                        .col-xl-3{
+                            .img-box{
+                                &:hover{
+                                    box-shadow: 0px 4px 12px 0px rgba(255, 255, 255, 0.5);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                #all-cities-list{
+                    .row{
+                        .col-lg-4{
+                            .img-box{
+                                &:hover{
+                                    box-shadow: 0px 4px 12px 0px rgba(255, 255, 255, 0.5);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.common-landing-page{
+                #how-it-works{
+                    .col-md-4{
+                        display: flex;
+                        .card-item{
+                            
+                            h4,p{
+                                padding: 20px 0;
+                                color: $cf-black;
+                            }
+                        }
+                    }
+                }
+
+                .cf-bg-layer{
+                    &:before{
+                        content: unset;
+                    }
+                }
+            }
+
+            &#public-url-page{
+                // Filter Bar
+                #filter-bar{
+                    button{
+                        &.bordered-dropdown{
+                            color: $cf-white;
+                        }
+                    }
+    
+                    h6{
+                        display: inline-block;
+                    }
+    
+                    // View Type
+                    #view-type{
+                        svg > path{
+                            fill: $cf-white;
+                        }
+                    }
+                }
+                .varieties{
+                    span{
+                        color: $cf-white;
+                    }
+                }
+    
+                // Shifts Section
+                #shifts-section{
+                    .shifts-container{
+                        position: relative;
+                        .days{
+                            .shift{
+                                .content{
+                                    .time{
+                                        h5{
+                                            color: $cf-black;
+                                        }
+                                    }
+                                    .cf-menu-btn{
+                                        p{
+                                            color: $cf-white;
+                                        }
+                                        span{
+                                            color: $cf-white;
+                                        }
+                                        &.active{
+                                            background-color: $cf-white;
+                                            p{
+                                                color: $cf-black;
+                                            }
+                                            span{
+                                                color: $cf-black;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+    
+                // Weekly updates application form section
+                #weekly-updates-application{
+                    form{
+                        width: 350px;
+                        margin: 0 auto;
+                    }
+                }
+            }
+        }
+        .ui-timepicker-standard{
+            background-color: $cf-white;
+            border-color: $cf-grey;
+            -webkit-box-shadow: 0 2px 3px 0 rgba(34,36,38,.15);
+            box-shadow: 0 2px 3px 0 rgb(35 35 35 / 37%);
+        }
+    }
+
+    // Vendor Profile Calender CSS
+    .fc-daygrid-event {
+        background-color: indianred !important;
+        color: white !important;
+        cursor: pointer !important;
+        padding: 0 !important;
+    }
+    .fc-list-event {
+        /* background-color: #154066 !important; */
+        /* color: white !important; */
+        cursor: pointer !important;
+        padding: 0 !important;
+    }
+    .event-padding {
+        padding: 10px 7px !important;
+    }
+    .fc-event-confirmed-initial {
+        background-color: green !important;
+        color: white !important;
+    }
+    .fc-event-unconfirmed {
+        background-color: indianred !important;
+        color: white !important;
+    }
+    .fc-list-event-dot {
+        display: none !important;
+    }
+    .fc-event-confirmed {
+        background-color: darkgreen !important;
+        color: white !important;
+    }
+    .fc-view-harness {
+        min-height: 50vh !important;
+    }
+    #location-calendar-view{ 
+        .fc-event {
+            padding: 3px;
+        }
+        .fc-content {
+            display: block;
+            overflow-wrap: normal;
+        }
+        .fc-title {
+            display: block;
+            overflow-wrap: normal;
+        }
+    }
+    
+    @media (max-width: 800px) {
+        .fc-toolbar-title {
+            font-size: 1em !important;
+        }
+    }
+    @media(max-width: 1000px) {
+        .fc-button-group {
+            float: right;
+        }
+        .fc-today-button {
+            float: right;
+        }
+        .top-labels .ui.label {
+            display: none !important;
+        }
+    }
+
+    
+    // Override the container-fluid property globally
+    .container-fluid{
+        padding-left: 35px;
+        padding-right: 35px;
+    }
+
+    #sign-up-thanks{
+        display: none;
+    }
+
+    a{
+        cursor: pointer;
+    }
+
+    // Color Codes
+    .cf-green{
+        color: $cf-green !important;
+    }
+    .cf-green-bg{
+        background-color: $cf-green !important;
+    }
+    .cf-lightgreen{
+        color: $cf-light-green;;
+    }
+    .cf-lightgreen-bg{
+        background-color: $cf-light-green;;
+    }
+    .cf-white{
+        color: $cf-white;
+    }
+    .cf-white-bg{
+        background-color: $cf-white;
+    }
+    .cf-black{
+        color: $cf-black;
+    }
+    .cf-black-bg{
+        background-color: $cf-black;
+    }
+    .cf-grey{
+        color: $cf-grey;
+    }
+    .cf-grey-bg{
+        background-color: $cf-grey;
+    }
+
+    // Typography and UI elements
+    span{
+        &.border-bottom-heading{
+            border-bottom: solid $cf-light-green;
+            &.cf-green-border{
+                border-color: $cf-green !important;
+            }
+        }
+        &.cf-highlight{
+            color: $cf-green;
+        }
+        &.cf-title{
+            color: $cf-light-green;;
+            font-style: normal;
+            line-height: 16px;
+            text-transform: uppercase;
+            &.small{
+                font-size: 12px;
+                font-weight: 600;
+            }
+            &.title-dark{
+                color: $cf-green;
+            }
+        }
+    }
+    h1, .cf-super-heading{
+        font-size: 84px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;
+        color: $cf-black;
+        font-family: "noka", sans-serif !important;
+    }
+    h2, .cf-sub-super-heading{
+        color:$cf-black;
+        font-size: 62px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;
+        font-family: "noka", sans-serif !important;
+    }
+    h3, .cf-heading{
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;
+        color: $cf-black;
+        font-family: "noka", sans-serif !important;
+        &.cf-section-title{
+            margin-bottom: 20px;
+        }
+    }
+    h4, .cf-sub-heading{
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;
+        font-family: "noka", sans-serif !important;
+        color: $cf-black;
+    }
+    h5, .cf-small-heading{
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        font-family: "noka", sans-serif !important;
+        line-height: 32px;
+    }
+    h6, .smallest-heading{
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        font-family: "noka", sans-serif !important;
+        line-height: normal;
+    }
+    p, .cf-pera{
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+        font-style: normal;
+        font-family: "noka", sans-serif !important;
+        font-weight: normal;
+        &.subtext{
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 24px;
+        }
+        &.cf-pera-2{
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 30px;
+        }
+    }
+
+    hr.invisible-border{
+        border-color: transparent;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    // Layer for background
+    .cf-bg-layer{
+        position: relative;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        &.cbl-300{
+            height: 300px;
+        }
+        &.cbl-400{
+            height: 400px;
+        }
+        &.cbl-500{
+            height: 500px;
+        }
+        &.white-layer{
+            &:before{
+                background: rgba(255, 255, 255, 0.4);
+            }    
+        }
+        &:before{
+            content: "";
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: rgba(0,0,0,.4);
+            position: absolute;
+        }
+    }
+    
+    // cf navigation / paginator
+    .cf-pagination{
+        ul{
+            li.page-item{
+                .page-link{
+                    color: $df-dark-green;
+                }
+                &.active .page-link{
+                    background-color: $cf-green;
+                    border-color: $cf-green;
+                    color: $df-white;
+                }
+                &.disabled{
+                    .page-link{
+                        opacity: 0.4;
+                    }
+                }
+            }
+        }
+    }
+
+    // breadcrumb
+    .cf-breadcrumb{
+        nav .breadcrumb{
+            .breadcrumb-item{
+                padding-left: 4px;
+                &:before{
+                    padding-right: 4px;
+                }
+                a{
+                    color: $cf-green;
+                    font-weight: 500;
+                    text-decoration: none;
+                }
+                &.active a{
+                    font-weight: 600;
+                    pointer-events: none;
+                    color: $cf-green;
+                }
+            }
+        }
+    }
+
+    // Owl Carousel
+    .owl-carousel{
+        &.cf-owlnav-btn{
+            .owl-nav{
+                button{
+                    position: absolute;
+                    &.owl-next{
+                        top: 50%;
+                        right: 0;
+                        transform: translate(-25px, -50%);
+                        font-size: 3rem;
+                        width: 70px;
+                        height: 70px;
+                        background-color: $df-white;
+                        border: solid 1px $cf-grey;
+                        border-radius: 50%;
+    
+                        &:before{
+                            content: "\f061";
+                            font-family: FontAwesome;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            font-size: 2rem;
+                        }
+                    }
+                    span{
+                        display: none;
+                    }
+                }
+            }
+            .owl-dots{
+                text-align: center;
+                button{
+                    position: relative;
+                    &:not(:first-child){
+                        margin-left: 40px;
+                    }
+    
+                    &.owl-dot{
+                        margin-top: 1rem;
+                        &:before{
+                            content: "\f111";
+                            font-family: FontAwesome;
+                            font-size: 10px;
+                            color: $cf-grey;
+                        }
+                        &.active{
+                            &:before{
+                                color: $df-black;
+                            }
+                        }
+                    }
+                    span{
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    // Override Button style
+    .btn{
+        cursor: pointer;
+        font-weight: 600;
+        padding: 10px 16px;
+        border-radius: 5px;
+
+        &[disabled=disabled]{
+            cursor: default;
+            pointer-events: none;
+            opacity: .65;
+        }
+
+        &.btn-outline-success{
+            border: solid 2px $cf-green;
+            color: $cf-green;
+            font-weight: 600;
+            &:hover{
+                color: $df-white;
+                background-color: $cf-green;
+            }
+        }
+        &.btn-success{
+            background-color: $cf-green;
+            border-color: $cf-green;
+        }
+        &.btn-success-light{
+            background-color: $cf-light-green;;
+            border-color: $cf-light-green;;
+            color: $df-white;
+        }
+        &.cf-outline-transparent{
+            border: solid 1px $cf-grey;
+            color: $cf-black;
+            &.active{
+                background-color: $cf-green;
+                border-color: $cf-green;
+                color: $df-white;
+            }
+        }
+    }
+
+    // CF From Style
+    .cf-centered-form{
+        // "div.cf-centered-form > form.cf-form" used to set request form in center putt this class in parent element.
+        width: 600px;
+        margin: 0 auto;
+    }
+    form.cf-form, .cf-form-grid{
+        text-align: center;
+        &.old-bordered-form{
+            border: solid 1px $cf-grey;
+            border-radius: 7px;
+            padding: 35px 40px 50px;
+            width: inherit;
+            background: #fff;
+            box-shadow: 0px 5px 13px 0px rgba(0,0,0,.2);
+            &.bg-form{
+                left: 50%;
+                transform: translateX(-50%);
+                box-shadow: 0px 0px 0px 0px rgba(0,0,0,.5);
+                position: absolute;
+                top: 32px;
+            }
+            .field{
+                // label
+                label{
+                    position: unset;
+                    padding: 4px;
+                }
+                // input
+                input, input.search, .ui.selection.dropdown{
+                    border: solid 1px $cf-grey;
+                    border-radius: 5px;
+                    padding: 5px 10px;
+                    width: 100%;
+                    font-size: 16px;
+                }
+
+                // textarea
+                textarea{
+                    width: 100%;
+                    padding: 10px;
+                    border-radius: 5px;
+                    border: solid 1px $cf-grey;
+                    &:focus{
+                        border-color: $cf-green;
+                    }
+                }
+            }
+
+             // two field in row
+             .two{
+                .field{
+                    margin-bottom: 1rem;
+                }
+            }
+
+            // Tags style
+            button{
+                &.btn-success{
+                    width: calc(100% - 10px);
+                    margin: 0 auto;
+                }
+            }
+
+            // Contract Dropdown
+            #event-contract{
+                h2{
+                    padding: 5px;
+                    button.accordion-button{
+                        border: solid 1px $cf-grey;
+                    }
+                }
+            }
+        }
+
+        label{
+            color: #625B69;
+            &:hover{
+                color: #625B69;;
+            }
+        }
+
+        // form parts
+        #event-form-part-two{
+            display: none;
+            .tdb_container{
+                display: flex;
+                align-items: center;
+                position: relative;
+                width: 60px;
+                text-align: center;
+                label{
+                    transform: translateX(-50%);
+                    left: 50%;
+                    width: fit-content;
+                    padding-left: 0;
+                    padding-right: 0;
+                    &:after{
+                        content: "";
+                    }
+                }
+                input{
+                    width: 16px;
+                    margin: 0px auto -5px;
+                }
+            }
+        }
+
+        .food-truck-validator{
+            .truck-error{
+                list-style-type: none;
+                padding: 0;
+            }
+        }
+
+
+        // Grid Configuration
+        .fields{
+            display: flex;
+            width: 100%;
+        }
+
+        .field, .field .ui.dropdown{
+            width: 100%;
+            position: relative;
+            padding: 5px;
+            background: transparent;
+            border: none;
+            margin-bottom: 1.5rem;
+
+            &.required{
+                label{
+                    &::after{
+                        margin: -0.2em 0 0 0.2em;
+                        content: '*'; 
+                        color: $df-red;
+                    }
+                }
+                &.error input{
+                    border-bottom: solid 2px $df-red !important;
+                }
+            }
+
+            // if label exist
+            &:not(:has(> label)){
+                margin-bottom: 0 !important;
+                padding: 0;
+            }
+
+            // label
+            label{
+                color: #625B69;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                position: absolute;
+                text-align: left;
+                width: 100%;
+                // left: 13px;
+                left: 0;
+                transition: 0.3s ease;
+                z-index: 0;
+                top: -10px;
+                font-size: 12px;
+                border-radius: 0 0.28571429rem 0.28571429rem 0;
+                border-color: rgba(0,0,0,.15);
+                padding: 4px 4px 4px 8px;
+            }
+
+            // semantic UI conf.
+            .default.text{
+                display: none;
+            }
+            .text{
+                font-weight: normal;
+            }
+            .input{
+                width: 100%;
+            }
+            .ui.selection.dropdown{
+                display: flex;
+                align-items: center;
+                margin-bottom: 0;
+                min-height: 40px;
+            }
+
+
+            // input
+            input, input.search, .ui.selection.dropdown{
+                border: none;
+                border-bottom: solid 2px $cf-green;
+                border-radius: 0;
+                background: transparent !important;
+                font-size: 18px;
+                min-height: 40px;
+                padding:3px 9px 3px 4px;
+                width: 100%;
+                &::placeholder{
+                    opacity: 0;
+                }
+                &:focus{
+                    box-shadow: none;
+                    border-color: $cf-green;
+                }
+                &:focus-visible{
+                    outline: none;
+                }
+                &:-webkit-autofill,
+                &:-webkit-autofill:hover, 
+                &:-webkit-autofill:focus, 
+                &:-webkit-autofill:active{
+                    -webkit-box-shadow: 0 0 0 30px white inset !important;
+                }
+
+                &:disabled{
+                    cursor: default;
+                    pointer-events: none;
+                    opacity: .45;
+                }
+
+                &[type=file]{
+                    font-size: 12px;
+                    padding-top: 10px;
+                }
+                &.multiple{
+                    flex-wrap: wrap;
+                    .ui.label.visible{
+                        font-size: 14px;
+                        min-width: fit-content;
+                        .delete.icon{
+                            opacity: 0.8;
+                            &:before{
+                                font-family: FontAwesome;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // textarea
+            textarea{
+                background: transparent;
+                width: 100%;
+                border: none;
+                padding: 10px;
+                padding-bottom: 0;
+                border-bottom: solid 2px $cf-green;
+                &:focus{
+                    box-shadow: none;
+                    border-color: $cf-green;
+                }
+                &:focus-visible{
+                    outline: none;
+                }
+            }
+        }
+
+        .inline{
+            &.field{
+                .checkbox{
+                    display: flex;
+                    label{
+                        padding-left: 1.6rem;
+                        &:before{
+                            top: 3px;
+                        }
+                        &:after{
+                            top: 4px;
+                        }
+                    }
+                }
+            }
+        }
+
+        // two field in row
+        .two{
+            .field{
+                width: 50%;
+                margin-bottom: 3rem;
+                &:not(:first-child){
+                    margin-left: 12px
+                }
+            }
+        }
+        // 
+        .three{
+            .field{
+                width: 33.33%;
+                &:not(:first-child){
+                    margin-left: 12px
+                }
+            }
+        }
+        // five
+        .five{
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            width: 95%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        // Tags style
+        button{
+            &.btn-success{
+                width: 215px;
+            }
+        }
+        #event-contract{
+            h2{
+                padding: 5px;
+                button.accordion-button{
+                    border-radius: 5px;
+                    margin-top: 5px;
+                    box-shadow: none;
+                    border-bottom: solid 2px #51B255;
+                    &:focus, &:focus:not(.collapsed), &:not(.collapsed){
+                        background-color: #51b25561;
+                        border-color: #51b25561;
+                        color: $cf-black;
+                    }
+                    &:after{
+                        background-image: unset !important;
+                        content: "\f077";
+                        font-family: FontAwesome;
+                    }
+                }
+            }
+            .accordion-item{
+                background-color: transparent;
+                .accordion-button {
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+
+    // dropdown
+    div.dropdown{
+        &.cf-bs-dropdown{
+            border-bottom: solid 2px $cf-green;
+            button{
+                position: relative;
+                width: 100%;
+                height: 40px;
+                font-size: 16px;
+                padding: 0 9px;
+                text-align: left;
+                border: none;
+                background: transparent;
+                &:after{
+                    position: absolute;
+                    border:none;
+                    content: "\f078";
+                    font-family: FontAwesome;
+                    right:9px;
+                }
+            }
+            ul.dropdown-menu{
+                min-width: fit-content;
+                li{
+                    &:not(:first-child){
+                        margin-top: 10px;
+                    }
+                    a{
+                        &:hover, &.active{
+                            background-color: #51b2548c;
+                        }
+                    }
+                }
+            }
+            .dropdown-menu{
+                width: 100%;
+                top: 12px;
+                border-radius: 0;
+            }
+        }
+    }
+
+    // ------------------------------------------ common page sections style ------------------------------------------
+    // Header Navbar Style
+    header{
+        position: unset;
+        background-color: $df-white;
+        height: 95px;
+        nav.navbar{
+            z-index: 10;
+            transition: 0.4s ease;
+            border-bottom: solid 1px $cf-grey;
+            background-color: $df-white !important;
+            // logo
+            .navbar-brand {
+                padding: 0;
+                img{
+                    width: 280px;
+                }
+            }
+            .navbar-toggler{
+                border: none;
+            }
+        
+            // Navbar menu items
+            ul.navbar-nav{
+                li.nav-item{
+                    margin-right: 40px;
+                    a{
+                        color: $cf-black;
+                        i{
+                            &.vendor-vector{
+                                margin-left: 8px;
+                                transform: rotate(40deg);
+                                font-size: 16px;
+                            }
+                        }
+                    }
+                    &.dropdown{
+                        ul.dropdown-menu{
+                            min-width: fit-content;
+                            li{
+                                &:not(:first-child){
+                                    margin-top: 10px;
+                                }
+                                a{
+                                    &:hover, &.active{
+                                        background-color: #51b2548c;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .cf-dark-mode-btn{
+                        display: flex;
+                        align-items: center;
+                        .checkbox {
+                            opacity: 0;
+                            position: absolute;
+                            &:checked + .checkbox-label .ball {
+                                transform: translateX(24px);
+                            }
+                        }
+                        .checkbox-label {
+                            background-color: #111;
+                            width: 50px;
+                            height: 26px;
+                            border-radius: 50px;
+                            position: relative;
+                            padding: 6px;
+                            cursor: pointer;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding-left: 8px;
+                            .ball {
+                                background-color: #fff;
+                                width: 22px;
+                                height: 22px;
+                                position: absolute;
+                                left: 2px;
+                                top: 2px;
+                                border-radius: 50%;
+                                transition: transform 0.2s linear;
+                            }
+                        }
+                        .fa-moon {
+                            color: #f1c40f;
+                        }
+                        .fa-sun {
+                            color: #f39c12;
+                        }
+                    }
+                }
+                
+            }
+            &.cf-navbar-sticky{
+                position: fixed;
+                border-bottom: None;
+                background-color: $df-white;
+                top: 0;
+                width: 100%;
+                z-index: 10;
+                box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.2);
+                transition: 0.5s ease;
+            }
+        }
+    }
+
+    // Footer Style
+    footer{
+        padding: 40px 0;
+        background-color: $df-dark-green;
+        height: 400px;
+    
+        .cf-email{   
+            a{
+                color: $cf-green;
+                text-decoration: underline;
+            }
+        }
+    
+        .row{
+            .footer-link{
+                &:not(:last-child){
+                    margin-bottom: 20px;
+                }
+                a{
+                    text-decoration: none;
+                    color:$cf-green;
+                }
+            }
+            &.social-links{
+                margin-top: 45px;
+                a{
+                    color: $cf-green;
+                    font-size: 30px;
+                }
+            }
+        }
+    
+        .sub-footer{
+            text-align: center;
+            margin-top: 90px;
+            span{
+                display: inline-block;
+                font-size: 12px;
+                font-weight: 600;
+                &:nth-child(1){
+                    margin-right: 1.5rem;
+                }
+                a{
+                    color: $df-white;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+    // modals
+    .modal{
+        &#login{
+            .modal-dialog{
+                max-width: 550px;
+                .modal-header{
+                    padding: 25px 0;
+                    justify-content: center;
+                    border-bottom: none;
+                    button.btn-close{
+                        left: 25px;
+                        &:focus{
+                            outline: 0;
+                            box-shadow: none;
+                        }
+                    }
+                }
+                .modal-body{
+                    padding: 25px 30px;
+                    h3.modal-title{
+                        margin-bottom: 40px;
+                    }
+                    form.cf-form{
+                        text-align: left;
+                        .required.field{
+                            margin-left: 0;
+                            &:not(:first-child){
+                                margin-top: 3.2rem;
+                                margin-bottom: 13px;
+                            }
+                            label{
+                                color: $cf-grey;
+                            }
+                        }
+                        .forgot-password-link{
+                            color: #EB6E57;
+                            font-size: 10px;
+                            font-style: normal;
+                            font-weight: 600;
+                            line-height: 1rem;
+                            text-decoration: none;
+                            display: block;
+                            margin-left: 5px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .cf-modal-close-btn{
+            position: absolute;
+            right: 1.3rem;
+            top: 1.3rem;
+            background-color: rgba(0,0,0,0.5);
+            padding: 9px;
+            border-radius: 25px;
+            background-image: none;
+            opacity: 0.8;
+            &:before{
+                content: "\f00d";
+                color: #fff;
+                font-family: 'FontAwesome';
+                font-size: 1.5rem;
+                position: absolute;
+                top: 55%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+
+    
+    // Section Style
+    section{
+        // Catered Companies
+        #catered-companies{
+            .logo-list{
+                padding: 11px 0;
+                img{
+                    &.img-thumbnail{
+                        max-width: 85px;
+                        border: none;
+                        background-color: transparent;
+                        &.tesla-logo{
+                            max-width: 90px;
+                        }
+                        &.apple-logo{
+                            max-width: 70px;
+                        }
+                    }
+                }
+            }
+        }
+    
+        // Scrolling Food
+        #scrolling-food{
+            padding: 40px 0;
+            height: 135px;
+            background-color: $df-dark-green;
+            .owl-carousel{
+                &.scrolling-food .item{
+                    margin-right: 1rem;
+                }
+                h3{
+                    color:$cf-green
+                }
+            }
+        }
+    
+        // CF Support Section
+        #cf-support{
+            // padding: 60px 0;
+            text-align: center;
+            p{
+                &.subtext{
+                    margin-bottom: 60px;
+                }
+            }
+            .col-md-4{
+                display: flex;
+                .support-content{
+                    display: flex;
+                    flex: 1 0 0;
+                    flex-direction: column;
+                    align-self: stretch;
+                    height: 425px;
+                    border-radius: 20px;
+                    padding: 20px 25px;
+                    justify-content: flex-end;
+                    background-color: $cf-white;
+                    .img-box{
+                        width: 275px;
+                        margin: 0 auto;
+                        img{
+                            width: 100%;
+                        }
+                    }
+                    h4{
+                        padding: 20px 0;
+                    }
+                }
+            }
+        }
+
+        // Why City Flavor Section
+        #why-cityflavor{
+            background-color: $cf-white;
+            padding: 30px 0;
+            .feature-item{
+                padding: 30px 0;
+                text-align: center;
+                img{
+                    height: 80px;
+                    width: 80px;
+                    margin: 0 auto;
+                }
+                h4{
+                    margin: 20px 0;
+                }
+            }
+        }
+    
+        // Food Truck Search
+        #food-truck-search{
+            .mobile-view-img{
+                display: none;
+            }
+            height: 835px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            position: relative;
+            .section-content{
+                width: 50%;
+                position: absolute;
+                top: 50%;
+                right: 0;
+                transform: translate(0, -50%);
+                h2{
+                    margin-bottom: 3.5rem;
+                }
+            }
+        }
+    
+        // Event Application Form        
+        #event-application{
+            .application-form{
+                margin-top: 3rem;
+                .cf-form{
+                    &.old-bordered-form{
+                        .fields-container{
+                            margin-bottom: 10px;
+                        }    
+                    }
+                    .fields-container{
+                        margin-bottom: 40px;
+                    }
+                }
+            }
+        }
+
+        // What we do
+        #what-we-do{
+            .what-we-do{
+                .img-container{
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    height: 425px;
+                }
+            }
+        }
+
+        // City Flavor Work Section
+        #city-flavor-work{
+            // Work Tabs Style
+            ul#city-flavor-work-tab{
+                border-bottom: none;
+                padding: 17px 0;
+                margin-bottom: 30px;
+                li{
+                    color: $df-black;
+                    font-size: 24px;
+        
+                    // Li style except the first one
+                    &:not(:first-child){
+                        margin-left: 70px;
+                    }
+        
+                    button{
+                        border: none;
+                        color: inherit;
+                        opacity: 0.3;
+                        position: relative;
+                        padding: 8px 2px;
+                        background-color: transparent;
+                        font-weight: 800;
+                        &:after{
+                            content: "";
+                            position: absolute;
+                            width: 100%;
+                            height: 10px;
+                            background-color: $cf-black;
+                            bottom: -20px;
+                            left: 0;
+                            right: 0;
+                            border-radius: 25px;
+                            opacity: 0;
+                        }
+                        // active tab button
+                        &.active{
+                            opacity: 1;
+                            &:after{
+                                opacity: 1;
+                            }
+                        }
+                    }
+                }
+            }
+        
+            // Data Section styles of tabs
+            .tab-pane{
+                .data-section{
+                    .data-tab-padding{
+                        width: 100%;
+                    }   
+                    h3.cf-heading{
+                        margin-bottom: 52px;
+                    }
+                    h4.sub-heading{
+                        margin-bottom: 12px;
+                    }
+                    p{
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+
+        // Query Section
+        #cf-queries{
+            .query-item{
+                width: 50%;
+                margin: 0 auto;
+                margin-bottom: 5rem;
+                h4{
+                    color: $cf-black;
+                }
+                &.area-content-template{
+                    h2, h3, h4, h5, h6{
+                        color: #14692f;
+                    }
+                }
+            }
+        }
+
+        // ------------------------------------------ Index Page Style ------------------------------------------
+        &#cf-home{
+            // Hero Section
+            #hero-section{
+                position: relative;
+                overflow-x: hidden;
+                .hero-video-section{
+                    video{
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            
+                .hero-text{
+                    position: absolute;
+                    top: 0;
+                    right: 1rem;
+                    width: 70%;
+                    height: 100%;
+                    z-index: 1;
+                    text-align: center;
+                    color: $df-white;
+                    h1{
+                        font-size: 65px;
+                        font-weight: 800;
+                        span.border-bottom-heading{
+                            border-width: 10px;
+                        }
+                    }
+                    p{
+                        font-weight: 500;
+                        font-size: 20px;
+                    }
+                }
+            }
+            
+            // Learn more Section
+            #learn-more{
+                padding: 3rem 0;
+                background-color: $cf-white;
+                .owl-carousel{
+                    position: unset;
+                    .item{
+                        padding: 25px;
+                        .card{
+                            background-color: inherit;
+                            position: relative;
+                            border: none;
+                            .card-img-top{
+                                width: 100%;
+                                height: 545px;
+                                background-size: cover;
+                                background-repeat: no-repeat;
+                                background-position: center;
+                                border-radius: 10px;
+                                margin-bottom: 0.8rem;
+                                .floating-label{
+                                    position: absolute;
+                                    color: $df-black;
+                                    background-color: $cf-light-green;;
+                                    padding: 11px 15px;
+                                    border-radius: 20px;
+                                    top: 18px;
+                                    left: 18px;
+                                    font-size: 12px;
+                                    font-style: normal;
+                                    line-height: 16px;
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+            }
+            
+            // CF Explore Cities
+            #explore-cities{
+                .owl-carousel{
+                    &.explore-cities{
+                        .city-img img{
+                            border-radius: 10px;
+                        }
+                        .owl-nav{
+                            button.owl-next{
+                                transform: translate(-25px, calc(-50% - 2rem));
+                                right:-45px
+                            }
+                        }
+                        .owl-dots{
+                            margin-top: 2rem;
+                        }
+                    }
+                }
+            }
+            
+            // All Cities
+            #cf-all-cities{
+                text-align: center;
+                .col-md-4{
+                    padding: 15px 0px;
+                    .city-link{
+                        padding: 10px 0;
+                        &:not(:first-child){
+                            margin-top: 30px;
+                        }
+                        p.cf-pera-2{
+                            margin-bottom: 0;
+                            a{
+                                color: $cf-black;
+                                text-decoration: none;
+                                span{
+                                    margin-left: 10px;
+                                    font-size: 18px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            #who-we-support{
+                h4{
+                    margin-top: 0;
+                }
+            }
+        }
+
+        // ------------------------------------------ Cities Page Style ------------------------------------------
+        &#cities-page{
+            // Sub header Section
+            #sub-header-section{
+                &.hero-section{
+                    height: 100vh;
+                    .content{
+                        color: $df-white;
+                        h1{
+                            color: $df-white;
+                        }
+                    }
+                }
+                padding:3rem 0;
+                .cf-form-grid{
+                    #select-city.cf-bs-dropdown{
+                        padding-bottom: 10px;
+                        button{
+                            font-size: 24px;
+                        }
+                        .dropdown-menu{
+                            top: 12px;
+                        }
+                    }
+                    
+                }
+                h1#top-truck-heading{
+                    font-size: 65px;
+                }
+            }
+            // Filter Truckss Section
+            #filter-trucks{
+                .cf-title{
+                    margin-bottom: 18px;
+                }
+                // Filter Grid Style
+                .filter-btn-grid{
+                    width: 80%;
+                    margin-right: auto;
+                    .cf-grid-item{
+                        button{
+                            &.show-more-btn{
+                                background-color: #eee;
+                            }
+                        }
+                        &:not(:last-child){
+                            margin-right: 15px;
+                            margin-bottom: 15px;
+                        }
+                    }
+                }
+
+                // Filter Result Style
+                .filter-results{
+                    .col-xl-3{
+                        height: 350px;
+                        padding: 20px;
+                        margin-bottom: 2rem;
+                        .img-box{
+                            width: 100%;
+                            height: 100%;
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: cover;
+                            border-radius: 5px;
+                            transition: 0.2s ease;
+                            &:hover{
+                                box-shadow: 0px 3px 8px 2px rgba(0,0,0,0.5);
+                            }
+                        }
+                        h6{
+                            margin-top: 12px;
+                            text-transform: capitalize;
+                        }
+                    }
+                }
+            }
+
+            // All Cities page
+            #all-cities-list{
+                .row{
+                    width: 80%;
+                    margin: 0 auto;
+                    .col-lg-4{
+                        height: 350px;
+                        padding: 20px;
+                        margin-bottom: 2rem;
+                        .img-box{
+                            width: 100%;
+                            height: 100%;
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: cover;
+                            border-radius: 5px;
+                            position: relative;
+                            transition: 0.2s ease;
+                            &:hover{
+                                box-shadow: 0px 3px 8px 2px rgba(0,0,0,0.5);
+                            }
+                            .cf-overlay{
+                                width: 100%;
+                                height: 100%;
+                                background: rgba(0,0,0,0.3);
+                            }
+                            h6{
+                                position: absolute;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
+                                color: $df-white;
+                            }
+                        }
+                        // h6{
+                        //     margin-top: 12px;
+                        //     text-transform: capitalize;
+                        // }
+                    }
+                }
+            }
+
+            // Book Vendor in City Section
+            #book-city-vendor{
+                .btn-success{
+                    margin-top: 4rem;
+                }
+            }
+        }
+        
+
+        // ------------------------------------------ About Company Style ------------------------------------------
+
+        &#about-company-page{
+            #our-story{
+                .row{
+                    .col-12{
+                        &:first-child{
+                            padding-right: 10rem;
+                            h2{
+                                margin-bottom: 2rem;
+                            }
+                        }
+                        .fries-first-img{
+                            background-position: center;
+                            background-size: cover;
+                            background-repeat: no-repeat;
+                            width: 100%;
+                            height: 500px;
+                        }
+                    }
+                }
+            }
+    
+            #our-team{
+                .img-fit{
+                    .our-team-img{
+                        background-position: center;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        width: 100%;
+                        height: 350px;
+                        &.bigger{
+                            height: 715px;
+                        }
+                    }
+                }
+            }
+        }
+
+        // ------------------------------------------ About Tech Style ------------------------------------------
+
+        &#about-tech-page{
+            #sub-header-section{    
+                .setup-features{
+                    width: 620px;
+                    text-align: left;
+                    list-style-type: none;
+                    margin: 3rem auto;
+                    
+                    li{
+                        margin-bottom: 1rem;
+                        svg{
+                            width: 25px;
+                            height: 25px;
+                            margin-right: 25px;
+                        }
+                        h6{
+                            display: inline-block;
+                        }
+                    }
+                }
+            
+            }
+    
+            #ordering-experience{
+                padding: 3rem 0;
+                background-color: $cf-white;
+                .col-md-4{
+                    padding-left: 5rem;
+                    padding-right: 5rem;
+                }
+            }
+    
+            #contact-sources{
+                .details-row{
+                    width: 80%;
+                }
+            }
+    
+            #cf-offers{
+                .row{
+                    width: 890px;
+                    margin: 0 auto;
+                    .box-container{
+                        padding:40px 30px;
+                        border-radius: 10px;
+                        ul{
+                            margin: 40px 0;
+                            padding-left: 20px;
+                            list-style-type: none;
+                            li{
+                                margin-bottom: 1rem;
+                                svg{
+                                    width: 25px;
+                                    height: 25px;
+                                    margin-right: 25px;
+                                }
+                                h6{
+                                    display: inline-block;
+                                }
+                            }
+                        }
+                        &.small-businesses{
+                            border: solid 1px $cf-green;
+                            p br{
+                                display: none;
+                            }
+                        }
+                        &.enterprise{
+                            background-color: $cf-white;
+                            p br{
+                                display: none;
+                            }
+                        }
+                        button{
+                            width: 285px;
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // ------------------------------------------ Vendor Support Style ------------------------------------------
+
+        &#sub-header-section-vendor-support{    
+            .setup-features{
+                width: 720px;
+                text-align: left;
+                list-style-type: none;
+                margin: 3rem auto;
+                
+                li{
+                    margin-bottom: 1rem;
+                    svg{
+                        width: 25px;
+                        height: 25px;
+                        margin-right: 25px;
+                    }
+                    h6{
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+
+        &#feature-details{
+            .common-section{
+                margin-bottom: 6rem;
+                .feature-img-cover{
+                    height: 480px;
+                    background-position: center;
+                    background-size:cover;
+                    width: 90%;
+                    margin-left: auto;
+                }
+
+                .text-container{
+                    width: 80%;
+                }
+            }
+        }
+
+        &#cf-availability{
+            background-color: $cf-white;
+            padding: 3rem 0;
+            .availability-items{
+                .cf-pera-2{
+                    width: 60%;
+                    margin: 0 auto;
+                }
+            }
+        }
+
+        &#asked-questions{
+            .cf-questions{
+                width: 40%;
+                margin: 6rem auto 4rem auto;
+
+                .question-item{
+                    &:not(:last-child){
+                        margin-bottom: 3.5rem;
+                    }
+                    h4{
+                        margin-bottom: 20px;
+                    }
+                }
+            }
+        }
+
+        // ------------------------------------------ common request Pages Style ------------------------------------------
+        &.common-landing-page{
+            // Event Request background Image
+            .event-request-bg{
+                background-size: 100%;
+                background-repeat: no-repeat;
+                background-position: top;
+                min-height: 1000px;
+            }
+
+            #how-it-works{
+                .col-md-4{
+                    display: flex;
+                    .card-item{
+                        display: flex;
+                        flex: 1 0 0;
+                        flex-direction: column;
+                        align-self: stretch;
+                        height: 510px;
+                        border-radius: 20px;
+                        text-align: center;
+                        padding: 20px 25px;
+                        justify-content: center;
+                        background-color: $cf-white;
+                        .img-box{
+                            width: 275px;
+                            margin: 0 auto;
+                            img{
+                                width: 100%;
+                            }
+                        }
+                        h4{
+                            padding: 20px 0;
+                        }
+                    }
+                }
+            }
+
+            #check-in-form{
+                margin: 0 auto;
+                width: 600px;
+                #check_vic{
+                    padding: 5px 10px;
+                    font-size: 18px;
+                    color: $df-dark-green;
+                    border: none;
+                    border-bottom: solid 2px $cf-green;
+                    border-radius: 0;
+                    margin-left: 10px;
+                    transition: 0.2s ease;
+                    &:hover{
+                        color: $cf-green;
+                    }
+                }
+            }
+        }
+
+        // ------------------------------------------ Property Page (Public Link) Style ------------------------------------------
+
+        &#public-url-page{
+            // Sub Header section
+            #sub-header-section{
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                width: 100%;
+                height: 300px;
+                position: relative;
+                &:before{
+                    content: "";
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0,0,0,0.3);
+                    top: 0;
+                    left: 0;
+                    position: absolute;
+                }
+                .container-fluid{
+                    position: relative;
+                    display: flex;
+                    height: 100%;
+                    align-items: end;
+                    justify-content: space-between;
+                    h1, h4{
+                        display: inline-block;
+                    }
+                }
+
+                
+            }
+            // Green Banner Bar
+            .banner-bar{
+                background-color: $cf-green;
+                padding: 12px 0;
+                h1, h2, h3, h4, h5, h6, p{
+                    color: inherit;
+                }
+            }
+
+            // Filter Bar
+            #filter-bar{
+                text-align: right;
+                button{
+                    &.bordered-dropdown{
+                        border: solid 1px $cf-grey;
+                        color: $df-black;
+                        text-align: left;
+                        border-radius: 5px;
+                        padding-right: 50px;
+                        &.cf-toggle{
+                            position:relative;
+                            &:after{
+                                position: absolute;
+                                content: "\f107";
+                                font-family: FontAwesome;
+                                top: 50%;
+                                right: 10px;
+                                transform: translateY(-50%);
+                                
+                            }
+                        }
+
+                    }
+                }
+
+                .dates-menu{
+                    .actually-active{
+                        background-color: $cf-green;
+                        color: #fff;
+                    }
+                }
+
+                h6{
+                    display: inline-block;
+                }
+
+                // View Type
+                #view-type{
+                    border: solid 1px $cf-grey;
+                    svg > path{
+                        fill: $df-black;
+                    }
+                    label.bordered-btn{
+                        border-color: transparent;
+                        &[for='calender_view']{
+                            border-top-right-radius: 0;
+                            border-bottom-right-radius: 0;
+                        }
+                        &[for='list_view']{
+                            border-top-left-radius: 0;
+                            border-bottom-left-radius: 0;
+                        }
+                    }
+                    input[type="radio"]:checked ~ label {
+                        background-color: #625B69;
+                        svg > path{
+                            fill: $cf-white;
+                        }
+                    }
+                }
+
+                .varieties{
+                    width: 60%;
+                    margin: 2rem auto 0;
+                    img{
+                        width: 40px;
+                    }
+                    span{
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            // Indoor Vendors
+            #indoor-vendors{
+                .vendor-review-label{
+                    background-color: #f2f2f2;
+                    color: $cf-black;
+                    padding: 10px 14px;
+                    transition: 0.2s ease;
+                    margin-bottom: 10px;
+                    display: inline-block;
+                    border-radius: 5px;
+                    &:hover{
+                        background-color: $cf-green;
+                        color: $cf-white;
+                    }
+                }
+
+                // Vendor Card
+                .vendor-card{
+                    border-radius: 20px;
+                    height: 345px;
+                    position: relative;
+                    overflow: hidden;
+                    box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+                    .image{
+                        height: calc(100% - 40px);
+                        width: 100%;
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        .image-overlay {
+                            position: absolute; 
+                            bottom: 0;
+                            left: 0; 
+                            width: 100%; 
+                            height: 100%; 
+                            background-color: rgba(0,0,0,0.5); 
+                            z-index: 0;
+                            background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.5));
+                        }
+                        .main-img {
+                            height: 100%;
+                            width: auto;
+                            min-width: 100%;
+                            bottom: 50%;
+                            right: 50%;
+                            transform: translate(50%, 50%);
+                            position: absolute;
+                        }
+                        .image-logo{
+                            position: absolute;
+                            bottom: 25px;
+                            left: 25px;
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 25px;
+                            overflow: hidden;
+                            border: 2px solid white;
+                            box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+                            background-color: white;
+                            img {
+                                width: 130%;
+                                height: auto;
+                                min-height: 100%;
+                            }
+                        }
+
+                        .location-icon {
+                            position: absolute;
+                            top: 8px;
+                            right: 8px;
+                            background-color: $cf-white;
+                            box-shadow: 1px 2px 2px rgba(0,0,0,0.5);
+                            color: $cf-black;
+                            border-radius: 20px;
+                            padding: 7px 10px;
+                            max-width: 90%;
+                        }
+                    }
+                    .bottom-order-btn {
+                        height: 60px;
+                        width: 100%;
+                        position: absolute;
+                        bottom: 0;
+                        background-color: $cf-dark-black;
+                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        transition: 0.3 ease;
+                        cursor: pointer;
+                        z-index: 5;
+                        font-weight: bold;
+                        a{
+                            color: $cf-white;
+                        }
+                        &:hover a{
+                            color: $cf-green;
+                        }
+                    }
+                }
+
+                .vendor-schedule {
+                    background-color: $cf-dark-black;
+                    border-radius: 10px;
+                    padding: 10px;
+                    width: auto;
+                    display: inline-block;
+                    
+                }
+
+                // Vendor title
+                .indoor-vendor-title{
+                    .sub-title{
+                        font-weight: 500;
+                        font-size: 16px;
+                        margin-top: 5px;
+                    }
+                }
+            }  
+            
+            // Animated rings
+            .ring-container {
+                display: inline-block;
+                position: relative;
+                height: 10px;
+                width: 10px; 
+                .ringring {
+                    border: 2px solid $cf-green;
+                    border-radius: 30px;
+                    height: 20px;
+                    width: 20px;
+                    position: absolute;
+                    left: -5px;
+                    top: -5px;
+                    animation: pulsate 1s ease-out;
+                    animation-iteration-count: infinite; 
+                    opacity: 0.0
+                }
+                
+                @keyframes pulsate {
+                    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+                    50% {opacity: 1.0;}
+                    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+                }
+
+                .anim-circle {
+                    width: 10px;
+                    height: 10px;
+                    background-color: $cf-green;
+                    border-radius: 50%;
+                    position: absolute;
+                }
+            }
+
+            // Shifts Section
+            #shifts-section{
+                .shifts-container{
+                    // min-width: 100vw;
+                    overflow-x: auto;
+                    display: flex;
+                    padding-bottom: 1rem;
+                    .days{
+                        min-width: 340px;
+                        // min-width: 440px;
+                        display: inline-block;
+                        &:not(:first-child){
+                            margin-left: 1.5rem;
+                        }
+                        .date-bar{
+                            text-align: center;
+                            padding: 10px 35px;
+                            border: 1px solid $cf-grey;
+                            border-bottom: none;
+                            &.current-day{
+                                color: $df-white;
+                                background-color: $cf-green;
+                                border-color: $cf-green;
+                            }
+
+                        }
+                        .shift{
+                            width: 100%;
+                            min-height: 270px;
+                            border: 1px solid $cf-grey;
+                            padding: 1.8rem 2rem;
+                            position: relative;
+
+                            &:not(:last-child){
+                                border-bottom: none;
+                            }
+                            // Floating Vendor Review Button
+                            .floating-label{
+                                position: absolute;
+                                color: $df-black;
+                                background-color: #f2f2f2;
+                                padding: 2px 8px;
+                                transition: 0.3s ease;
+                                border-radius: 20px;
+                                top: 3px;
+                                right: 3px;
+                                font-size: 10px;
+                                font-style: normal;
+                                line-height: 16px;
+                                cursor: pointer;
+                            }
+
+                            .content{
+                                .time{
+                                    margin-bottom: 20px;
+                                    h5{
+                                        font-size: 10px;
+                                        line-height: 16px;
+                                        display: inline-block;
+                                        background-color: $cf-white;
+                                        padding: 5px 25px;
+                                        border-radius: 10px;
+                                        .cf-icon{
+                                            font-size: inherit;
+                                            margin-right: 8px;
+                                        }
+                                    }
+                                }
+
+                                .vendor-title{
+                                    margin-bottom: 1rem;
+                                    h4{
+                                        margin-bottom: 12px;
+                                    }
+                                    h5{
+                                        font-size: 12px;
+                                    }
+                                }
+
+                                .cf-menu-btn{
+                                    border: solid 1px $cf-grey;
+                                    width: 80%;
+                                    margin: 0 auto;
+                                    border-radius: 25px;
+                                    text-decoration: none;
+                                    padding: 5px 15px;
+                                    transition: 0.2s ease;
+                                    &.disabled{
+                                        pointer-events: none;
+                                        opacity: 0.5;
+                                    }
+                                    &.active{
+                                        background-color: $cf-black;
+                                        border: solid 1px $cf-black;
+                                        &.disabled{
+                                            pointer-events: none;
+                                            opacity: 0.5;
+                                            background-color: transparent !important;
+                                        }
+                                        p{
+                                            color: $cf-white;
+                                        }
+                                    }
+                                    &:hover{
+                                        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+                                    }
+                                    p{
+                                        text-align: center;
+                                        font-size: 16px;
+                                        font-style: normal;
+                                        font-weight: 800;
+                                        line-height: normal;
+                                        color: $cf-black;
+                                        margin-bottom: 2px;
+                                    }
+                                    span{
+                                        display: block;
+                                        font-size: 10px;
+                                        font-style: normal;
+                                        font-weight: 500;
+                                        line-height: normal;
+                                        color: $cf-grey;
+                                    }
+                                }
+
+                                .variety-container{
+                                    margin-top: 1.5rem;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    .variety{
+                                        &:not(:first-child){
+                                            margin-left: 10px;
+                                        }
+                                        width: 30px;
+                                        height: 30px;
+                                        background-color: #E7C782;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .load-more-shift-btn{
+                        position: absolute;
+                        top: 50%;
+                        right: 1rem;
+                        transform: translateY(-50%);
+                        font-size: 3rem;
+                        z-index: 10;
+                        width: 70px;
+                        cursor: pointer;
+                        height: 70px;
+                        background-color: #fff;
+                        border: solid 1px #A1A1A1;
+                        border-radius: 50%;
+                        &:before{
+                            content: "\f061";
+                            font-family: FontAwesome;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            font-size: 2rem;
+                        }
+                    }
+                }
+            }
+
+            hr.container{
+                width: 50%;
+                margin: 0 auto;
+            }
+
+            // Calender-view for public URL page
+            .event-padding{
+                text-align: center;
+                border: solid 1px $cf-black;
+            }
+
+            // Weekly updates application form section
+            #weekly-updates-application{
+                form{
+                    width: 350px;
+                    margin: 0 auto;
+                }
+            }
+
+            #location-feedback-form{
+                p.subtext{
+                    font-weight: 600;
+                }
+                .cf-form{
+                    width: 70%;
+                    margin: 0 auto;
+                }
+            }
+        }
+
+        // Single/commonn food truck page
+        &#food_truck_page{
+            // Sub-header Section
+            #sub-header-section{
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: relative;
+                background-position: center;
+                &:before{
+                    content: "";
+                    background: rgba(0,0,0,.4);
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    
+                }
+                height: calc(calc(100vh - 130px) - 98px);
+                color: $cf-white;
+                h1{
+                    color: $cf-white;
+                }
+            }
+
+            // Foot bar section
+            #section-foot-bar{
+                min-height: 130px;
+                background-color: $cf-white;
+                padding: 2rem 0;
+                .col{
+                    color: $cf-black;
+                    .fa-solid, .fa-brands{
+                        font-size: 3rem;
+                        color: $cf-green;
+                        margin-bottom: 0.8rem;
+                    }
+                }
+            }
+            
+        }
+
+        &#blog-page{
+            // Main Image Section
+            .main-image-section{
+                .img-container{
+                    position: relative;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 5px;
+                    }
+                    .floating-label{
+                        position: absolute;
+                        color: $df-black;
+                        background-color: $cf-light-green;;
+                        padding: 11px 15px;
+                        border-radius: 20px;
+                        top: 18px;
+                        left: 18px;
+                        font-size: 12px;
+                        font-style: normal;
+                        line-height: 16px;
+                    }
+                }
+            }
+
+            // Blog Content Section
+            .blog-content-section{
+                width: 50%;
+                margin: 0 auto;
+                h3{
+                    margin-bottom: 3rem;
+                }
+                p{
+                    &.subtext{
+                        margin-top: 3rem;
+                    }
+                }
+            }
+        }
+
+
+        // ------------------------------------------ Erro Page Style ------------------------------------------
+        &#error-page-section{
+            height: 835px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            position: relative;
+            background-position: right;
+            .section-content{
+                width: 50%;
+                position: absolute;
+                top: 50%;
+                left: 35px;
+                transform: translate(0, -50%);
+                h1, p{
+                    margin-bottom: 40px;
+                }
+            }
+        }
+    }
+}
+
+/* ============================================== !! @MEDIA QUERIES !! ============================================== */
+
+@media screen and (max-width: 1199px) and (min-width: 320px) {
+    body{
+        // Typography and UI elements
+        span{
+            &.cf-title{
+                &.small{
+                    font-size: 9px;
+                }
+            }
+        }
+        // H1
+        h1, .cf-super-heading{
+            font-size: 35px;
+        }
+        // H2
+        h2, .cf-sub-super-heading{
+            font-size: 30px;
+        }
+        // H3
+        h3, .cf-heading{ // --
+            font-size: 22px; 
+            &.cf-section-title{
+                margin-bottom: 14px;
+            }
+        } 
+        // H4
+        h4, .cf-sub-heading{ // --
+            font-size: 18px; 
+        }
+        // H5
+        h5, .cf-small-heading{
+            font-size: 20px;
+            line-height: 22px;
+        }
+        // H6
+        h6, .smallest-heading{
+            font-size: 12px;
+        }
+        p, .cf-pera{
+            font-size: 12px;
+            line-height: 18px;
+            &.subtext{
+                font-size: 14px;
+                
+                line-height: 20px;
+            }
+            &.cf-pera-2{
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 22px;
+            }
+        }
+
+        // Override Button style
+        .btn{
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+
+        // Container style 
+        .container-fluid{
+            padding-left: 17px;
+            padding-right: 17px;
+        }
+
+        // Order Ahead Iframe
+        #order_ahead_iframe{
+            height: 500px; 
+        }
+        
+        // breadcrumb
+        .cf-breadcrumb{
+            nav .breadcrumb{
+                .breadcrumb-item{
+                    font-size: 10px;
+                    margin-bottom: 8px;
+                }
+            }
+        }
+
+        // Owl Carousel
+        .owl-carousel{
+            &.cf-owlnav-btn{
+                .owl-dots{
+                    button{
+                        &:not(:first-child){
+                            margin-left: 18px;
+                        }
+        
+                        &.owl-dot{
+                            margin-top: 0.2rem;
+                            &:before{
+                                font-size: 7px;
+                            }
+                        }
+                        span{
+                            display: none;
+                        }
+                    }
+                }
+                .owl-nav{
+                    display: none;
+                }
+            }
+        }
+
+        // CF From Style
+        .cf-centered-form{
+            width: 100%;
+        }
+        form.cf-form, .cf-form-grid{
+            text-align: center;
+            // Grid Configuration
+            .fields{
+                display: flex;
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .field{
+                width: 100%;
+                margin-bottom: 1.2rem;
+
+                &:not(:first-child){
+                    margin-left: 0
+                }
+
+                // label
+                label{
+                    font-size: 12px;
+                    top: 0;
+                    left: 0;
+                    text-align: left;
+                }
+
+                // Input
+                input, input.search, .ui.selection.dropdown{
+                    font-size: 14px;
+                    padding: 10px 0 0 4px;
+
+                    &[type=file]{
+                        font-size: 10px;
+                        padding-top: 16px;
+                    }
+                }
+
+                // Textarea
+                textarea{
+                    padding: 30px 0 0 4px;
+                }
+            }
+
+            .two{
+                .field{
+                    width: 100%;
+                    margin-bottom: 1.2rem;
+                    margin-right: 0;
+                    margin-left: 0;
+                    &:not(:first-child){
+                        margin-left: 0
+                    }
+                }
+            }
+
+            .inline{
+                &.field{
+                   &:not(:last-child){
+                        margin-bottom: 0.5rem !important;
+                   }
+                }
+            }
+    
+            // three
+            .three{
+                .field{
+                    width: 100%;
+                    &:not(:first-child){
+                        margin-left: 0
+                    }
+                }
+            }
+
+            // five
+            .five{
+                padding: 0 5px;
+                .field{
+                    width: 100%;
+                }
+            }
+
+            
+            // Tags style
+            button{
+                &.btn-success{
+                    width: 215px;
+                }
+            }
+        }
+
+        // Header Navbar Style
+        header{
+            height: 58px;
+            nav.navbar{
+                // logo
+                .navbar-brand {
+                    img{
+                        width: 150px;
+                    }
+                }
+                .navbar-toggler{
+                    font-size: 14px;
+                    border: none;
+                    &:focus{
+                        box-shadow: none;
+                        outline: none;
+                    }
+                }
+
+                // Navbar menu items
+                ul.navbar-nav{
+                    li.nav-item{
+                        a{
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Footer Navigation
+        footer{
+            height: fit-content;
+            .row{
+                .col-sm-6{
+                    &:not(:first-child){
+                        margin-top: 1.5rem;
+                        margin-bottom: 2rem;
+                    }
+                }
+                .cf-email{
+                    font-size: 28px;
+                    border-bottom: solid 3px $cf-green;
+                    padding-bottom: 12px;
+                    a{
+                        text-decoration: none;
+                    }
+                }
+                .footer-link{
+                    &:not(:last-child){
+                        margin-bottom: 18px;
+                    }
+                    h4{
+                        font-size: 19px;
+                    }
+                }
+                &.social-links{
+                    margin-top: 30px;
+                    margin-bottom: 1.5rem;
+                    .col-2{
+                        &:not(:first-child){
+                            margin-left: 1rem
+                        }
+                    }
+                    a{
+                        font-size: 16px;
+                        svg{
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+            .sub-footer{
+                margin-top: 55px;
+            }
+        }
+
+        section{
+            // Scrolling Food
+            #scrolling-food{
+                padding: 20px 0;
+                height: fit-content;
+                .owl-carousel{
+                    .item{
+                        h3{
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+
+            // What we do
+            #what-we-do{
+                .what-we-do{
+                    .img-container{
+                        height: 250px;
+                    }
+                }
+            }
+
+            // CF Support Section
+            #cf-support{
+                p{
+                    &.subtext{
+                        margin-bottom: 30px;
+                    }
+                }
+                .col-md-4{
+                    &:not(:last-child){
+                        margin-bottom: 2rem;
+                        .support-content{
+                            .img-box{
+                                margin-bottom: 2rem;
+                            }
+                        }
+                    }
+                    .support-content{
+                        height: 400px;
+                        .img-box{
+                            width: 190px;
+                            margin-bottom: 1.2rem;
+                        }
+                        h4{
+                            padding: 15px 0;
+                        }
+                    }
+                }
+            }
+
+            // Catered Companies
+            #catered-companies{
+                .logo-list{
+                    .col-4{
+                        &:last-child{
+                            margin-top: 1rem;
+                        }
+                    }
+                    img{
+                        width: 100%;
+                        &.img-thumbnail{
+                            &.tesla-logo{
+                                max-width: 60px;
+                            }
+                            &.apple-logo{
+                                max-width: 45px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Why City flavor section
+            #why-cityflavor{
+                padding: 30px 0;
+                .feature-item{
+                    padding: 20px 0;
+                    h4{
+                        margin: 15px 0;
+                    }
+                    p.cf-pera-2{
+                        font-size: 13px;
+                    }
+                }
+            }
+
+            // Food truck section
+            #food-truck-search{
+                height: 100%;
+                .mobile-view-img{
+                    display: block;
+                }
+                .section-content{
+                    text-align: center;
+                    width: 100%;
+                    position: relative;
+                    top: unset;
+                    left: unset;
+                    transform: unset;
+                    margin-top: 2rem;
+                    h2{
+                        font-size: 32px;
+                        margin-bottom: 2rem;
+                    }
+                    p.cf-pera-2{
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            // City Flavor Work Section
+            #city-flavor-work{
+                margin-bottom: 2.5rem !important;
+                // Work Tabs Style
+                .tab-navigation-container{
+                    overflow-x: auto;
+                    ul#city-flavor-work-tab{
+                        margin-bottom: 15px;
+                        display: block;
+                        min-width: 660px;
+                        margin-bottom: 0;
+                        li{
+                            display: inline-block;
+                            margin-bottom: 1rem;
+                            font-size: 18px;
+                            &:not(:first-child){
+                                margin-left: 20px;
+                            }
+                            button{
+                                &:after{
+                                    height: 8px;
+                                    bottom: -10px;
+                                }
+                            }
+                        }
+                    }
+                }
+            
+                // Data Section styles of tabs
+                .tab-pane{
+                    .data-section{
+                        h3.cf-heading{
+                            margin-bottom: 20px;
+                        }
+                        p{
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+
+            // Query Section
+            #cf-queries{
+                .query-item{
+                    width: 90%;
+                    margin-bottom: 3rem;
+                    text-align: justify;
+                }
+            }
+
+            // Index Page
+            &#cf-home{              
+                // Hero Section
+                #hero-section{        
+                    position: relative;
+                    height: calc(100vh - 58px);
+                    .hero-video-section{
+                        video{
+                            position: absolute;
+                            top:50%;
+                            left:50%;
+                            transform: translate(-50%, -50%);
+                            width: 500%;
+                        }
+                    }
+                    .hero-text{
+                        width: 100%;
+                        position: absolute;
+                        top:50%;
+                        left:50%;
+                        transform: translate(-50%, -50%);
+                        h1{
+                            font-size: 35px;
+                            margin-bottom: 1rem !important;
+                            .border-bottom-heading{
+                                border-bottom: none;
+                            }
+                        }
+                        p{
+                            font-size: 16px;
+                        }
+                    }
+                }
+
+                // Learn more Section
+                #learn-more{
+                    padding: 1.5rem 0;;
+                    .owl-carousel{
+                        .item{
+                            padding: 0;
+                            .card{
+                                .card-img-top{
+                                    height: 200px;
+                                    .floating-label{
+                                        font-size: 9px;
+                                        padding: 4px 10px;
+                                    }
+                                }
+                                .card-body{
+                                    padding-top: 5px;
+                                    h3{
+                                        font-size: 18px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // All Cities
+                #cf-all-cities{
+                    .col-md-4{
+                        .city-link{
+                            &:not(:first-child){
+                                margin-top: 25px;
+                            }
+                            p.cf-pera-2{
+                                font-size: 16px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Cities Page
+            &#cities-page{
+                // Sub header Section
+                #sub-header-section{
+                    padding:2rem 0;
+                    padding-bottom: 0;
+                    .cf-form-grid{
+                        #select-city.cf-bs-dropdown{
+                            padding-bottom: 0;
+                            button{
+                                font-size: 16px;
+                                padding: 2px;
+                            }
+                            .dropdown-menu{
+                                top: 12px;
+                                li a{
+                                    font-size: 12px;
+                                    padding: 0 6px;
+                                }
+                            }
+                        }   
+                    }
+                    h1#top-truck-heading{
+                        font-size: 30px;
+                    }
+                }
+
+                // Filter Truckss Section
+                #filter-trucks{
+                    .cf-title{
+                        margin-bottom: 18px;
+                    }
+                    // Filter Grid Style
+                    .filter-btn-grid{
+                        width: 100%;
+                        margin-right: unset;
+                        margin-bottom: 1.5rem;
+                        .cf-grid-item{
+                            &:not(:last-child){
+                                margin-right: 5px;
+                                margin-bottom: 10px;
+                            }
+                        }
+                    }
+    
+                    // Filter Result Style
+                    .filter-results{
+                        .col-xl-3{
+                            height: 220px;
+                            padding: 10px;
+                        }
+                    }
+                }
+
+                #all-cities-list{
+                    .row{
+                        width: 100%;
+                        .col-lg-4{
+                            padding: 10px;
+                        }
+                    }
+                }
+
+                // Book Vendor in City Section
+                #book-city-vendor{
+                    .btn-success{
+                        margin-top: 1rem;
+                    }
+                }
+            }
+
+            // About Company
+            &#about-company-page{
+                #our-story{
+                    .row{
+                        .col-12{
+                            .cf-pera-2{
+                                text-align: justify;
+                            }
+                            &:first-child{
+                                padding-right: 12px;
+                                h2{
+                                    margin-bottom: 1rem;
+                                }
+                            }
+                            .fries-first-img{
+                                height: 220px;
+                            }
+                        }
+                    }
+                }
+        
+                #our-team{
+                    .img-fit{
+                        .our-team-img{
+                            height: 285px;
+                            &.bigger{
+                                height: 300px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // About Tech Page
+            &#about-tech-page{
+                #sub-header-section{    
+                    .setup-features{
+                        margin: 2rem auto;
+                        width: 100%;
+                        li{
+                            margin-bottom: 0.5rem;
+                            svg{
+                                width: 14px;
+                                height: 14px;
+                                margin-right: 10px;
+                            }
+                            h6{
+                                display: inline-block;
+                            }
+                        }
+                    }
+                }
+
+                #city-flavor-work{
+                    .tab-navigation-container{
+                        ul#city-flavor-work-tab{
+                            min-width: 495px;
+                        }
+                    }
+                }
+        
+                #contact-sources{
+                    .details-row{
+                        width: 100%;
+                    }
+                }
+        
+                #cf-offers{
+                    .row{
+                        width: 100%;
+                        .box-container{
+                            padding: 15px 15px;
+                            margin-bottom: 1.5rem;
+                            ul{
+                                margin: 30px 0;
+                                padding-left: 0;
+                                li{
+                                    margin-bottom: .5rem;
+                                    svg{
+                                        width: 14px;
+                                        height: 14px;
+                                        margin-right: 5px;
+                                    }
+                                    h6{
+                                        display: inline-block;
+                                    }
+                                }
+                            }
+                            &.small-businesses{
+                                p br{
+                                    display: block;
+                                }
+                            }
+                            &.enterprise{
+                                p br{
+                                    display: block;
+                                }
+                            }
+                            button{
+                                width: 180px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Common Landing Page
+            &.common-landing-page{
+                #how-it-works{
+                    .col-md-4{
+                        display: flex;
+                        &:not(:first-child){
+                            margin-top: 2rem;
+                        }
+                        .card-item{
+                            height: 465px;
+                            .img-box{
+                                width: 225px;
+                            }
+                            h4{
+                                padding: 10px 0;
+                            }
+                        }
+                    }
+                }
+
+                #check-in-form{
+                    width: 100%;
+                }
+            }
+
+            // Single/commonn food truck page
+            &#food_truck_page{
+                // Sub-header Section
+                #sub-header-section{
+                    height: calc(100vh - 60px);
+                    color: $cf-white;
+                    h1{
+                        color: $cf-white;
+                    }
+                }
+
+                // Foot bar section
+                #section-foot-bar{
+                    padding: 1rem 0;
+                    .col{
+                        font-size: 12px;
+                        .fa-solid, .fa-brands{
+                            font-size: 1.5rem;
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+            }
+
+            // Public URL Page Style
+            &#public-url-page{
+                // Sub Header section
+                #sub-header-section{
+                    height: 500px;
+                    .container-fluid{
+                        flex-direction: column;
+                        justify-content: center;
+                        text-align: center;
+                        h1,h4{
+                            width: 100%;
+                        }
+                    }
+                }
+    
+                // Filter Bar
+                #filter-bar{
+                    text-align: left;
+                    .filter-section{
+                        .vendor-filter{
+                            display: inline-block;
+                            margin-bottom: 0.5rem;
+                        }
+                    }
+    
+                    .varieties{
+                        width: 90%;
+                        .col{
+                            margin-bottom: 0.5rem;
+                        }
+                        span{
+                            font-size: 12px;
+                        }
+                    }
+
+                    .dates-menu{
+                        flex-wrap: wrap;
+                        a{
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+    
+                // Shifts Section
+                #shifts-section{
+                    .shifts-container{
+                        .days{
+                            min-width: 280px;
+                            .shift{
+                                .content{
+                                    .vendor-title{
+                                        h5 {
+                                            font-size: 10px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .load-more-shift-btn{
+                            width: 40px;
+                            height: 40px;
+                            &:before{
+                                font-size: 1.5rem;
+                            }
+                        }
+                    }
+                }
+
+                // Weekly updates application form section
+                #weekly-updates-application{
+                    form{
+                        width: 100%;
+                    }
+                }
+
+                #location-feedback-form{
+                    .cf-form{
+                        width: 100%;
+                    }
+                }
+            }
+
+            &#blog-page{
+                // Main Image Section
+                .main-image-section{
+                    .img-container{
+                        .floating-label{
+                            padding: 4px 10px;
+                            top: 6px;
+                            left: 6px;
+                            font-size: 9px;
+                        }
+                    }
+                }
+    
+                // Blog Content Section
+                .blog-content-section{
+                    width: 100%;
+                    h3{
+                        margin-bottom: 2rem;
+                    }
+                    p{
+                        &.subtext{
+                            margin-top: 2.5rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1199px) and (min-width: 399px) {
+   body{
+        // H1
+        h1, .cf-super-heading{
+            font-size: 45px;
+        }
+        // H2
+        h2, .cf-sub-super-heading{
+            font-size: 30px;
+        }
+        // H3
+        h3, .cf-heading{ // --
+            font-size: 25px; 
+            &.cf-section-title{
+                margin-bottom: 15px;
+            }
+        }
+        // H4
+        h4, .cf-sub-heading{ // --
+            font-size: 20px; 
+        }
+        p, .cf-pera{
+            font-size: 13px;
+            line-height: 18px;
+            &.subtext{
+                font-size: 14px;
+                line-height: 20px;
+            }
+            &.cf-pera-2{
+                font-size: 18px;
+                line-height: 22px;
+            }
+        }
+
+        // Override Button style
+        .btn{
+            font-size: 13px;
+            padding: 10px 15px;
+        }
+
+        // Container style 
+        .container-fluid{
+            padding-left: 18px;
+            padding-right: 18px;
+        }
+
+        // breadcrumb
+        .cf-breadcrumb{
+            nav .breadcrumb{
+                .breadcrumb-item{
+                    font-size: 14px;
+                }
+            }
+        }
+
+        // Owl Carousel
+        .owl-carousel{
+            &.cf-owlnav-btn{
+                .owl-dots{
+                    button{
+                        &:not(:first-child){
+                            margin-left: 18px;
+                        }
+                        &.owl-dot{
+                            margin-top: 0.2rem;
+                            &:before{
+                                font-size: 7px;
+                            }
+                        }
+                        span{
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        form.cf-form, .cf-form-grid{
+            // five
+            .five{
+                .field{
+                    width: 50%;
+                }
+            }
+        }
+
+        // Header Navbar Style
+        header{
+            height: 72px;
+            nav.navbar{
+                // logo
+                .navbar-brand {
+                    img{
+                        width: 200px;
+                    }
+                }
+                .navbar-toggler{
+                    font-size: 20px;
+                }
+
+                // Navbar menu items
+                ul.navbar-nav{
+                    li.nav-item{
+                        a{
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Footer Navigation
+        footer{
+            .row{
+                .cf-email{
+                    display: inline-block;
+                    font-size: 32px;
+                }
+                &.social-links{
+                    a{
+                        svg{
+                            width: 28px;
+                        }
+                    }
+                }
+            }
+        }
+
+        section{
+            // Scrolling Food
+            #scrolling-food{
+                padding: 22px 0;
+                height: 65px;
+                .owl-carousel{
+                    .item{
+                        h3{
+                            font-size: 20px;
+                        }
+                    }
+                }
+            }
+
+            // What we do
+            #what-we-do{
+                .what-we-do{
+                    .img-container{
+                        height: 300px;
+                    }
+                }
+            }
+
+            // Catered Companies
+            #catered-companies{
+                .logo-list{
+                    img{
+                        width: 90%;
+                        &.img-thumbnail{
+                            &.tesla-logo{
+                                max-width: 65px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Why City flavor section
+            #why-cityflavor{
+                .feature-item{
+                    min-width: 80%;
+                    margin: 0 auto;
+                    p.cf-pera-2{
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            // Food truck section
+            #food-truck-search{
+                .section-content{
+                    h2{
+                        font-size: 30px;
+                    }
+                }
+            }
+
+            // City Flavor Work Section
+            #city-flavor-work{
+                .tab-navigation-container{
+                    ul#city-flavor-work-tab{
+                        button{
+                            &:focus-visible{
+                                box-shadow: none;
+                                outline: none;
+                            }
+                        }
+                    }
+                }
+            
+                // Data Section styles of tabs
+                .tab-pane{
+                    .data-section{
+                        h3.cf-heading{
+                            margin-bottom: 22px;
+                        }
+                        p{
+                            font-size: 14px;
+                            line-height: 20px;
+                        }
+                    }
+                }
+            }
+
+            // Query Section
+            #cf-queries{
+                .query-item{
+                    width: 90%;
+                    margin-bottom: 3rem;
+                    text-align: justify;
+                }
+            }
+
+            // Index Page
+            &#cf-home{
+                // Hero Section
+                #hero-section{        
+                    height: calc(100vh - 60px);
+                    .hero-video-section{
+                        video{
+                            width: 490%;
+                        }
+                    }
+
+                    .hero-text{
+                        h1{
+                            font-size: 45px;
+                        }
+                        p{
+                            font-size: 19px;
+                            line-height: 22px;
+                        }
+                    }
+                }
+
+                // Learn more Section
+                #learn-more{
+                    .owl-carousel{
+                        .item{
+                            .card{
+                                .card-img-top{
+                                    height: 225px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // All Cities
+                #cf-all-cities{
+                    .col-md-4{
+                        .city-link{
+                            p.cf-pera-2{
+                                font-size: 17px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Common landing page.
+            &.common-landing-page{
+                #how-it-works{
+                    .col-md-4{
+                        .card-item{
+                            height: 460px;
+                            .img-box{
+                                width: 265px;
+                            }
+                            h4{
+                                padding: 15px 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Cities Page
+            &#cities-page{
+                // Sub header Section
+                #sub-header-section{
+                    .cf-form-grid{
+                        #select-city.cf-bs-dropdown{
+                            padding-bottom: 3px;
+                            button{
+                                font-size: 20px;
+                            }
+                            .dropdown-menu{
+                                li a{
+                                    font-size: 16px;
+                                    padding: 1px 7px;
+                                }
+                            }
+                        }
+                    }
+                    h1#top-truck-heading{
+                        font-size: 32px;
+                    }
+                }
+
+                // Filter Truckss Section
+                #filter-trucks{
+                    // Filter Result Style
+                    .filter-results{
+                        .col-xl-3{
+                            height: 235px;
+                        }
+                    }
+                }
+
+                // Book Vendor in City Section
+                #book-city-vendor{
+                    .btn-success{
+                        margin-top: 1rem;
+                    }
+                }
+            }
+
+            // Single/commonn food truck page
+            &#food_truck_page{
+                // Sub-header Section
+                #sub-header-section{
+                    height: calc(100vh - 60px);
+                    color: $cf-white;
+                    h1{
+                        color: $cf-white;
+                    }
+                }
+
+                // Foot bar section
+                #section-foot-bar{
+                    padding: 1rem 0;
+                    .col{
+                        font-size: 12px;
+                        .fa-solid, .fa-brands{
+                            font-size: 1.5rem;
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+            }
+
+            // About Tech Page
+            &#about-tech-page{
+                #sub-header-section{    
+                    .setup-features{
+                        margin: 2rem auto;
+                        li{
+                            margin-bottom: 0.8rem;
+                            svg{
+                                width: 18px;
+                                height: 18px;
+                            }
+                        }
+                    }
+                }
+        
+                #cf-offers{
+                    .row{
+                        .box-container{
+                            padding: 20px 20px;
+                            ul{
+                                li{
+                                    margin-bottom: .8rem;
+                                }
+                            }
+                            button{
+                                width: 230px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Public URL Page Style
+            &#public-url-page{
+                // Filter Bar
+                #filter-bar{
+                    .filter-section{
+                        .vendor-filter{
+                            display: inline-block;
+                        }
+                    }
+                    h6{
+                        display: block;
+                    }
+                }
+    
+                // Shifts Section
+                #shifts-section{
+                    .shifts-container{
+                        .days{
+                            min-width: 310px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1199px) and (min-width: 576px) {
+    body{
+        // Typography and UI elements
+        h1, .cf-super-heading{
+            font-size: 55px;
+            margin-bottom: 25px;
+        }
+        h2, .cf-sub-super-heading{
+            font-size: 32px;
+        }
+        h3, .cf-heading{
+            font-size: 28px;
+            &.cf-section-title{
+                margin-bottom: 20px;
+            }
+        }
+        h4, .cf-sub-heading{
+            font-size: 22px;
+        }
+        h5, .cf-small-heading{
+            font-size: 17px;
+           
+        }
+        h6, .smallest-heading{
+            font-size: 16px;
+            
+        }
+        p, .cf-pera{
+            font-size: 16px;
+            &.subtext{
+                font-size: 16px;
+                margin-bottom: 18px;
+            }
+            &.cf-pera-2{
+                font-size: 18px;
+            }
+        }
+
+        span{
+            &.cf-title{
+                &.small{
+                    font-size: 10px;
+                }
+            }
+        }
+
+        // Order Ahead Iframe
+        #order_ahead_iframe{
+            height: 600px; 
+        }
+
+        // Override Button style
+        .btn{
+            font-size: 16px;
+            padding: 12px 22px;
+        }
+
+        // breadcrumb
+        .cf-breadcrumb{
+            nav .breadcrumb{
+                .breadcrumb-item{
+                    font-size: 16px;
+                }
+            }
+        }
+
+        // Owl Carousel
+        .owl-carousel{
+            &.cf-owlnav-btn{
+                .owl-dots{
+                    button{
+                        &:not(:first-child){
+                            margin-left: 30px;
+                        }
+        
+                        &.owl-dot{
+                            margin-top: 1rem;
+                            &:before{
+                                font-size: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        form.cf-form, .cf-form-grid{
+            .field{
+                margin-bottom: 3rem;
+                // label
+                label{
+                    font-size: 13px;
+                    top: -5px;
+                }
+
+                // input
+                input, input.search, .ui.selection.dropdown{
+                    font-size: 16px;
+                }
+
+                 // textarea
+                textarea{
+                    font-size: 16px;
+                }
+                .characters{
+                    top: 5px;
+                    position: relative;
+                    right: 5px;
+                }
+            }
+
+            .inline{
+                &.field{
+                   &:not(:last-child){
+                        margin-bottom: 1rem !important;
+                   }
+                }
+            }
+
+            .two{
+                .field{
+                    margin-bottom: 3rem;
+                }
+            }
+
+            // three
+            .three{
+                .field{
+                    &:not(:first-child){
+                        width: 50%;
+                    }
+                }
+            }
+
+            // five
+        
+
+        }
+
+        // Header Navbar Style
+        header{
+            height: 82px;
+            nav.navbar{
+                // logo
+                .navbar-brand {
+                    img{
+                        width: 235px;
+                    }
+                }
+                .navbar-toggler{
+                    font-size: 23px;
+                }
+
+                // Navbar menu items
+                ul.navbar-nav{
+                    li.nav-item{
+                        a{
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+        }
+
+        footer{
+            .row{
+                .col-12{
+                    margin-bottom: 2rem;
+                }
+                .cf-email{
+                    font-size: 35px;
+                }
+                .footer-link{
+                    h4{
+                        font-size: 22px;
+                    }
+                }
+                &.social-links{
+                    margin-top: 25px;
+                }
+            }
+        }
+
+        section{
+            // ------------------------------------------ common page sections style ------------------------------------------
+            // Catered Companies
+            #catered-companies{
+                .logo-list{
+                    img{
+                        &.img-thumbnail{
+                            &.tesla-logo{
+                                max-width: 82px;
+                            }
+                            &.apple-logo{
+                                max-width: 60px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // What we do
+            #what-we-do{
+                .what-we-do{
+                    .img-container{
+                        height: 370px;
+                    }
+                }
+            }
+
+            // CF Support Section
+            #cf-support{
+                .col-md-4{
+                    .support-content{
+                        .img-box{
+                            width: 210px;
+                        }
+                    }
+                }
+            }
+
+            // Food Truck Search
+            #food-truck-search{
+                height: 100%;
+                background-size: 0;
+                .mobile-view-img{
+                    display: block;
+                    width: 75%;
+                }
+                .section-content{
+                    margin-top: 2rem;
+                    width: 100%;
+                    position: relative;
+                    top: unset;
+                    right: unset;
+                    transform: unset;
+                    h2{
+                        margin-bottom: 2.5rem;
+                        font-size: 45px;
+                    }
+                    p.cf-pera-2{
+                        font-size: 18px;
+                    }
+                }
+            }
+
+             // Scrolling Food
+             #scrolling-food{
+                height: 85px;
+                .owl-carousel{
+                    .item{
+                        h3{
+                            font-size: 26px;
+                        }
+                    }
+                }
+            }
+
+            // Why City flavor section
+            #why-cityflavor{
+                .feature-item{
+                    min-width: unset;
+                    p.cf-pera-2{
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            // Event Application Form        
+            #event-application{
+                p.subtext{
+                    br{
+                        display: none;
+                    }
+                }
+                .application-form{
+                    .cf-form{
+                        .fields-container{
+                            margin-bottom: 15px;
+                        }
+                    }
+                }
+            }
+
+            // City Flavor Work Section
+            #city-flavor-work{
+                // Work Tabs Style
+                .tab-navigation-container{
+                    ul#city-flavor-work-tab{
+                        min-width: 850px;
+                        li{
+
+                            button{
+                                font-size: 24px;
+                            }
+                        }
+                    }
+                }
+            
+                // Data Section styles of tabs
+                .tab-pane{
+                    .data-section{
+                        h3.cf-heading{
+                            margin-bottom: 32px;
+                        }
+                        p{
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+
+            // Query Section
+            #cf-queries{
+                .query-item{
+                    text-align: left;
+                }
+            }
+
+            // Index Page
+            &#cf-home{
+                // Hero Section
+                #hero-section{        
+                    height: calc(100vh - 82px);
+                    .hero-video-section{
+                        video{
+                            width: 320%;
+                        }
+                    }
+                    .hero-text{
+                        h1{
+                            font-size: 45px;
+                            line-height: 50px;
+                        }
+                        p{
+                            font-size: 20px;
+                        }
+                    }
+                }
+
+                // Learn more Section
+                #learn-more{
+                    .owl-carousel{
+                        .item{
+                            .card{
+                                .card-img-top{
+                                    height: 350px;
+                                }
+                                .card-body{
+                                    h3{
+                                        font-size: 26px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // All Cities
+                #cf-all-cities{
+                    .col-md-4{
+                        .city-link{
+                            p.cf-pera-2{
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Cities Page
+            &#cities-page{
+                // Sub header Section
+                #sub-header-section{
+                    .cf-form-grid{
+                        #select-city.cf-bs-dropdown{
+                            margin-top: 1.5rem;
+                            padding-bottom: 3px;
+                            .dropdown-menu{
+                                li a{
+                                    font-size: 16px;
+                                    padding: 3px 7px;
+                                }
+                            }
+                        }
+                    }
+                    h1#top-truck-heading{
+                        font-size: 40px;
+                    }   
+                }
+
+                // Filter Truckss Section
+                #filter-trucks{
+                    .cf-grid-item .btn{
+                        padding: 10px 18px;
+                        font-size: 15px;
+                    }
+                    // Filter Result Style
+                    .filter-results{
+                        .col-xl-3{
+                            height: 200px;
+                        }
+                    }
+                }
+
+    
+                // Book Vendor in City Section
+                #book-city-vendor{
+                    .btn-success{
+                        margin-top: 1rem;
+                    }
+                }
+            }
+
+            // About Company
+            &#about-company-page{
+                #our-story{
+                    .row{
+                        .col-12{
+                            &:first-child{
+                                h2{
+                                    margin-bottom: 1.5rem;
+                                }
+                            }
+                            .fries-first-img{
+                                height: 360px;
+                            }
+                        }
+                    }
+                }
+        
+                #our-team{
+                    .img-fit{
+                        .our-team-img{
+                            height: 350px;
+                            &.bigger{
+                                height: 400px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // About Tech Page
+            &#about-tech-page{
+                #sub-header-section{    
+                    .setup-features{
+                        padding-left: 0;
+                        li{
+                            margin-bottom: 1rem;
+                            svg{
+                                width: 22px;
+                                height: 22px;
+                            }
+                        }
+                    }
+                }
+
+                #city-flavor-work{
+                    .tab-navigation-container{
+                        ul#city-flavor-work-tab{
+                            min-width: 640px;
+                        }
+                    }
+                }
+        
+                #cf-offers{
+                    .row{
+                        width: 80%;
+                        .box-container{
+                            padding: 30px 30px;
+                            margin-bottom: 1.5rem;
+                            ul{
+                                margin: 30px 0;
+                                padding-left: 0;
+                                li{
+                                    margin-bottom: 1rem;
+                                    svg{
+                                        width: 20px;
+                                        height: 20px;
+                                        margin-right: 10px;
+                                    }
+                                }
+                            }
+                            button{
+                                width: 260px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Common landing page.
+            &.common-landing-page{
+                #how-it-works{
+                    .col-md-4{
+                        .card-item{
+                            height: 550px;
+                            .img-box{
+                                width: 320px;
+                            }
+                            h4{
+                                padding: 20px 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Public URL Page Style
+            &#public-url-page{
+                // Filter Bar
+                #filter-bar{
+                    h6{
+                        display: block;
+                    }
+                }
+    
+                // Shifts Section
+                #shifts-section{
+                    .shifts-container{
+                        .days{
+                            min-width: 310px;
+                        }
+
+                        .load-more-shift-btn{
+                            width: 50px;
+                            height: 50px;
+                            &:before{
+                                font-size: 1.8rem;
+                            }
+                        }
+                    }
+                }
+
+                // Indoor Vendors
+                #indoor-vendors{
+                    // Vendor Card
+                    .vendor-card{
+                        height: 290px;
+                    }
+                }
+
+                // Weekly updates application form section
+                #weekly-updates-application{
+                    form{
+                        width: 350px;
+                        margin: 0 auto;
+                    }
+                }
+
+                .dates-menu{
+                    justify-content: start;
+                    a{
+                        margin-bottom: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1199px) and (min-width: 768px) {
+    body{
+        h1, .cf-super-heading{
+            font-size: 65px;
+        }
+        h2, .cf-sub-super-heading{
+            font-size: 31px;
+        }
+        h3, .cf-heading{
+            font-size: 28px;
+            &.cf-section-title{
+                margin-bottom: 20px;
+            }
+        }
+        h4, .cf-sub-heading{
+            font-size: 22px;
+        }
+        h5, .cf-small-heading{
+            font-size: 18px;
+           
+        }
+        h6, .smallest-heading{
+            font-size: 16px;
+            
+        }
+        p, .cf-pera{
+            font-size: 16px;
+            &.subtext{
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+            &.cf-pera-2{
+                font-size: 18px;
+            }
+        }
+
+        span{
+            &.cf-title{
+                &.small{
+                    font-size: 12px;
+                }
+            }
+        }
+
+        // Order Ahead Iframe
+        #order_ahead_iframe{
+            height: 750px; 
+        }
+
+         // Override Button style
+        .btn{
+            padding: 8px 16px;
+        }
+
+        // Owl Carousel
+        .owl-carousel{
+            &.cf-owlnav-btn{
+                .owl-nav{
+                    display: none;
+                }
+                .owl-dots{
+                    button{
+                        &:not(:first-child){
+                            margin-left: 25px;
+                        }
+                    }
+                }
+            }
+        }
+
+        // CF From Style
+        .cf-centered-form{                
+            max-width: 550px;
+        }
+
+        form.cf-form, .cf-form-grid{
+            .two{
+                .field{
+                    // width: 50%;
+                    margin-bottom: 2.5rem;
+                }
+            }
+
+            // five
+            .five{
+                .field{
+                    width: 33.33%;
+                }
+            }
+        }
+
+        // Header Navbar Style
+        header{
+            height: 89px;
+            nav.navbar{
+                // logo
+                .navbar-brand {
+                    img{
+                        width: 260px;
+                    }
+                }
+            }
+        }
+
+        footer{
+            height: fit-content;
+            .row{
+                .col-sm-6{
+                    &:not(:first-child){
+                        margin-top: 0;
+                    }
+                }
+                .cf-email{
+                    font-size: 28px;
+                }
+                .footer-link{
+                    &:not(:last-child){
+                        margin-bottom: 25px;
+                    }
+                    h4{
+                        font-size: 21px;
+                    }
+                }
+                &.social-links{
+                    margin-top: 35px;
+                    .col-2{
+                        &:not(:first-child){
+                            margin-left: 1rem
+                        }
+                    }
+                    a{
+                        font-size: 16px;
+                        svg{
+                            width: 30px
+                        }
+                    }
+                }
+            }
+            .sub-footer{
+                margin-top: 55px;
+            }
+        }
+        
+        // ------------------------------------------ Index Page Style ------------------------------------------
+        section{
+            // ------------------------------------------ common page sections style ------------------------------------------
+            // Catered Companies
+            #catered-companies{
+                .logo-list{
+                    img{
+                        width: 70%;
+                        &.img-thumbnail{
+                            &.tesla-logo{
+                                max-width: 85px;
+                            }
+                            &.apple-logo{
+                                max-width: 60px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // What we do
+            #what-we-do{
+                .what-we-do{
+                    .img-container{
+                        height: 290px;
+                    }
+                }
+            }
+
+            // Scrolling Food
+            #scrolling-food{
+                padding: 25px 0;
+                height: fit-content;
+            }
+
+            // CF Support Section
+            #cf-support{
+                .col-md-4{
+                    &:not(:last-child){
+                        margin-bottom: 2rem;
+                        .support-content{
+                            .img-box{
+                                margin-bottom: 2rem;
+                            }
+                        }
+                    }
+                    .support-content{
+                        padding: 20px 10px;
+                        .img-box{
+                            width: 160px;
+                        }
+                    }
+                }
+            }
+
+            // Food Truck Search
+            #food-truck-search{
+                height: 400px;
+                background-size: contain;
+                .mobile-view-img{
+                    display: none;
+                }
+                .section-content{
+                    text-align: left;
+                    margin-left: auto;
+                    position: absolute;
+                    top: 50%;
+                    right: 18px;
+                    transform:translateY(-50%);
+                    width: 60%;
+                    margin-top: 0;
+                    h2{
+                        margin-bottom: 2.5rem;
+                        font-size: 43px;
+                    }
+                }
+            }
+
+            // Event Application Form        
+            #event-application{
+                .application-form{
+                    .cf-form{
+                        .fields-container{
+                            margin-bottom: 15px;
+                        }
+                    }
+                }
+                p.subtext br{
+                    display: unset;
+                }
+            }
+
+            // City Flavor Work Section
+            #city-flavor-work{
+                // Work Tabs Style
+                .tab-navigation-container{
+                    overflow-x: hidden;
+                    ul#city-flavor-work-tab{
+                        min-width: 100%;
+                        display: flex;
+                        li{
+                            
+                            &:not(:first-child){
+                                margin-left: 32px;
+                            }
+                            // Li style except the first one
+                            &:last-child{
+                                margin-left: 0;
+                                padding: 0 20px;
+                            }
+            
+                            button{
+                                font-size: 26px;
+                            }
+                        }
+                    }
+                }
+            
+                // Data Section styles of tabs
+                .tab-pane{
+                    .data-section{
+                        h3.cf-heading{
+                            margin-bottom: 32px;
+                        }
+                        p{
+                            font-size: 17px;
+                        }
+                    }
+                }
+            }
+
+            // Query Section
+            #cf-queries{
+                .query-item{
+                    width: 70%;
+                }
+            }
+
+            // Index Page
+            &#cf-home{
+                // Hero Section
+                #hero-section{        
+                    .hero-text{
+                        width: 85%;
+                        h1{
+                            font-size: 62px;
+                            line-height: 65px;
+                        }
+                        p{
+                            font-size: 20px;
+                        }
+                    }
+                }
+
+                // Learn more Section
+                #learn-more{
+                    .owl-carousel{
+                        .item{
+                            padding: 5px;
+                            .card{
+                                .card-img-top{
+                                    height: 255px;
+                                    .floating-label{
+                                        padding: 6px 10px;
+                                        top: 12px;
+                                        left: 12px;
+                                        font-size: 9px;
+                                    }
+                                }
+                            }
+                        }
+                        .card-body{
+                            h3{
+                                font-size: 22px;
+                            }
+                        }
+                    }
+                }
+
+                // All Cities
+                #cf-all-cities{
+                    .col-md-4{
+                        padding: 15px 0px ;
+                        .city-link{
+                            padding: 13px 0;
+                            &:not(:first-child){
+                                margin-top: 20px;
+                            }
+                            p.cf-pera-2{
+                                font-size: 20px;
+                                a{
+                                    span{
+                                        margin-left: 6px;
+                                        font-size: 14px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Cities Page
+            &#cities-page{
+                // Sub header Section
+                #sub-header-section{
+                    // padding:2rem 0;
+                    // padding-bottom: 0;
+                    .cf-form-grid{
+                        #select-city.cf-bs-dropdown{
+                            margin-top: 2rem;
+                            padding-bottom: 6px;
+                            button{
+                                font-size: 23px;
+                                padding: 3px;
+                            }
+                            .dropdown-menu{
+                                li a{
+                                    padding: 3px 14px;
+                                }
+                            }
+                        }
+                    }
+                    h1#top-truck-heading{
+                        font-size: 50px;
+                    }
+                }
+
+                // Filter Truckss Section
+                #filter-trucks{
+                    .cf-title{
+                        margin-bottom: 18px;
+                    }
+    
+                    // Filter Result Style
+                    .filter-results{
+                        .col-xl-3{
+                            height: 240px;
+                        }
+                    }
+                }
+    
+                // Book Vendor in City Section
+                #book-city-vendor{
+                    .btn-success{
+                        margin-top: 1rem;
+                    }
+                }
+            }
+
+            // About Company
+            &#about-company-page{
+                #our-story{
+                    .row{
+                        .col-12{
+                            .cf-pera-2{
+                                text-align: left;
+                            }
+                            .fries-first-img{
+                                height: 480px;
+                            }
+                        }
+                    }
+                }
+        
+                #our-team{
+                    .img-fit{
+                        .our-team-img{
+                            height: 320px;
+                            &.bigger{
+                                height: 400px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // About Tech Page
+            &#about-tech-page{
+                #sub-header-section{    
+                    .setup-features{
+                        margin: 2rem auto;
+                        width: 620px
+                        // li{
+                        //     margin-bottom: 0.5rem;
+                        //     svg{
+                        //         width: 14px;
+                        //         height: 14px;
+                        //         margin-right: 10px;
+                        //     }
+                        //     h6{
+                        //         display: inline-block;
+                        //     }
+                        // }
+                    }
+                }
+
+                // #city-flavor-work{
+                //     .tab-navigation-container{
+                //         ul#city-flavor-work-tab{
+                //             min-width: 495px;
+                //         }
+                //     }
+                // }
+        
+                // #contact-sources{
+                //     .details-row{
+                //         width: 100%;
+                //     }
+                // }
+        
+                #cf-offers{
+                    .row{
+                        width: 100%;
+                        .box-container{
+                            padding: 30px 15px;
+                            ul{
+                                margin: 30px 0;
+                                padding-left: 0;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Common landing page.
+            &.common-landing-page{
+                #how-it-works{
+                    .col-md-4{
+                        &:not(:first-child){
+                            margin: 0;
+                        }
+                        .card-item{
+                            height: 480px;
+                            .img-box{
+                                width: 180px;
+                            }
+                        }
+                    }
+                }
+
+                #check-in-form{
+                    width: 600px;
+                }
+            }
+
+            // Public URL Page Style
+            &#public-url-page{
+                #filter-bar{
+                    text-align: right;
+                    h6{
+                        display: inline-block;
+                    }
+                }
+
+                // Indoor Vendors
+                #indoor-vendors{
+                    // Vendor Card
+                    .vendor-card{
+                        height: 330px;
+                    }
+                }
+
+                // Shifts Section
+                #shifts-section{
+                    .shifts-container{
+                        .days{
+                            min-width: 340px;
+                            .shift{
+                                .content{
+                                    .vendor-title{
+                                        h5 {
+                                            font-size: 11px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .load-more-shift-btn{
+                            width: 60px;
+                            height: 60px;
+                            &:before{
+                                font-size: 2rem;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Blog Page
+            &#blog-page{
+                // Main Image Section
+                .main-image-section{
+                    .img-container{
+                        .floating-label{
+                            padding: 7px 12px;
+                            top: 10px;
+                            left: 10px;
+                            font-size: 11px;
+                        }
+                    }
+                }
+                
+    
+                // Blog Content Section
+                .blog-content-section{
+                    width: 80%;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1199px) and (min-width: 992px) {
+    body{
+        h1, .cf-super-heading{
+            font-size: 62px;
+            line-height: normal;
+        }
+        h2, .cf-sub-super-heading{
+            font-size: 40px;
+        }
+        h3, .cf-heading{
+            font-size: 35px;
+        }
+
+        p, .cf-pera{
+            font-size: 16px;
+            line-height: normal;
+            &.subtext{
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+            &.cf-pera-2{
+                font-size: 16px;
+            }
+        }
+
+        // Override Button style
+        .btn{
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        form.cf-form, .cf-form-grid{
+            .two{
+                .field{
+                    width: 50%;
+                }
+            }
+            // three
+            .three{
+                .field{
+                    width: 33.33%;
+                    &:not(:first-child){
+                        width: 33.33%;
+                    }
+                }
+            }
+        }
+
+        // Order Ahead Iframe
+        #order_ahead_iframe{
+            height: 730px; 
+        }
+    
+        footer{
+            .row{
+                .cf-email{
+                    font-size: 40px;
+                    border-bottom: none;
+                    a{
+                        text-decoration: underline;
+                    }
+                }
+                .footer-link{
+                    &:not(:last-child){
+                        margin-bottom: 30px;
+                    }
+                    h4{
+                        font-size: 24px;
+                    }
+                }
+                &.social-links{
+                   
+                    .col-2{
+                        &:not(:first-child){
+                            margin-left: 3rem
+                        }
+                    }
+                }
+            }
+        
+            .sub-footer{
+                margin-top: 75px;
+            }
+        }
+
+        // CF From Style
+        .cf-centered-form{
+            // "div.cf-centered-form > form.cf-form" used to set request form in center putt this class in parent element.
+            width: 100%;
+            max-width: 650px;
+            margin: auto;
+        }
+    
+        section{
+            // ------------------------------------------ common page sections style ------------------------------------------
+            // CF Support Section
+            #cf-support{
+                .col-md-4{
+                    .support-content{
+                        height: 450px;
+                        .img-box{
+                            width: 190px;
+                        }
+                    }
+                }
+            }
+
+            // What we do
+            #what-we-do{
+                .what-we-do{
+                    .img-container{
+                        height: 300px;
+                    }
+                }
+            }
+        
+            // Catered Companies
+            #catered-companies{
+                .logo-list{
+                    img{
+                        &.img-thumbnail{
+                            &.tesla-logo{
+                                max-width: 95px;
+                            }
+                            &.apple-logo{
+                                max-width: 70px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Food Truck Search
+            #food-truck-search{
+                height: 630px;
+                .section-content{
+                    width: 50%;
+                    h2{
+                        font-size: 45px;
+                    }
+                }
+            }
+
+            // Scrolling Food
+            #scrolling-food{
+                padding: 35px 0;
+                height: 115px;
+                .owl-carousel{
+                    .item{
+                        h3{
+                           font-size: 32px;
+                        }
+                    }
+                }
+            }
+
+            // City Flavor Work Section
+            #city-flavor-work{
+                // Work Tabs Style
+                ul#city-flavor-work-tab{
+                    margin-bottom: 20px;
+                    li{
+                        margin-bottom: 1rem;
+                        // Li style except the first one
+                        &:last-child{
+                            margin-left: 0;
+                        }
+
+                        button{
+                            &:after{
+                                bottom: -15px;
+                            }
+                        }
+                    }
+                }
+
+                // Data Section styles of tabs
+                .tab-pane{
+                    .data-section{
+                        .data-tab-padding{
+                            width: 100%;
+                        }   
+                    }
+                }
+            }
+
+            // ------------------------------------------ Index Page Style ------------------------------------------
+            &#cf-home{
+                // Hero Section
+                #hero-section{  
+                    height: calc(80vh - 89.5px);
+                    .hero-video-section{
+                        video{
+                            position: relative;
+                            top: unset;
+                            left: unset;
+                            transform: unset;
+                            width: 120%;
+                        }}
+
+                    .hero-text{
+                        width: 70%;
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        left: unset;
+                        h1{
+                            font-size: 48px;
+                            line-height: normal;
+                            .border-bottom-heading{
+                                border-bottom: solid $cf-light-green;
+                                border-width: 7px !important;
+                            }
+                        }
+                        p{
+                            line-height: normal;
+                        }
+                    }
+                }
+
+                // All Cities
+                #cf-all-cities{
+                    .col-md-4{
+                        .city-link{
+                            p.cf-pera-2{
+                                a{
+                                    span{
+                                        font-size: 20px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+    
+                // Learn more Section
+                #learn-more{
+                    .owl-carousel{
+                        .item{
+                            padding: 12px;
+                            .card{
+                                .card-img-top{
+                                    height: 325px;
+                                    .floating-label{
+                                        font-size: 12px;
+                                        padding: 10px 12px;
+                                    }
+                                }
+                            }
+                        }
+                        .card-body{
+                            h3{
+                                font-size: 30px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // About Company
+            &#about-company-page{
+                #our-story{
+                    .row{
+                        .col-12{
+                            .fries-first-img{
+                                height: 300px;
+                            }
+                            &:first-child{
+                                padding-right: 8rem;
+                                h2{
+                                    margin-bottom: 1rem;
+                                }
+                            }
+                        }
+                    }
+                }
+        
+                #our-team{
+                    .img-fit{
+                        .our-team-img{
+                            height: 285px;
+                            &.bigger{
+                                height: 585px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // About Tech Page
+            &#about-tech-page{
+                #cf-offers{
+                    .row{
+                        width: 760px;
+                    }
+                }
+            }
+
+            // Common landing page.
+            &.common-landing-page{
+                #how-it-works{
+                    .col-md-4{
+                        .card-item{
+                            height: 500px;
+                            .img-box{
+                                width: 220px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &#public-url-page{
+                // Sub Header section
+                #sub-header-section{
+                    .container-fluid{
+                        flex-direction: row;
+                        h1{
+                            text-align: left;
+                            margin-bottom: 10px;
+                        }
+                        h4{
+                            text-align: right;
+                            margin-bottom: 10px;
+                        }
+                    }
+    
+                    .filter-section{
+                        text-align: right;
+                    }
+                }
+            }
+
+            // Blog Page
+            &#blog-page{
+                // Main Image Section
+                .main-image-section{
+                    .img-container{
+                        .floating-label{
+                            padding: 10px 14px;
+                            top: 14px;
+                            left: 14px;
+                            font-size: 12px;
+                        }
+                    }
+                }
+    
+                // Blog Content Section
+                .blog-content-section{
+                    width: 70%;
+                }
+            }
+            // Cities Page
+            &#cities-page{
+                #sub-header-section{
+                    h1#top-truck-heading{
+                        font-size: 58px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1199px) and (min-width: 1150px) { // Device size XL
+    body{
+        h2, .cf-sub-super-heading{
+            font-size: 60px;
+        }
+        section{
+            // ------------------------------------------ common page sections style ------------------------------------------
+            // Catered Companies
+            #catered-companies{
+                .logo-list{
+                    img{
+                        width: 50%;
+                        margin-bottom: 1rem;
+                        &.img-thumbnail{
+                            &.tesla-logo{
+                                max-width: 95px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // CF Support Section
+            #cf-support{
+                // padding: 60px 0;
+                text-align: center;
+                p{
+                    &.subtext{
+                        margin-bottom: 60px;
+                    }
+                }
+                .col-md-4{
+                    display: flex;
+                    .support-content{
+                        height: 425px;
+                        .img-box{
+                            width: 230px;
+                        }
+                    }
+                }
+            }
+
+            // Food Truck Search
+            #food-truck-search{
+                height: 580px;
+                .section-content{
+                    width: 60%;
+                    p{
+                        margin-bottom: 1.5rem;
+                    }
+                    h2{
+                        font-size: 60px;
+                        margin-bottom: 3.5rem;
+                    }
+                }
+            }
+
+            // City Flavor Work Section
+            #city-flavor-work{
+                // Data Section styles of tabs
+                .tab-pane{
+                    .data-section{
+                        .data-tab-padding{
+                            width: 100%;
+                        }   
+                        h3.cf-heading{
+                            margin-bottom: 40px;
+                        }
+                        h4.sub-heading{
+                            margin-bottom: 10px;
+                        }
+                    }
+                }
+            }
+
+            // Query Section
+            #cf-queries{
+                .query-item{
+                    width: 70%;
+                    margin-bottom: 4rem;
+                }
+            }
+
+
+            // ------------------------------------------ Index Page Style ------------------------------------------
+            &#cf-home{
+                // Hero Section
+                #hero-section{     
+                    height: 100%;
+                    .hero-text{
+                        width: 70%;
+                        h1{
+                            font-size: 55px;
+                            .border-bottom-heading{
+                                border-width: 9px !important;
+                            }
+                        }
+                    }
+
+                    .hero-video-section{
+                        video{
+                            position: relative;
+                            top: unset;
+                            left: unset;
+                            transform: unset;
+                            width: 100%;
+                        }
+                    }
+                }
+    
+                // Learn more Section
+                #learn-more{
+                    .owl-carousel{
+                        .item{
+                            .card{
+                                .card-img-top{
+                                    height: 430px;
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+
+                // All Cities
+                #cf-all-cities{
+                    .col-md-4{
+                        padding: 30px;
+                        .city-link{
+                            &:not(:first-child){
+                                margin-top: 30px;
+                            }
+                            p.cf-pera-2{
+                                font-size: 20px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Cities Page
+            &#cities-page{
+                // Filter Truckss Section
+                #filter-trucks{
+                    // Filter Result Style
+                    .filter-results{
+                        .col-xl-3{
+                            height: 300px;
+                        }
+                    }
+                }
+                #sub-header-section{
+                    h1#top-truck-heading{
+                        font-size: 65px;
+                    }
+                }
+            }
+        }
+    }
+}
+

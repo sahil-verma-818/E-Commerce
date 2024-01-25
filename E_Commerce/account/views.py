@@ -35,6 +35,7 @@ def register(request):
         password = request.POST.get('password')
         user_type = request.POST.get('usertype')
         otp = request.POST.get('otp')
+        mobile = request.POST.get('mobile')
 
         # ===============================================================
         # Checking if User with perticular email exists or not
@@ -45,7 +46,7 @@ def register(request):
                 validate=OneTimePassword.validate_otp(request=request, otp=otp)
                 if validate:
                     username = email.split('@')[0]
-                    User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type)
+                    User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password, user_type=user_type, mobile=mobile)
                     return JsonResponse({'status' : 'success', 'message' : f"New user registered with username : {username}", 'redirect' : '/adminlogin'})
                 else:
                     return JsonResponse({'status' : 'error', 'message' : 'OTP not matched. Re-try with generating new OTP'})

@@ -153,18 +153,30 @@
     $(function () { 
         $('.nav-item').ready(function () { 
             $('#dashboard').addClass('active');
+            var interval = setInterval(() => {
+                $.ajax({
+                    url : '/admin-panel/dashboard',
+                    method : 'GET',
+                    success : function(data){
+                        
+                    }
+                })
+            }, 1000);
          });
      })
 
 
 
 
-    $('#orderTable').click(function(){
-        total=0
+
+
+
+    $('body').mousemove(function(){
+        total=0 
         t_order = -1
         t_delivered = 0
         t_process = 0
-        $(this).find('tr').each(function(){
+        $('#orderTable').find('tr').each(function(){
             t_order += 1
             $(this).find('td').each(function(){
                 var price = $(this).closest('.price').html()
