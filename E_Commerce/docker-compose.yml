@@ -13,6 +13,8 @@ services:
       - MYSQL_PASSWORD:'12345'
       - MYSQL_ROOT_PASSWORD:'12345'
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    volumes:
+      - mysql_data:/var/lib/mysql
 
     
   web:
