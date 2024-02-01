@@ -1,64 +1,60 @@
 # E-Commerce
 
-Setup to run the E-Commerce Project
+# Setup to run the E-Commerce Project
 
-Step 1:
+# Step 1:
+**Take the clone from the GitHub**
 
-    Take the clone from the GitHub
+    git clone https://github.com/sahil-verma-818/E-Commerce.git
 
-    command: git clone https://github.com/sahil-verma-818/E-Commerce.git
+# Step 2:
+**Move to the base directory folder**
 
-Step 2:
+    cd E-Commerce/E_Commerce/
 
-    Move to the base directory folder
+#
+> **_NOTE:_**  Docker Setup is mandatory for further process.
+# Step 3:
+**Take a pull from docker hub** 
 
-    command: cd E-Commerce/E_Commerce/
+    docker pull sahilverma818/e_commerce_web
 
-Step 3:
+# Step 4:
+**Run the Project in detach mode**
 
-    Take a pull from docker hub 
+    docker compose up -d
 
-    command: docker pull sahilverma818/e_commerce_web
+# Step 5:
+**Open the bash:**
 
-Step 4:
+    docker compose exec web bash
 
-    Run the Project in detach mode
+# Step 6:
+- **Inside the bash:**
+    - **command to migrate:**
 
-    command: docker compose up -d
+          python3 manage.py migrate
 
-Step 5:
+    - **command to create super user**
 
-    Open the bash:
+          python3 manage.py createsuperuser
 
-    command: docker compose exec web bash
+      > **_NOTE:_** Fill all the required details to create super user
+    
+    - **Exit from bash**
 
-Step 6:
+            Exit
 
-    Inside the bash:
+# Step 7:
+- **In order to view running terminal and response, run again the following command**
 
-    command to migrate:
-    command: python3 manage.py migrate
+      docker compose up
 
-    command to create super user
-    command: python3 manage.py createsuperuser
+- **For exiting the running terminal:**
 
-    Fill all the required details
+      ctrl + c
 
-    After successful user creation
-    Exit from bash
+- **For clearing or closing the running container** 
 
-    command: Exit
+      docker compose down
 
-Step 7:
-
-    In order to view running terminal and response, run again the following command
-
-    command: docker compose up
-
-For exiting the running terminal:
-
-    press ctrl + c
-
-for clearing or closing the running container 
-
-    command: docker compose down
